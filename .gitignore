@@ -83,8 +83,8 @@ nb-configuration.xml
 ##############################
 .DS_Store
 
-src/main/resources/
-src/main/resources/log/archive/
+
+
 *.log
 *.temp
 *.obs
