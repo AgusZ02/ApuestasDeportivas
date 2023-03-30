@@ -217,21 +217,12 @@ public class LoginGUI extends JFrame {
 			btnNoAcc.setBounds(250, 129, 102, 21);
 			btnNoAcc.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					lblError.setVisible(false);
-					String us = textField.getText();
-					String ps = new String(passwordField.getPassword());
-					BLFacade logicaNegocio = LoginGUI.getBusinessLogic();
-					boolean bool = logicaNegocio.existsUser(us);
-					if (bool) {
-						lblError.setText("Invalid username, try another one.");
-						lblError.setVisible(true);
-						lblError.setForeground(Color.RED);
-					} else {
-						lblError.setForeground(Color.green);
-						logicaNegocio.createUser(us, ps);
-						lblError.setText("User created successfully!");
-						lblError.setVisible(true);
-					}
+					RegisterGUI ventana = new RegisterGUI();
+					ventana.setUserText(textField.getText());
+					ventana.setPasswordText(new String(passwordField.getPassword()));
+					ventana.setVisible(true);
+					dispose();
+					
 				}
 			});
 		}

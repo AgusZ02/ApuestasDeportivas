@@ -97,5 +97,5 @@ public interface BLFacade {
 
 	public Usuario getUsuario(String nombreUsuario);
 	
-	@WebMethod public Usuario createUser(String us, String ps);
+	@WebMethod public Usuario createUser(Usuario user);
 }

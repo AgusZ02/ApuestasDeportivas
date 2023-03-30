@@ -16,7 +16,11 @@ public class Usuario implements Serializable{
 	private String nombreUsuario;
 	private String contrasena;
 	private boolean esAdmin;
+	private String dni;
+	private String nombre;
 	
+
+
 	public Usuario(String nombreUsuario, String contrasena, boolean esAdmin) {
 		this(nombreUsuario, contrasena);
 		this.esAdmin = esAdmin;
@@ -53,6 +57,31 @@ public class Usuario implements Serializable{
 
 	public boolean equals(Usuario u){
 		return this.nombreUsuario.equals(u.getNombreUsuario()) && this.contrasena.equals(u.getContrasena());
+	}
+
+		/**
+	 * @return the dni
+	 */
+	public String getDni() {
+		return dni;
+	}
+	/**
+	 * @param dni the dni to set
+	 */
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 	

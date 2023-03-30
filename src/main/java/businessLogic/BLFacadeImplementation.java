@@ -263,10 +263,14 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 	@WebMethod
-	public Usuario createUser(String us, String ps) {
+	public Usuario createUser(Usuario userP) {
+		
 		dbManager.open(false);
-		Usuario user = dbManager.createUser(us, ps);
+		
+		Usuario user = dbManager.createUser(userP.getNombreUsuario(), userP.getContrasena());
 		dbManager.close();
+		
 		return user;
 	}
+
 }
