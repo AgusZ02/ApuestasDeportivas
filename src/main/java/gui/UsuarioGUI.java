@@ -1,11 +1,8 @@
 package gui;
 
 import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
 import configuration.UtilDate;
-
 import com.toedter.calendar.JCalendar;
-
 import domain.Pronostico;
 import domain.Question;
 import javax.swing.*;
@@ -14,7 +11,6 @@ import java.awt.event.*;
 import java.beans.*;
 import java.text.DateFormat;
 import java.util.*;
-
 import javax.swing.table.DefaultTableModel;
 
 
@@ -48,7 +44,7 @@ public class UsuarioGUI extends JFrame {
 	private final JScrollPane scrollPanePron = new JScrollPane();
 	private JTextField textFieldCantidad;
 	private JLabel lblApostar;
-	private BLFacade facade;
+	private BLFacade facade = LoginGUI.getBusinessLogic();;
 	private String[] columnNamesEvents = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
@@ -99,7 +95,8 @@ public class UsuarioGUI extends JFrame {
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), tableProns.getSelectedColumn());
+				//TODO: cálculo del resultado del pronostico
+				String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
 				
 			}
 		});
@@ -133,7 +130,7 @@ public class UsuarioGUI extends JFrame {
 
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
-		BLFacade facade = LoginGUI.getBusinessLogic();
+		
 		datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
 		CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
 

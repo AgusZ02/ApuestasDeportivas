@@ -238,41 +238,42 @@ public class DataAccess {
 		db.getTransaction().commit();
 		return us;
 	}
+	
+	/**
+	 * Busca un pronostico en base a su descripcion y pregunta respectiva.
+	 * 
+	 * @param pronostico
+	 * @param pregunta
+	 * @return el pronostico buscado, nulo sino existe o no ha sido encontrado.
+	 */
+	public Pronostico getPronostico(String pronostico, Question pregunta) {
+		Pronostico pronosticoBuscado = null;
+		Question preguntaBuscada = db.find(Question.class, pregunta.getQuestionNumber());
+		for (Pronostico pr : preguntaBuscada.getPronosticos())
+			if (pr.getPronostico().equals(pronostico))
+				pronosticoBuscado = pr;
 
-	public Event createEvent(String desc, Date date) {
-		db.getTransaction().begin();
-		TypedQuery<Integer> query = db.createQuery("SELECT ev.eventNumber FROM Event ev", Integer.class);
-		List<Integer> lis = query.getResultList();
-		Integer num = lis.get(lis.size() - 1);
-		Event event = new Event(num + 1, desc, date);
-		
-		db.persist(event);
-		db.getTransaction().commit();
-		
-		System.out.println("Nuevo evento insertado: " + event.getEventNumber());
-		return event;
+		return pronosticoBuscado;
 	}
 
+	public Vector<Usuario> getUsuarios() {
 
-	public Pronostico createPron(Event ev, Question qu, String desc, double mul) throws PredictionAlreadyExists {
-		System.out.println(">> DataAccess: createPron=> question= " + qu + " pron= " + desc + " quote="
-		+ mul);
-		Event event = findEvent(ev.getEventNumber());
-		
-		if (qu.DoesPredictionExist(desc)){
-			throw new PredictionAlreadyExists();
+		TypedQuery<Usuario> query = db.createQuery("SELECT f FROM Flight f", Usuario.class); // Selecciona todos los
+																								// usuarios en una
+																								// consulta
+		List<Usuario> usuarios = query.getResultList();
+		Vector<Usuario> resultado = new Vector<Usuario>();
+		for (Usuario usuario : usuarios) {
+			resultado.add(usuario);
 		}
-		Pronostico pron = null;
-		db.getTransaction().begin();	
-		for (Question question : event.getQuestions()) {
-			if (question.getQuestionNumber() == qu.getQuestionNumber()) {
-				pron = question.addPronostico(desc, mul);
-			}
-		}
-		db.getTransaction().commit();
-		return pron;
+		return resultado;
 	}
-
+	public Usuario getUser(String us, String ps) {
+		Usuario user = db.find(Usuario.class, us);
+		if (user != null && user.getContrasena().equals(ps))
+			return user;
+		return null;
+	}
 	/**
 	 * This method retrieves from the database the events of a given date
 	 * 
@@ -318,7 +319,58 @@ public class DataAccess {
 		return res;
 	}
 
+	/**
+	 * Este método retorna el evento con el número introducido en el parámetro
+	 * @param eventNumber el numero de evento
+	 * @return el evento buscado
+	 */
+	public Event getEvent(Integer eventNumber) {
+		TypedQuery<Event> query = db.createQuery("SELECT e from Event e WHERE e.getEventNumber()=?1", Event.class);
+		query.setParameter(1, eventNumber);
+		Event eventObtained = null;
+		try {
+			eventObtained = query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("El evento no existe");
+		}
+		return eventObtained;
+	}
+
+	public Event createEvent(String desc, Date date) {
+		db.getTransaction().begin();
+		TypedQuery<Integer> query = db.createQuery("SELECT ev.eventNumber FROM Event ev", Integer.class);
+		List<Integer> lis = query.getResultList();
+		Integer num = lis.get(lis.size() - 1);
+		Event event = new Event(num + 1, desc, date);
+		
+		db.persist(event);
+		db.getTransaction().commit();
+		
+		System.out.println("Nuevo evento insertado: " + event.getEventNumber());
+		return event;
+	}
+
+	public Pronostico createPron(Event ev, Question qu, String desc, double mul) throws PredictionAlreadyExists {
+		System.out.println(">> DataAccess: createPron=> question= " + qu + " pron= " + desc + " quote="
+		+ mul);
+		Event event = findEvent(ev.getEventNumber());
+		
+		if (qu.DoesPredictionExist(desc)){
+			throw new PredictionAlreadyExists();
+		}
+		Pronostico pron = null;
+		db.getTransaction().begin();	
+		for (Question question : event.getQuestions()) {
+			if (question.getQuestionNumber() == qu.getQuestionNumber()) {
+				pron = question.addPronostico(desc, mul);
+			}
+		}
+		db.getTransaction().commit();
+		return pron;
+	}
+
 	public void open(boolean initializeMode) {
+
 
 		System.out.println("Opening DataAccess instance => isDatabaseLocal: " + c.isDatabaseLocal()
 				+ " getDatabBaseOpenMode: " + c.getDataBaseOpenMode());
@@ -345,30 +397,6 @@ public class DataAccess {
 
 	}
 
-	public boolean existQuestion(Event event, String question) {
-		System.out.println(">> DataAccess: existQuestion=> event= " + event + " question= " + question);
-		Event ev = db.find(Event.class, event.getEventNumber());
-		return ev.DoesQuestionExists(question);
-
-	}
-
-	/**
-	 * Busca un pronostico en base a su descripcion y pregunta respectiva.
-	 * 
-	 * @param pronostico
-	 * @param pregunta
-	 * @return el pronostico buscado, nulo sino existe o no ha sido encontrado.
-	 */
-	public Pronostico getPronostico(String pronostico, Question pregunta) {
-		Pronostico pronosticoBuscado = null;
-		Question preguntaBuscada = db.find(Question.class, pregunta.getQuestionNumber());
-		for (Pronostico pr : preguntaBuscada.getPronosticos())
-			if (pr.getPronostico().equals(pronostico))
-				pronosticoBuscado = pr;
-
-		return pronosticoBuscado;
-	}
-
 	/**
 	 * Cierra la base de datos y muestra un mensaje por consola indicativo.
 	 */
@@ -377,16 +405,22 @@ public class DataAccess {
 		System.out.println("DataBase closed");
 	}
 
-	public Vector<Usuario> getUsuarios() {
-		TypedQuery<Usuario> query = db.createQuery("SELECT f FROM Flight f", Usuario.class); // Selecciona todos los
-																								// usuarios en una
-																								// consulta
-		List<Usuario> usuarios = query.getResultList();
-		Vector<Usuario> resultado = new Vector<Usuario>();
-		for (Usuario usuario : usuarios) {
-			resultado.add(usuario);
-		}
-		return resultado;
+	public boolean existQuestion(Event event, String question) {
+
+		System.out.println(">> DataAccess: existQuestion=> event= " + event + " question= " + question);
+		Event ev = db.find(Event.class, event.getEventNumber());
+		return ev.DoesQuestionExists(question);
+
+	}
+
+	public boolean existsUser(String us) {
+		TypedQuery<Usuario> query = db.createQuery("SELECT Us FROM Usuario us WHERE us.nombreUsuario=?1",
+				Usuario.class);
+		query.setParameter(1, us);
+		List<Usuario> user = query.getResultList();
+		if (!user.isEmpty())
+			return true;
+		return false;
 	}
 
 	public Event addEvent(Event evento) {
@@ -399,41 +433,12 @@ public class DataAccess {
 		return evento;
 	}
 
-	public Event getEvent(Integer eventNumber) {
-		TypedQuery<Event> query = db.createQuery("SELECT e from Event e WHERE e.getEventNumber()=?1", Event.class);
-		query.setParameter(1, eventNumber);
-		Event eventObtained = null;
-		try {
-			eventObtained = query.getSingleResult();
-		} catch (NoResultException e) {
-			System.out.println("El evento no existe");
-		}
-		return eventObtained;
-	}
-
 	public Event removeEvent(Integer eventNumber) {
 		Event eventToRemove = this.getEvent(eventNumber);
 		if (eventToRemove == null)
 			return eventToRemove; //
 
 		return eventToRemove;
-	}
-
-	public Usuario getUser(String us, String ps) {
-		Usuario user = db.find(Usuario.class, us);
-		if (user != null && user.getContrasena().equals(ps))
-			return user;
-		return null;
-	}
-
-	public boolean existsUser(String us) {
-		TypedQuery<Usuario> query = db.createQuery("SELECT Us FROM Usuario us WHERE us.nombreUsuario=?1",
-				Usuario.class);
-		query.setParameter(1, us);
-		List<Usuario> user = query.getResultList();
-		if (!user.isEmpty())
-			return true;
-		return false;
 	}
 
 	public Usuario createUser(String us, String ps) {

@@ -2,23 +2,18 @@ package gui;
 
 import businessLogic.BLFacade;
 import configuration.UtilDate;
-
 import com.toedter.calendar.JCalendar;
-
-import domain.Event;
 import domain.Pronostico;
 import domain.Question;
 import exceptions.EventFinished;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
 import java.text.DateFormat;
 import java.util.*;
-
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.LineBorder;
 
