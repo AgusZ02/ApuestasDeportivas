@@ -193,8 +193,8 @@ public class DataAccess {
 
 		db.getTransaction().begin();
 		Question q = ev.addQuestion(question, betMinimum);
-		// db.persist(q);
-		db.persist(ev); // db.persist(q) not required when CascadeType.PERSIST is added in questions
+		db.persist(q);
+						// db.persist(q) not required when CascadeType.PERSIST is added in questions
 						// property of Event class
 						// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 		db.getTransaction().commit();
@@ -245,30 +245,30 @@ public class DataAccess {
 		List<Integer> lis = query.getResultList();
 		Integer num = lis.get(lis.size() - 1);
 		Event event = new Event(num + 1, desc, date);
+		
 		db.persist(event);
 		db.getTransaction().commit();
-		;
+		
 		System.out.println("Nuevo evento insertado: " + event.getEventNumber());
 		return event;
 	}
 
-//	public Event createEvent(String desc, Date date) {
-//		db.getTransaction().begin();
-//		Event event = new Event(desc, date);
-//		db.persist(event);
-//		db.getTransaction().commit();
-//		System.out.println("Nuevo evento insertado: " + event.getEventNumber());
-//		return event;
-//	}
 
-	public Pronostico createPron(Question qu, String desc, double mul) throws PredictionAlreadyExists {
-
-		Question quest = db.find(Question.class, qu.getQuestionNumber());
-		if (quest.DoesPredictionExist(desc))
+	public Pronostico createPron(Event ev, Question qu, String desc, double mul) throws PredictionAlreadyExists {
+		System.out.println(">> DataAccess: createPron=> question= " + qu + " pron= " + desc + " quote="
+		+ mul);
+		Event event = findEvent(ev.getEventNumber());
+		
+		if (qu.DoesPredictionExist(desc)){
 			throw new PredictionAlreadyExists();
-		db.getTransaction().begin();
-		Pronostico pron = qu.addPronostico(desc, mul);
-		db.persist(pron);
+		}
+		Pronostico pron = null;
+		db.getTransaction().begin();	
+		for (Question question : event.getQuestions()) {
+			if (question.getQuestionNumber() == qu.getQuestionNumber()) {
+				pron = question.addPronostico(desc, mul);
+			}
+		}
 		db.getTransaction().commit();
 		return pron;
 	}
@@ -456,6 +456,14 @@ public class DataAccess {
 		if (user == null)
 			return false;
 		return (user.getContrasena().equals(pass) && user.getNombreUsuario().equals(name));
+	}
+
+	public Event findEvent(int numEvento) {
+		System.out.println(">> DataAccess: findEvent");
+		TypedQuery<Event> query = db.createQuery("SELECT ev FROM Event ev WHERE ev.eventNumber=?1", Event.class);
+		query.setParameter(1, numEvento);
+		Event evento = query.getSingleResult();
+		return evento;
 	}
 
 }

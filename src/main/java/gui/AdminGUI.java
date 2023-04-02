@@ -5,6 +5,7 @@ import configuration.UtilDate;
 
 import com.toedter.calendar.JCalendar;
 
+import domain.Event;
 import domain.Pronostico;
 import domain.Question;
 import exceptions.EventFinished;
@@ -48,7 +49,7 @@ public class AdminGUI extends JFrame {
 	private DefaultTableModel tableModelEvents;
 	private DefaultTableModel tableModelQueries;
 	private DefaultTableModel tableModelProns;
-
+	private BLFacade facade = LoginGUI.getBusinessLogic();
 	private String[] columnNamesEvents = new String[] { ResourceBundle.getBundle("Etiquetas").getString("EventN"),
 			ResourceBundle.getBundle("Etiquetas").getString("Event"),
 
@@ -105,7 +106,7 @@ public class AdminGUI extends JFrame {
 
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
-		BLFacade facade = LoginGUI.getBusinessLogic();
+		
 		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 		CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
 
@@ -136,7 +137,7 @@ public class AdminGUI extends JFrame {
 
 						jCalendar1.setCalendar(calendarAct);
 
-						BLFacade facade = LoginGUI.getBusinessLogic();
+						
 
 						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 					}
@@ -147,7 +148,7 @@ public class AdminGUI extends JFrame {
 						tableModelEvents.setDataVector(null, columnNamesEvents);
 						tableModelEvents.setColumnCount(3); // another column added to allocate ev objects
 
-						BLFacade facade = LoginGUI.getBusinessLogic();
+						
 
 						Vector<domain.Event> events = facade.getEvents(firstDay);
 
@@ -286,6 +287,7 @@ public class AdminGUI extends JFrame {
 		JButton btnNewEvent = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnNewEvent"));
 		btnNewEvent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				String evDesc = tfNewEvent.getText();
 
 				Date date = jCalendar1.getDate();
@@ -293,8 +295,9 @@ public class AdminGUI extends JFrame {
 				if (date != null) {
 
 					if (evDesc.length() > 0) {
-						BLFacade facade = LoginGUI.getBusinessLogic();
+						
 						jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("EventCreated"));
+						
 						facade.createEvent(evDesc, date);
 					} else
 						jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorEvent"));
@@ -313,7 +316,7 @@ public class AdminGUI extends JFrame {
 				int i = tableEvents.getSelectedRow();
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(i, 2);
 				if (quest.length() > 0) {
-					BLFacade facade = LoginGUI.getBusinessLogic();
+					
 					try {
 						facade.createQuestion(ev, quest, min);
 						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryCreated"));
@@ -369,10 +372,12 @@ public class AdminGUI extends JFrame {
 				double mul = Double.parseDouble(tfMultip.getText());
 				int i = tableQueries.getSelectedRow();
 				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 2);
+				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
+				
 				if (pron.length() > 0) {
-					BLFacade facade = LoginGUI.getBusinessLogic();
+					
 					try {
-						facade.createPron(qu, pron, mul);
+						facade.createPron(ev, qu, pron, mul);
 					} catch (PredictionAlreadyExists e1) {
 						
 					}
@@ -402,6 +407,10 @@ public class AdminGUI extends JFrame {
 		lblMultip.setBounds(350, 430, 85, 13);
 		getContentPane().add(lblMultip);
 
+	}
+	
+	public void setBussinessLogic(BLFacade b){
+		this.facade = b;
 	}
 	
 }

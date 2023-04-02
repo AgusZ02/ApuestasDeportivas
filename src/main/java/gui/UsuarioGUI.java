@@ -1,6 +1,7 @@
 package gui;
 
 import businessLogic.BLFacade;
+import businessLogic.BLFacadeImplementation;
 import configuration.UtilDate;
 
 import com.toedter.calendar.JCalendar;
@@ -27,14 +28,13 @@ public class UsuarioGUI extends JFrame {
 
 	
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-
+	private JButton btnApostar;
 	// Code for JCalendar
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
 	private Calendar calendarAct = null;
 	private JScrollPane scrollPaneEvents = new JScrollPane();
 	private JScrollPane scrollPaneQueries = new JScrollPane();
-	
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 
 	private JTable tableEvents= new JTable();
@@ -45,8 +45,10 @@ public class UsuarioGUI extends JFrame {
 	private DefaultTableModel tableModelEvents;
 	private DefaultTableModel tableModelQueries;
 	private DefaultTableModel tableModelProns;
-
-	
+	private final JScrollPane scrollPanePron = new JScrollPane();
+	private JTextField textFieldCantidad;
+	private JLabel lblApostar;
+	private BLFacade facade;
 	private String[] columnNamesEvents = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
@@ -64,10 +66,11 @@ public class UsuarioGUI extends JFrame {
 
 	};
 	
-	private final JScrollPane scrollPanePron = new JScrollPane();
+	
 
 	public UsuarioGUI()
 	{
+		
 		try
 		{
 			jbInit();
@@ -82,20 +85,40 @@ public class UsuarioGUI extends JFrame {
 	private void jbInit() throws Exception
 	{
 
+		
+		
+		lblApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblApostar")); //$NON-NLS-1$ //$NON-NLS-2$
+		lblApostar.setBounds(338, 354, 39, 20);
+		this.getContentPane().add(lblApostar, null);
+		
+		textFieldCantidad = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
+		textFieldCantidad.setBounds(413, 354, 122, 20);
+		textFieldCantidad.setColumns(10);
+		this.getContentPane().add(textFieldCantidad, null);
+		
+		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnApostar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), tableProns.getSelectedColumn());
+				
+			}
+		});
+		btnApostar.setBounds(549, 353, 89, 23);
+		this.getContentPane().add(btnApostar, null);
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 500));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
-		jLabelQueries.setBounds(40, 251, 288, 14);
+		jLabelQueries.setBounds(40, 227, 288, 14);
 		jLabelEvents.setBounds(295, 19, 259, 16);
 
 		this.getContentPane().add(jLabelEventDate, null);
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(274, 419, 130, 30));
+		jButtonClose.setBounds(new Rectangle(264, 419, 140, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -193,7 +216,7 @@ public class UsuarioGUI extends JFrame {
 		this.getContentPane().add(jCalendar1, null);
 		
 		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
-		scrollPaneQueries.setBounds(new Rectangle(40, 275, 288, 116));
+		scrollPaneQueries.setBounds(new Rectangle(40, 251, 288, 91));
 		scrollPanePron.setBounds(new Rectangle(350, 272, 300, 116));
 
 
@@ -275,6 +298,8 @@ public class UsuarioGUI extends JFrame {
 		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
 		tableQueries.setDefaultEditor(Object.class, null);
 
+		
+
 		scrollPanePron.setViewportView(tableProns);
 		tableModelProns = new DefaultTableModel(null, columnNamesProns);
 
@@ -288,14 +313,18 @@ public class UsuarioGUI extends JFrame {
 		this.getContentPane().add(scrollPanePron, null);
 
 		scrollPanePron.setBounds(new Rectangle(350, 272, 300, 116));
-		scrollPanePron.setBounds(338, 275, 300, 116);
+		scrollPanePron.setBounds(338, 251, 300, 91);
 		
-		lblPronosticos.setBounds(350, 249, 300, 13);
-		getContentPane().add(lblPronosticos);
+		lblPronosticos.setBounds(338, 227, 300, 14);
+		this.getContentPane().add(lblPronosticos, null);
+		
+		
 	}
 
 	private void jButton2_actionPerformed(ActionEvent e) {
 		System.exit(0);
 	}
-
+	public void setBussinessLogic(BLFacade b){
+		this.facade = b;
+	}
 }

@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.HashMap;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ public class Pronostico implements Serializable {
 	private double cuotaGanancia;
 	@XmlIDREF
 	private Question pregunta;
+	private HashMap<Usuario, Double> apuestas;
 
 	public Pronostico(String pronostico, boolean finalizado, double cuotaGanancia) {
 		super();
@@ -83,6 +86,9 @@ public class Pronostico implements Serializable {
 
 	public Question getPregunta(){
 		return this.pregunta;
+	}
+	public void apostar(Usuario user, double cantidad){
+		this.apuestas.put(user, cantidad);
 	}
 	
 	

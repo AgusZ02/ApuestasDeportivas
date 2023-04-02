@@ -82,9 +82,9 @@ public class BLFacadeImplementation implements BLFacade {
 	
 
 	@WebMethod
-	public void createPron(Question qu, String desc, double d) throws PredictionAlreadyExists {
+	public void createPron(Event ev,Question qu, String desc, double d) throws PredictionAlreadyExists {
 		dbManager.open(false);
-		dbManager.createPron(qu, desc, d);
+		dbManager.createPron(ev, qu, desc, d);
 		dbManager.close();
 		return;
 	}
@@ -266,6 +266,15 @@ public class BLFacadeImplementation implements BLFacade {
 		dbManager.close();
 		
 		return user;
+	}
+
+	@Override
+	public Event findEvent(int numEvento) {
+		Event evento = null; 
+		dbManager.open(false);
+		evento = dbManager.findEvent(numEvento);
+		dbManager.close();
+		return evento;
 	}
 
 }
