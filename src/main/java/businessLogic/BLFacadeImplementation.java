@@ -79,13 +79,7 @@ public class BLFacadeImplementation implements BLFacade {
 		return qry;
 	};
 
-	@WebMethod
-	public void createEvent(String eventDesc, Date date) {
-		dbManager.open(false);
-		if (new Date().compareTo(date) > 0);
-		dbManager.createEvent(eventDesc, date);
-		dbManager.close();
-	}
+	
 
 	@WebMethod
 	public void createPron(Question qu, String desc, double d) throws PredictionAlreadyExists {
@@ -233,14 +227,16 @@ public class BLFacadeImplementation implements BLFacade {
 		return pronosticoSearched;
 	}
 
-	public Event createEvent(Integer eventNum, String description, Date eventDate) {
+
+	@WebMethod
+	public void createEvent(String eventDesc, Date date) {
 		dbManager.open(false);
-		Event eventToAdd = null;
-		if (this.getEvent(eventNum) != null)
-			eventToAdd = dbManager.addEvent(new Event(eventNum, description, eventDate));
+		if (new Date().compareTo(date) > 0);
+		dbManager.createEvent(eventDesc, date);
 		dbManager.close();
-		return eventToAdd;
 	}
+
+
 
 	public Event getEvent(Integer eventNumber) {
 		dbManager.open(false);

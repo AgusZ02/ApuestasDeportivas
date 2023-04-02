@@ -91,6 +91,7 @@ public interface BLFacade {
 	@WebMethod
 	public boolean existsUser(String us);
 
+	@WebMethod
 	void createEvent(String evDesc, Date date);
 
 	void createPron(Question qu, String pron, double mul) throws PredictionAlreadyExists;
