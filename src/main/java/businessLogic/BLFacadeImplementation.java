@@ -143,7 +143,6 @@ public class BLFacadeImplementation implements BLFacade {
 		dbManager.close();
 	}
 
-	// TODO: cambiar los prints por mensajes en la app.
 	/**
 	 * crea el usuario en la base de datos
 	 * 

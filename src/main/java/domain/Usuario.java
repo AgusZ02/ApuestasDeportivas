@@ -18,16 +18,19 @@ public class Usuario implements Serializable{
 	private boolean esAdmin;
 	private String dni;
 	private String nombre;
-	
+	private double saldo;	
 
 
-	public Usuario(String nombreUsuario, String contrasena, boolean esAdmin) {
+	public Usuario(String nombreUsuario, String contrasena, double saldo, boolean esAdmin) {
 		this(nombreUsuario, contrasena);
 		this.esAdmin = esAdmin;
+		this.saldo = saldo;
 	}
 	public Usuario(String nombreUsuario, String contrasena) {
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
+		this.esAdmin = false;
+		this.saldo = 0;
 	}
 
 
@@ -82,6 +85,12 @@ public class Usuario implements Serializable{
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public void setSaldo(double saldo){
+		this.saldo = saldo;
+	}
+	public double getSaldo(){
+		return saldo;
 	}
 	
 	

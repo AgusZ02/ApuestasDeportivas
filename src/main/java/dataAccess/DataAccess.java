@@ -130,8 +130,8 @@ public class DataAccess {
 			db.persist(p2);
 			db.persist(p1);
 
-			Usuario user1 = new Usuario("user1", "user1", false);
-			Usuario admin1 = new Usuario("admin1", "admin1", true);
+			Usuario user1 = new Usuario("user1", "user1", 100,false);
+			Usuario admin1 = new Usuario("admin1", "admin1", 100,true);
 
 			db.persist(admin1);
 			db.persist(user1);
@@ -445,7 +445,7 @@ public class DataAccess {
 
 	public Usuario createUser(String us, String ps) {
 		db.getTransaction().begin();
-		Usuario user = new Usuario(us, ps, false);
+		Usuario user = new Usuario(us, ps, 0, false);
 		db.persist(user);
 		db.getTransaction().commit();
 		return user;
