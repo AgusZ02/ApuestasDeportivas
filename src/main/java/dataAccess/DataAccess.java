@@ -352,13 +352,6 @@ public class DataAccess {
 
 	}
 
-	public void addPronostico(Pronostico pron) {
-		db.getTransaction().begin();
-		db.persist(pron);
-		db.getTransaction().commit();
-		System.out.println("Insertado: " + pron);
-	}
-
 	/**
 	 * Busca un pronostico en base a su descripcion y pregunta respectiva.
 	 * 

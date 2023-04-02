@@ -191,26 +191,6 @@ public class BLFacadeImplementation implements BLFacade {
 
 	}
 
-	/**
-	 * Crea un pronostico con su descripcion, cuota de ganancia, pregunta a la que
-	 * hace referencia y si ha finalizado o no. Muestra un mensaje por consola si se
-	 * ha creado correctamente o no.
-	 * 
-	 * @param pronostico
-	 * @param finalizado
-	 * @param cuotaGanancia
-	 */
-	@WebMethod
-	public void createPronostico(String pronostico, boolean finalizado, float cuotaGanancia, Question pregunta) {
-		dbManager.open(false);
-		if (this.getPronostico(pronostico, pregunta) != null)
-			System.out.println("El pronostico ya existe en la base de datos");
-		else {
-			dbManager.addPronostico(new Pronostico(pronostico, finalizado, cuotaGanancia, pregunta));
-			System.out.println("Pronostico insertado");
-		}	
-		dbManager.close();
-	}
 
 	/**
 	 * Busca un pronostico en base a su descripcion y pregunta respectiva.
