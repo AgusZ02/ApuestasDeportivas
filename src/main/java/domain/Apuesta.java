@@ -13,10 +13,87 @@ public class Apuesta {
 	@Id
 	@GeneratedValue
 	private Integer betNumber;
-	private int bet;
+	private float bet;
 	@XmlIDREF
 	private Pronostico pronostico;
 	@XmlIDREF
 	private Usuario user;
-	
+
+	public Apuesta(Integer betNumber, float bet, Pronostico pronostico, Usuario user) {
+		super();
+		this.betNumber = betNumber;
+		this.bet = bet;
+		this.pronostico = pronostico;
+		this.user = user;
+	}
+
+	public Apuesta(float bet, Pronostico pronostico, Usuario user) {
+		super();
+		this.bet = bet;
+		this.pronostico = pronostico;
+		this.user = user;
+	}
+
+	public Apuesta(float bet, Pronostico pronostico) {
+		super();
+		this.bet = bet;
+		this.pronostico = pronostico;
+	}
+
+	/**
+	 * @return the betNumber
+	 */
+	public Integer getBetNumber() {
+		return betNumber;
+	}
+
+	/**
+	 * @param betNumber the betNumber to set
+	 */
+	public void setBetNumber(Integer betNumber) {
+		this.betNumber = betNumber;
+	}
+
+	/**
+	 * @return the bet
+	 */
+	public float getBet() {
+		return bet;
+	}
+
+	/**
+	 * @param bet the bet to set
+	 */
+	public void setBet(float bet) {
+		this.bet = bet;
+	}
+
+	/**
+	 * @return the pronostico
+	 */
+	public Pronostico getPronostico() {
+		return pronostico;
+	}
+
+	/**
+	 * @param pronostico the pronostico to set
+	 */
+	public void setPronostico(Pronostico pronostico) {
+		this.pronostico = pronostico;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public Usuario getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
 }
