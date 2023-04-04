@@ -5,6 +5,9 @@ import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
 import domain.Pronostico;
 import domain.Question;
+import domain.Usuario;
+import exceptions.NotEnoughMoney;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -64,12 +67,12 @@ public class UsuarioGUI extends JFrame {
 	
 	
 
-	public UsuarioGUI()
+	public UsuarioGUI(Usuario u)
 	{
 		
 		try
 		{
-			jbInit();
+			jbInit(u);
 		}
 		catch(Exception e)
 		{
@@ -78,7 +81,7 @@ public class UsuarioGUI extends JFrame {
 	}
 
 	
-	private void jbInit() throws Exception
+	private void jbInit(Usuario u) throws Exception
 	{
 
 		
@@ -94,10 +97,18 @@ public class UsuarioGUI extends JFrame {
 		
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnApostar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO: cálculo del resultado del pronostico
-				String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
-				
+			public void actionPerformed(ActionEvent e) {				
+				//restar saldo al usuario
+				double apuesta = Double.parseDouble(textFieldCantidad.getText());
+				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 2);
+				String str = (String) tableModelProns.getValueAt(tableProns.getSelectedRow(), 1);
+				domain.Pronostico pron = facade.getPronostico(str, qu);  
+				try{
+					facade.apostar(pron, u, apuesta);
+				} catch(NotEnoughMoney er){
+					//TODO: mensaje en pantalla
+					System.out.println("El usuario no tiene dinero");
+				}
 			}
 		});
 		btnApostar.setBounds(549, 353, 89, 23);
