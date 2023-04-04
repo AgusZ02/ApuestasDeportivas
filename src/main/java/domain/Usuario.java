@@ -1,12 +1,16 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Vector;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 
 	/**
 	 * 
@@ -20,19 +24,21 @@ public class Usuario implements Serializable{
 	private String nombre;
 	private double saldo;	
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	private Vector<Apuesta> apuestas = new Vector<Apuesta>();
 
 	public Usuario(String nombreUsuario, String contrasena, double saldo, boolean esAdmin) {
 		this(nombreUsuario, contrasena);
 		this.esAdmin = esAdmin;
 		this.saldo = saldo;
 	}
+
 	public Usuario(String nombreUsuario, String contrasena) {
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
 		this.esAdmin = false;
 		this.saldo = 0;
 	}
-
 
 	public String getNombreUsuario() {
 		return nombreUsuario;
@@ -58,28 +64,31 @@ public class Usuario implements Serializable{
 		this.esAdmin = esAdmin;
 	}
 
-	public boolean equals(Usuario u){
+	public boolean equals(Usuario u) {
 		return this.nombreUsuario.equals(u.getNombreUsuario()) && this.contrasena.equals(u.getContrasena());
 	}
 
-		/**
+	/**
 	 * @return the dni
 	 */
 	public String getDni() {
 		return dni;
 	}
+
 	/**
 	 * @param dni the dni to set
 	 */
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
+
 	/**
 	 * @return the nombre
 	 */
 	public String getNombre() {
 		return nombre;
 	}
+
 	/**
 	 * @param nombre the nombre to set
 	 */
@@ -92,7 +101,8 @@ public class Usuario implements Serializable{
 	public double getSaldo(){
 		return saldo;
 	}
-	
-	
-}
 
+	public void addApuesta(Apuesta apuesta) {
+		apuestas.add(apuesta);
+	}
+}

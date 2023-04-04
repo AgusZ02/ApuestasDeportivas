@@ -1,11 +1,14 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.HashMap;
-
+import java.util.Vector;
+//import java.util.HashMap;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
@@ -30,7 +33,9 @@ public class Pronostico implements Serializable {
 	private double cuotaGanancia;
 	@XmlIDREF
 	private Question pregunta;
-	private HashMap<Usuario, Double> apuestas;
+	//private HashMap<Usuario, Double> apuestas;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	private Vector<Apuesta> apuestas = new Vector<Apuesta>();
 
 	public Pronostico(String pronostico, boolean finalizado, double cuotaGanancia) {
 		super();
@@ -44,7 +49,6 @@ public class Pronostico implements Serializable {
 		this.pregunta = pregunta;
 		
 	}
-
 
 	public String getPronostico() {
 		return pronostico;
@@ -74,12 +78,10 @@ public class Pronostico implements Serializable {
 		return predictionNumber;
 	}
 	
-
 	public void setPregunta(Question pregunta) {
 		this.pregunta = pregunta;
 	}
 
-	
 	public boolean equals(String pronostico) {
 		return this.pronostico.equals(pronostico);
 	}
@@ -91,7 +93,10 @@ public class Pronostico implements Serializable {
 		this.apuestas.put(user, cantidad);
 	}
 	
-	
-	
+	public Apuesta addApuesta(Float bet) {
+		Apuesta apuesta = new Apuesta(bet, this);
+		apuestas.add(apuesta);
+		return apuesta;
+	}
 	
 }
