@@ -475,4 +475,21 @@ public class DataAccess {
 
     }
 
+    public void cerrarEvento(Event ev) {
+		Event evento = this.findEvent(ev.getEventNumber());
+		db.getTransaction().begin();
+		ev.setClosed(true);
+		for (Question q : evento.getQuestions()) {
+			for (Pronostico p: q.getPronosticos()) {
+				p.setFinalizado(true);
+				q.setResult(p.getPronostico()); //TODO: cambiar por el pronostico correcto, no p.
+				this.getPronostico(p.getPronostico(), q).setFinalizado(true);
+				for (Usuario u : p.getApuestas().keySet()) {
+					u.setSaldo(u.getSaldo()+p.getApuestas().get(u)*p.getCuotaGanancia()*10);
+				}
+			}	
+		}
+		db.getTransaction().commit();
+    }
+
 }

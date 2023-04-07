@@ -91,6 +91,9 @@ public class Pronostico implements Serializable {
 	public void apostar(Usuario user, double cantidad){
 		this.apuestas.put(user, cantidad);
 	}
+	public HashMap<Usuario, Double> getApuestas(){
+		return this.apuestas;
+	}
 	
 	
 	

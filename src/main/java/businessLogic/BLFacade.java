@@ -107,4 +107,6 @@ public interface BLFacade {
     void apostar(Pronostico pron, Usuario u, double apuesta) throws NotEnoughMoney;
 
     Pronostico getPronostico(String pronostico, Question pregunta);
+
+    void cerrarEvento(Event ev);
 }
