@@ -18,6 +18,7 @@ import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
 import configuration.UtilDate;
+import domain.Apuesta;
 import domain.Event;
 import domain.Pronostico;
 import domain.Question;
@@ -61,7 +62,7 @@ public class DataAccess {
 			Calendar today = Calendar.getInstance();
 
 			int month = today.get(Calendar.MONTH);
-			//month += 1;
+			// month += 1;
 			int year = today.get(Calendar.YEAR);
 			if (month == 12) {
 				month = 0;
@@ -130,8 +131,8 @@ public class DataAccess {
 			db.persist(p2);
 			db.persist(p1);
 
-			Usuario user1 = new Usuario("user1", "user1", 100,false);
-			Usuario admin1 = new Usuario("admin1", "admin1", 100,true);
+			Usuario user1 = new Usuario("user1", "user1", 100, false);
+			Usuario admin1 = new Usuario("admin1", "admin1", 100, true);
 
 			db.persist(admin1);
 			db.persist(user1);
@@ -194,9 +195,9 @@ public class DataAccess {
 		db.getTransaction().begin();
 		Question q = ev.addQuestion(question, betMinimum);
 		db.persist(q);
-						// db.persist(q) not required when CascadeType.PERSIST is added in questions
-						// property of Event class
-						// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+		// db.persist(q) not required when CascadeType.PERSIST is added in questions
+		// property of Event class
+		// @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 		db.getTransaction().commit();
 		return q;
 
@@ -238,7 +239,7 @@ public class DataAccess {
 		db.getTransaction().commit();
 		return us;
 	}
-	
+
 	/**
 	 * Busca un pronostico en base a su descripcion y pregunta respectiva.
 	 * 
@@ -268,12 +269,14 @@ public class DataAccess {
 		}
 		return resultado;
 	}
+
 	public Usuario getUser(String us, String ps) {
 		Usuario user = db.find(Usuario.class, us);
 		if (user != null && user.getContrasena().equals(ps))
 			return user;
 		return null;
 	}
+
 	/**
 	 * This method retrieves from the database the events of a given date
 	 * 
@@ -321,6 +324,7 @@ public class DataAccess {
 
 	/**
 	 * Este método retorna el evento con el número introducido en el parámetro
+	 * 
 	 * @param eventNumber el numero de evento
 	 * @return el evento buscado
 	 */
@@ -342,24 +346,23 @@ public class DataAccess {
 		List<Integer> lis = query.getResultList();
 		Integer num = lis.get(lis.size() - 1);
 		Event event = new Event(num + 1, desc, date);
-		
+
 		db.persist(event);
 		db.getTransaction().commit();
-		
+
 		System.out.println("Nuevo evento insertado: " + event.getEventNumber());
 		return event;
 	}
 
 	public Pronostico createPron(Event ev, Question qu, String desc, double mul) throws PredictionAlreadyExists {
-		System.out.println(">> DataAccess: createPron=> question= " + qu + " pron= " + desc + " quote="
-		+ mul);
+		System.out.println(">> DataAccess: createPron=> question= " + qu + " pron= " + desc + " quote=" + mul);
 		Event event = findEvent(ev.getEventNumber());
-		
-		if (qu.DoesPredictionExist(desc)){
+
+		if (qu.DoesPredictionExist(desc)) {
 			throw new PredictionAlreadyExists();
 		}
 		Pronostico pron = null;
-		db.getTransaction().begin();	
+		db.getTransaction().begin();
 		for (Question question : event.getQuestions()) {
 			if (question.getQuestionNumber() == qu.getQuestionNumber()) {
 				pron = question.addPronostico(desc, mul);
@@ -370,7 +373,6 @@ public class DataAccess {
 	}
 
 	public void open(boolean initializeMode) {
-
 
 		System.out.println("Opening DataAccess instance => isDatabaseLocal: " + c.isDatabaseLocal()
 				+ " getDatabBaseOpenMode: " + c.getDataBaseOpenMode());
@@ -464,4 +466,17 @@ public class DataAccess {
 		return evento;
 	}
 
+	public Apuesta createApuesta(double bet, Pronostico pronostico) {
+		db.getTransaction().begin();
+		TypedQuery<Integer> query = db.createQuery("SELECT ap.betNumber FROM Apuesta ap", Integer.class);
+		List<Integer> list = query.getResultList();
+		Integer num = list.get(list.size() - 1);
+		Apuesta apuesta = new Apuesta(num + 1, bet, pronostico);
+
+		db.persist(apuesta);
+		db.getTransaction().commit();
+
+		System.out.println("Nueva apuesta creada: " + apuesta.getBetNumber());
+		return apuesta;
+	}
 }

@@ -22,7 +22,7 @@ public class Usuario implements Serializable {
 	private boolean esAdmin;
 	private String dni;
 	private String nombre;
-	private double saldo;	
+	private double saldo;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Vector<Apuesta> apuestas = new Vector<Apuesta>();
@@ -95,10 +95,12 @@ public class Usuario implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public void setSaldo(double saldo){
+
+	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-	public double getSaldo(){
+
+	public double getSaldo() {
 		return saldo;
 	}
 

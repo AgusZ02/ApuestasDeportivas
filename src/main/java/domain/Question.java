@@ -138,9 +138,7 @@ public class Question implements Serializable {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
-	
-	
-	
+
 	/**
 	 * @param pronosticos the pronosticos to set
 	 */
@@ -148,10 +146,8 @@ public class Question implements Serializable {
 		this.pronosticos = pronosticos;
 	}
 
-	
-	
-	public String toString(){
-		return questionNumber+";"+question+";"+Float.toString(betMinimum);
+	public String toString() {
+		return questionNumber + ";" + question + ";" + Float.toString(betMinimum);
 	}
 
 	public Pronostico addPronostico(String p, double c) {
@@ -171,5 +167,5 @@ public class Question implements Serializable {
 		}
 		return false;
 	}
-	
+
 }

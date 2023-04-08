@@ -33,7 +33,7 @@ public class Pronostico implements Serializable {
 	private double cuotaGanancia;
 	@XmlIDREF
 	private Question pregunta;
-	//private HashMap<Usuario, Double> apuestas;
+	// private HashMap<Usuario, Double> apuestas;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Vector<Apuesta> apuestas = new Vector<Apuesta>();
 
@@ -47,7 +47,7 @@ public class Pronostico implements Serializable {
 	public Pronostico(String pronostico, boolean finalizado, double cuotaGanancia, Question pregunta) {
 		this(pronostico, finalizado, cuotaGanancia);
 		this.pregunta = pregunta;
-		
+
 	}
 
 	public String getPronostico() {
@@ -77,7 +77,7 @@ public class Pronostico implements Serializable {
 	public Integer getPronNumber() {
 		return predictionNumber;
 	}
-	
+
 	public void setPregunta(Question pregunta) {
 		this.pregunta = pregunta;
 	}
@@ -86,17 +86,16 @@ public class Pronostico implements Serializable {
 		return this.pronostico.equals(pronostico);
 	}
 
-	public Question getPregunta(){
+	public Question getPregunta() {
 		return this.pregunta;
 	}
-	public void apostar(Usuario user, double cantidad){
+
+	/*public void apostar(Usuario user, double cantidad) {
 		this.apuestas.put(user, cantidad);
+	}*/
+
+	public void addApuesta(Apuesta ap) {
+		apuestas.add(ap);
 	}
-	
-	public Apuesta addApuesta(Float bet) {
-		Apuesta apuesta = new Apuesta(bet, this);
-		apuestas.add(apuesta);
-		return apuesta;
-	}
-	
+
 }

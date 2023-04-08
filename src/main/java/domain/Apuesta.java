@@ -13,13 +13,13 @@ public class Apuesta {
 	@Id
 	@GeneratedValue
 	private Integer betNumber;
-	private float bet;
+	private double bet;
 	@XmlIDREF
 	private Pronostico pronostico;
 	@XmlIDREF
 	private Usuario user;
 
-	public Apuesta(Integer betNumber, float bet, Pronostico pronostico, Usuario user) {
+	public Apuesta(Integer betNumber, double bet, Pronostico pronostico, Usuario user) {
 		super();
 		this.betNumber = betNumber;
 		this.bet = bet;
@@ -27,15 +27,9 @@ public class Apuesta {
 		this.user = user;
 	}
 
-	public Apuesta(float bet, Pronostico pronostico, Usuario user) {
+	public Apuesta(Integer betNumber, double bet, Pronostico pronostico) {
 		super();
-		this.bet = bet;
-		this.pronostico = pronostico;
-		this.user = user;
-	}
-
-	public Apuesta(float bet, Pronostico pronostico) {
-		super();
+		this.betNumber = betNumber;
 		this.bet = bet;
 		this.pronostico = pronostico;
 	}
@@ -57,14 +51,14 @@ public class Apuesta {
 	/**
 	 * @return the bet
 	 */
-	public float getBet() {
+	public double getBet() {
 		return bet;
 	}
 
 	/**
 	 * @param bet the bet to set
 	 */
-	public void setBet(float bet) {
+	public void setBet(double bet) {
 		this.bet = bet;
 	}
 

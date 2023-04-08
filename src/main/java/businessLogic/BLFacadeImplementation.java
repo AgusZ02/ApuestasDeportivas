@@ -9,6 +9,7 @@ import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import domain.Question;
 import domain.Usuario;
+import domain.Apuesta;
 import domain.Event;
 import domain.Pronostico;
 import exceptions.EventFinished;
@@ -86,7 +87,6 @@ public class BLFacadeImplementation implements BLFacade {
 		dbManager.open(false);
 		dbManager.createPron(ev, qu, desc, d);
 		dbManager.close();
-		return;
 	}
 
 	/**
@@ -239,12 +239,9 @@ public class BLFacadeImplementation implements BLFacade {
 
 	@WebMethod
 	public Usuario createUser(Usuario userP) {
-		
 		dbManager.open(false);
-		
 		Usuario user = dbManager.createUser(userP.getNombreUsuario(), userP.getContrasena());
 		dbManager.close();
-		
 		return user;
 	}
 
@@ -257,4 +254,15 @@ public class BLFacadeImplementation implements BLFacade {
 		return evento;
 	}
 
+	@WebMethod
+	public void createApuesta(double bet, Pronostico pronostico) {
+		if (bet <=0)
+			System.out.println("Cantidad apostada incorrecta"); // TODO: mostrar este error en la app
+		else {
+			dbManager.open(false);
+			dbManager.createApuesta(bet, pronostico);
+			dbManager.close();
+		}
+	}
+	
 }

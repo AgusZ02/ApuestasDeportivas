@@ -6,7 +6,9 @@ import java.util.Date;
 //import domain.Booking;
 import domain.Question;
 import domain.Usuario;
+import domain.Apuesta;
 import domain.Event;
+import domain.Pronostico;
 import exceptions.EventFinished;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
@@ -73,6 +75,7 @@ public interface BLFacade {
 	/**
 	 * Devuelve true si la combinación de usuario y contraseña del parámetro
 	 * corresponde a un usuario de la base de datos
+	 * 
 	 * @param user     el nombre de usuario introducido en la app
 	 * @param password la contraseña introducida en la app
 	 * @return true o false
@@ -97,8 +100,12 @@ public interface BLFacade {
 	void createPron(Event ev, Question qu, String pron, double mul) throws PredictionAlreadyExists;
 
 	public Usuario getUsuario(String nombreUsuario);
-	
-	@WebMethod public Usuario createUser(Usuario user);
 
-    Event findEvent(int numEvento);
+	@WebMethod
+	public Usuario createUser(Usuario user);
+
+	public Event findEvent(int numEvento);
+
+	@WebMethod
+	public void createApuesta(double bet, Pronostico pronostico);
 }
