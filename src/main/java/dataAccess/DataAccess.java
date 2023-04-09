@@ -546,8 +546,8 @@ public class DataAccess {
 		System.out.println(">> DataAccess: cerrarEvento=> event= " + ev.getDescription() + "question= " + q.toString() + "pronostico= " + p.toString());
 		db.getTransaction().begin();
 		if (ultimaPregunta) {
+			findEvent(ev.getEventNumber()).setClosed(true);
 			ev.setClosed(true);
-			//db.persist(ev);
 		}
 		for (Question qu : ev.getQuestions()) {
 			if (q.getQuestionNumber()==qu.getQuestionNumber()) {
@@ -558,7 +558,7 @@ public class DataAccess {
 					if (pr.getPronNumber()==p.getPronNumber()) {
 						pr.setFinalizado(true);
 						p.setFinalizado(true);
-						this.getPronostico(p.toString(), q).setFinalizado(true);
+						this.getPronostico(p.toString(), q).setFinalizado(true); 
 
 						
 						for (Apuesta a : p.getApuestas()) { //Actualiza el saldo de los que apostaron
