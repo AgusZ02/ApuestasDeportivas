@@ -76,14 +76,14 @@ public class CerrarEventoGUI extends JFrame {
         	}
         });
 		contentPane.setLayout(null);
-		comboBoxPreguntas.setBounds(116, 101, 109, 21);
+		comboBoxPreguntas.setBounds(116, 101, 237, 21);
 		this.getContentPane().add(comboBoxPreguntas);
 	
 
 
 
 		comboBoxPronosticos = new JComboBox<Pronostico>();
-		comboBoxPronosticos.setBounds(116, 132, 109, 21);
+		comboBoxPronosticos.setBounds(116, 132, 237, 21);
         comboBoxPronosticos.setModel(modeloPronosticos);
 		this.getContentPane().add(comboBoxPronosticos);
 		
@@ -105,11 +105,11 @@ public class CerrarEventoGUI extends JFrame {
 		this.getContentPane().add(lblMarcaRespuestas);
 		
 		lblPreguntas = new JLabel("Preguntas");
-		lblPreguntas.setBounds(52, 105, 107, 13);
+		lblPreguntas.setBounds(49, 105, 107, 13);
 		this.getContentPane().add(lblPreguntas);
 		
 		lblPronostico = new JLabel("Pronostico");
-		lblPronostico.setBounds(49, 136, 107, 13);
+		lblPronostico.setBounds(49, 132, 107, 13);
 		this.getContentPane().add(lblPronostico);
 		
 		btnResolver = new JButton("Resolver pregunta");
