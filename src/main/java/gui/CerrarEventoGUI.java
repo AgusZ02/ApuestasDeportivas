@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
+import businessLogic.BLFacadeImplementation;
 import domain.Event;
 import domain.Pronostico;
 import domain.Question;
@@ -22,10 +23,21 @@ public class CerrarEventoGUI extends JFrame {
     private JComboBox<Pronostico> comboBoxPronosticos;
 	private JButton btnVolver, btnResolver;
     private JLabel lblMarcaRespuestas, lblPreguntas, lblPronostico;
-    private BLFacade facade;
-    private ComboBoxModel<Question> modeloPreguntas;
-    private ComboBoxModel<Pronostico> modeloPronosticos = new DefaultComboBoxModel<>();
+    private DefaultComboBoxModel<Question> modeloPreguntas;
+    private DefaultComboBoxModel<Pronostico> modeloPronosticos = new DefaultComboBoxModel<Pronostico>();
 	
+    
+    private static BLFacade facade;
+
+	public static BLFacade getBusinessLogic() {
+		return facade;
+	}
+
+	public void setBussinessLogic(BLFacade b){
+        this.facade = b;
+    }
+    
+    
 	public CerrarEventoGUI(Event ev) {
 		
 		setResizable(false);
@@ -35,12 +47,19 @@ public class CerrarEventoGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 	
-		modeloPreguntas = new DefaultComboBoxModel<Question>(ev.getQuestions());
+		modeloPreguntas = new DefaultComboBoxModel<Question>();
 		
 
         comboBoxPreguntas = new JComboBox<Question>();
+		
+		for (Question q : ev.getQuestions()) { //llena el combobox de preguntas
+			
+			if (q.getResult()==null) {
+				modeloPreguntas.addElement(q);
+			}
+		}
+		comboBoxPreguntas.setModel(modeloPreguntas);
 		comboBoxPreguntas.setSelectedItem(null);
-		refillComboBoxQ(ev);
         comboBoxPreguntas.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if (comboBoxPreguntas.getItemCount()==0) {
@@ -49,9 +68,12 @@ public class CerrarEventoGUI extends JFrame {
 					comboBoxPronosticos.removeAllItems();
 					comboBoxPronosticos.setSelectedItem(null);
 					Question q = (Question) comboBoxPreguntas.getSelectedItem();
-        			for (Pronostico p : q.getPronosticos()) {
-                    	comboBoxPronosticos.addItem(p);
-                	}
+					if (q != null) {
+						for (Pronostico p : q.getPronosticos()) {
+							comboBoxPronosticos.addItem(p);
+						}	
+					}
+					
 				}
 				
         	}
@@ -59,7 +81,6 @@ public class CerrarEventoGUI extends JFrame {
 		contentPane.setLayout(null);
 		comboBoxPreguntas.setBounds(116, 101, 109, 21);
 		this.getContentPane().add(comboBoxPreguntas);
-		comboBoxPreguntas.setModel(modeloPreguntas);
 	
 
 
@@ -97,6 +118,7 @@ public class CerrarEventoGUI extends JFrame {
 		btnResolver = new JButton("Resolver pregunta");
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				System.out.println(comboBoxPreguntas.getSelectedItem().toString());
 				System.out.println(comboBoxPronosticos.getSelectedItem().toString());
 				Question qu = (Question) comboBoxPreguntas.getSelectedItem();
@@ -106,26 +128,23 @@ public class CerrarEventoGUI extends JFrame {
 					dispose();
 				}
 				facade.cerrarEvento(ev, qu, pron, false); //TODO: null pointer exception en esta linea (return value of "gui.CerrarEventoGUI.access$2(gui.CerrarEventoGUI)" is null)
-				comboBoxPreguntas.removeAllItems();
+				int index = comboBoxPreguntas.getSelectedIndex();
+				
+				modeloPreguntas.removeElementAt(index);
+				comboBoxPreguntas.setModel(modeloPreguntas);
+				comboBoxPreguntas.setSelectedItem(null);
+				
 				comboBoxPronosticos.removeAllItems();
-				refillComboBoxQ(ev);
+				//refillComboBoxQ(ev);
             }
 		});
 		btnResolver.setBounds(49, 163, 304, 21);
 		this.getContentPane().add(btnResolver);
 	}
 	
-	public void setBussinessLogic(BLFacade b){
-        this.facade = b;
-    }
 
 	private void refillComboBoxQ(Event ev){
-		for (Question q : ev.getQuestions()) {
-			System.out.println(q.toString());
-			if (q.getResult()==null) {
-				comboBoxPreguntas.addItem(q);
-			}
-		}
+		
 		comboBoxPreguntas.repaint();
 
 	}
