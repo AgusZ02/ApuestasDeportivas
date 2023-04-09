@@ -255,12 +255,12 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 	@WebMethod
-	public void createApuesta(double bet, Pronostico pronostico) {
+	public void createApuesta(double bet, Event ev, Question qu, Pronostico pronostico) {
 		if (bet <=0)
 			System.out.println("Cantidad apostada incorrecta"); // TODO: mostrar este error en la app
 		else {
 			dbManager.open(false);
-			dbManager.createApuesta(bet, pronostico);
+			dbManager.createApuesta(bet, ev, qu, pronostico);
 			dbManager.close();
 		}
 	}

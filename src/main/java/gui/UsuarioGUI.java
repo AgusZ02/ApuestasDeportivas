@@ -100,13 +100,14 @@ public class UsuarioGUI extends JFrame {
 				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
 				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
 				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 2);
+				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(),2);
 				
 				if (betRealizada < qu.getBetMinimum()) {
-					VentanaAvisos error = new VentanaAvisos("<html>Error: La apuesta no llega al importe mínimo.<br/>No es posible realizar la apuesta.</html>", "");
+					VentanaAvisos error = new VentanaAvisos("<html>Error: La apuesta no llega al importe mï¿½nimo.<br/>No es posible realizar la apuesta.</html>", "");
 					error.setVisible(true);
 				} else {
 					Pronostico pred = facade.getPron(pr);
-					facade.createApuesta(betRealizada, pred);
+					facade.createApuesta(betRealizada, ev, qu, pred);
 					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
 					lblPronosticos.setText("Apuesta realizada correctamente");
 				}

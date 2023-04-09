@@ -107,7 +107,7 @@ public interface BLFacade {
 	public Event findEvent(int numEvento);
 
 	@WebMethod
-	public void createApuesta(double bet, Pronostico pronostico);
+	public void createApuesta(double bet,Event ev, Question qu, Pronostico pronostico);
 	
 	@WebMethod
 	public Apuesta getApuesta(Integer betNumber);

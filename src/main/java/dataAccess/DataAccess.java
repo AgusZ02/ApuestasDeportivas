@@ -482,13 +482,24 @@ public class DataAccess {
 		return evento;
 	}
 
-	public Apuesta createApuesta(double bet, Pronostico pronostico) {
+	public Apuesta createApuesta(double bet, Event ev, Question qu, Pronostico pronostico) {
 		db.getTransaction().begin();
 		TypedQuery<Integer> query = db.createQuery("SELECT ap.betNumber FROM Apuesta ap", Integer.class);
 		List<Integer> list = query.getResultList();
 		Integer num = list.get(list.size() - 1);
 		Apuesta apuesta = new Apuesta(num + 1, bet, pronostico);
-		pronostico.addApuesta(apuesta);
+		
+		Event event = this.findEvent(ev.getEventNumber());
+		for (Question question : event.getQuestions()) {
+			for (Pronostico pron : question.getPronosticos()) {
+				if (pron.getPronNumber() == pronostico.getPronNumber()) {
+					pron.addApuesta(apuesta);
+					pronostico.addApuesta(apuesta);
+				}
+			}
+		}
+
+		
 		db.persist(apuesta);
 		db.getTransaction().commit();
 
