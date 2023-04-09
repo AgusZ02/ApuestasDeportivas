@@ -10,8 +10,8 @@ import domain.Apuesta;
 import domain.Event;
 import domain.Pronostico;
 import exceptions.EventFinished;
-import exceptions.PredictionAlreadyExists;
 import exceptions.NotEnoughMoney;
+import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -108,7 +108,7 @@ public interface BLFacade {
 	public Event findEvent(int numEvento);
 
 	@WebMethod
-	public void createApuesta(double bet,Event ev, Question qu, Pronostico pronostico, Usuario us);
+	public void createApuesta(double bet,Event ev, Question qu, Pronostico pronostico, Usuario us) throws NotEnoughMoney;
 	
 	@WebMethod
 	public Apuesta getApuesta(Integer betNumber);

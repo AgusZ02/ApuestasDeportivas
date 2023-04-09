@@ -89,6 +89,11 @@ public class AdminGUI extends JFrame {
 		this.getContentPane().add(jLabelEventDate, null);
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
+		jButtonClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 
 		jButtonClose.setBounds(new Rectangle(195, 523, 130, 30));
 
@@ -397,21 +402,10 @@ public class AdminGUI extends JFrame {
 		getContentPane().add(lblMultip);
 		btnCerrarEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO: cerrar el evento
-				
-				
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
 				CerrarEventoGUI ventana = new CerrarEventoGUI(ev);
 				ventana.setBussinessLogic(facade);
 				ventana.setVisible(true);
-				// int q = (int) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 0);
-				// Question qu = facade.findQuestion(q);
-				// String p = (String) tableModelProns.getValueAt(tableProns.getSelectedRow(), 1);
-				// Pronostico pron = facade.getPronostico(p, qu);
-				// facade.cerrarEvento(ev, qu, pron);
-				
-				
-
 			}
 		});
 		btnCerrarEvento.setBounds(350, 523, 110, 30);

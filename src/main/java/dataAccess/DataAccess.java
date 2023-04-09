@@ -545,7 +545,7 @@ public class DataAccess {
 					pronostico.addApuesta(apuesta);
 					
 					us.addApuesta(apuesta);
-					us.setSaldo(usuarioActual.getSaldo()-bet);
+					us.setSaldo(us.getSaldo()-bet);
 					getUser(us.getNombreUsuario(), us.getContrasena()).addApuesta(apuesta);
 					getUser(us.getNombreUsuario(), us.getContrasena()).setSaldo(getUser(us.getNombreUsuario(), us.getContrasena()).getSaldo()-bet);
 					Usuario usuarioActual = apuesta.getUser();

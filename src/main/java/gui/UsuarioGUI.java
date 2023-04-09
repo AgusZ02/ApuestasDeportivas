@@ -6,6 +6,7 @@ import com.toedter.calendar.JCalendar;
 import domain.Pronostico;
 import domain.Question;
 import domain.Usuario;
+import exceptions.NotEnoughMoney;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class UsuarioGUI extends JFrame {
 	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
 	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
 	private final JLabel lblPronosticos = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblPronosticos"));
-
+	private JLabel lblSaldo;
 	
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 	private JButton btnApostar;
@@ -97,8 +98,7 @@ public class UsuarioGUI extends JFrame {
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO: cálculo del resultado del pronostico
-				
+
 				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
 				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
 				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 2);
@@ -109,7 +109,13 @@ public class UsuarioGUI extends JFrame {
 					error.setVisible(true);
 				} else {
 					Pronostico pred = facade.getPron(pr);
-					facade.createApuesta(betRealizada, ev, qu, pred, u);
+					try{
+						facade.createApuesta(betRealizada, ev, qu, pred, u);
+						String.format("saldo disponible: %s",u.getSaldo());
+					} catch(NotEnoughMoney NEM){
+						VentanaAvisos vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
+						vAvisos.setVisible(true);
+					}
 					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
 					lblPronosticos.setText("Apuesta realizada correctamente");
 				}
@@ -341,6 +347,11 @@ public class UsuarioGUI extends JFrame {
 		lblPronosticos.setBounds(338, 227, 300, 14);
 		this.getContentPane().add(lblPronosticos, null);
 		
+		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UsuarioGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		lblSaldo = new JLabel();
+		lblSaldo.setText(String.format("saldo disponible: %s",u.getSaldo()));
+		lblSaldo.setBounds(449, 15, 164, 13);
+		getContentPane().add(lblSaldo);
 		
 	}
 
