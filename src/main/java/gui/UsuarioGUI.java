@@ -291,12 +291,11 @@ public class UsuarioGUI extends JFrame {
 
 				for (domain.Pronostico p : pronosticos1) {
 					Vector<Object> row = new Vector<Object>();
-					if (!p.isFinalizado()) {
-						row.add(p.getPronNumber());
-						row.add(p.toString());
-						row.add(p.getCuotaGanancia());
-						tableModelProns.addRow(row);
-					}
+					row.add(p.getPronNumber());
+					row.add(p.toString());
+					row.add(p.getCuotaGanancia());
+					tableModelProns.addRow(row);
+					
 				}
 				tableProns.getColumnModel().getColumn(0).setPreferredWidth(10);
 				// tableProns.getColumnModel().getColumn(2).setPreferredWidth(10);
