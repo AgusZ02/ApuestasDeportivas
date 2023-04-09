@@ -50,7 +50,7 @@ public class Pronostico implements Serializable {
 
 	}
 
-	public String getPronostico() {
+	public String toString() {
 		return pronostico;
 	}
 
@@ -97,5 +97,4 @@ public class Pronostico implements Serializable {
 	public void addApuesta(Apuesta ap) {
 		apuestas.add(ap);
 	}
-
 }

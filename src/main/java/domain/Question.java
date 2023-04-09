@@ -2,7 +2,6 @@ package domain;
 
 import java.io.*;
 import java.util.Vector;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -69,7 +68,8 @@ public class Question implements Serializable {
 	 * @return the bet question
 	 */
 
-	public String getQuestion() {
+
+	public String toString() {
 		return question;
 	}
 
@@ -146,9 +146,11 @@ public class Question implements Serializable {
 		this.pronosticos = pronosticos;
 	}
 
-	public String toString() {
-		return questionNumber + ";" + question + ";" + Float.toString(betMinimum);
-	}
+	
+	
+	// public String toString(){
+	// 	return questionNumber+";"+question+";"+Float.toString(betMinimum);
+	// }
 
 	public Pronostico addPronostico(String p, double c) {
 		Pronostico pron = new Pronostico(p, false, c, this);
@@ -162,7 +164,7 @@ public class Question implements Serializable {
 
 	public boolean DoesPredictionExist(String predi) {
 		for (Pronostico pred : this.getPronosticos()) {
-			if (pred.getPronostico().compareTo(predi) == 0)
+			if (pred.toString().compareTo(predi) == 0)
 				return true;
 		}
 		return false;

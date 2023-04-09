@@ -273,7 +273,7 @@ public class LoginGUI extends JFrame {
 							AdminGUI a = new AdminGUI();
 							a.setBussinessLogic(logicaNegocio);
 							a.setVisible(true);
-
+							
 						} else {
 							UsuarioGUI b = new UsuarioGUI(user);
 							b.setBussinessLogic(logicaNegocio);

@@ -11,6 +11,7 @@ import domain.Event;
 import domain.Pronostico;
 import exceptions.EventFinished;
 import exceptions.PredictionAlreadyExists;
+import exceptions.NotEnoughMoney;
 import exceptions.QuestionAlreadyExist;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -115,4 +116,11 @@ public interface BLFacade {
 	@WebMethod
 	public Pronostico getPron(Integer predNumber);
 
+    void apostar(Pronostico pron, Usuario u, double apuesta) throws NotEnoughMoney;
+
+    Pronostico getPronostico(String pronostico, Question pregunta);
+
+    void cerrarEvento(Event ev, Question q, Pronostico p, boolean b);
+
+	Question findQuestion(int q);
 }

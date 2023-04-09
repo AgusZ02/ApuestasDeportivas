@@ -13,6 +13,7 @@ import domain.Apuesta;
 import domain.Event;
 import domain.Pronostico;
 import exceptions.EventFinished;
+import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 
@@ -281,4 +282,26 @@ public class BLFacadeImplementation implements BLFacade {
 		return predSearched;
 	}
 	
+
+	@Override
+	public void cerrarEvento(Event ev, Question q, Pronostico p, boolean b) {
+		dbManager.open(false);
+		if (ev.getQuestions().isEmpty()) {
+			return;
+			//TODO:throw new NoQuestions;
+		}
+		dbManager.cerrarEvento(ev, q, p, b);
+		dbManager.close();
+
+	}
+
+	public Question findQuestion(int q){
+		Question qu = null;
+		dbManager.open(false);
+		qu = dbManager.findQuestion(q);
+		dbManager.close();
+		return qu;
+
+	}
+
 }
