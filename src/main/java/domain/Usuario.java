@@ -96,6 +96,9 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
+	public void addSaldo(double saldo){
+		this.saldo += saldo;
+	}
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}

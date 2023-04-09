@@ -23,6 +23,7 @@ public class Apuesta {
 	private Pronostico pronostico;
 	//@XmlIDREF
 	private Usuario user;
+	private boolean finalizado;
 
 	public Apuesta(Integer betNumber, double bet, Pronostico pronostico, Usuario user) {
 		super();
@@ -37,12 +38,14 @@ public class Apuesta {
 		this.betNumber = betNumber;
 		this.bet = bet;
 		this.pronostico = pronostico;
+	
 	}
 
-	public Apuesta(double bet, Pronostico pronostico) {
+	public Apuesta(double bet, Pronostico pronostico, Usuario user) {
 		super();
 		this.bet = bet;
 		this.pronostico = pronostico;
+		this.user = user;
 	}
 
 	/**

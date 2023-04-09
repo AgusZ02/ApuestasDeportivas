@@ -127,18 +127,8 @@ public class DataAccess {
 			Pronostico p4 = q2.addPronostico("Aduriz", 0.3);
 			Pronostico p5 = q2.addPronostico("Herrera", 0.3);
 			
-			Apuesta ap1 = new Apuesta(11.3, p1);
-			Apuesta ap2 = new Apuesta(15, p1);
-			Apuesta ap3 = new Apuesta(7.5, p3);
-					
-			p1.addApuesta(ap1);
-			p1.addApuesta(ap2);
-			p3.addApuesta(ap3);
 			
-			db.persist(ap1);
-			db.persist(ap2);
-			db.persist(ap3);
-			
+		
 			db.persist(p5);
 			db.persist(p4);
 			db.persist(p3);
@@ -150,6 +140,7 @@ public class DataAccess {
 
 			db.persist(admin1);
 			db.persist(user1);
+
 
 			db.persist(q1);
 			db.persist(q2);
@@ -489,8 +480,16 @@ public class DataAccess {
 		db.getTransaction().begin();
 		TypedQuery<Integer> query = db.createQuery("SELECT ap.betNumber FROM Apuesta ap", Integer.class);
 		List<Integer> list = query.getResultList();
-		Integer num = list.get(list.size() - 1);
-		Apuesta apuesta = new Apuesta(num + 1, bet, pronostico, us);
+		Integer num;
+		Apuesta apuesta;
+		if (list.isEmpty()) {
+			num = 0;
+			apuesta = new Apuesta(num, bet, pronostico, us);
+		} else{
+			num = list.get(list.size() - 1);
+			apuesta = new Apuesta(num + 1, bet, pronostico, us);
+		}
+		
 		
 		Event event = this.findEvent(ev.getEventNumber());
 		for (Question question : event.getQuestions()) {
@@ -501,7 +500,10 @@ public class DataAccess {
 					
 					us.addApuesta(apuesta);
 					getUser(us.getNombreUsuario(), us.getContrasena()).addApuesta(apuesta);
+					getUser(us.getNombreUsuario(), us.getContrasena()).setSaldo(getUser(us.getNombreUsuario(), us.getContrasena()).getSaldo()-bet);
 					
+					// Usuario usuarioActual = apuesta.getUser();
+					// usuarioActual.setSaldo(usuarioActual.getSaldo()-bet);
 				}
 			}
 		}
@@ -557,8 +559,12 @@ public class DataAccess {
 						p.setFinalizado(true);
 						this.getPronostico(p.toString(), q).setFinalizado(true);
 
-						for (Usuario u : p.getApuestas().keySet()) { //Actualiza el saldo de los que apostaron
-							u.setSaldo(u.getSaldo()+p.getApuestas().get(u)*p.getCuotaGanancia()*10);
+						
+						for (Apuesta a : p.getApuestas()) { //Actualiza el saldo de los que apostaron
+							Usuario usuarioActual = getUser(a.getUser().getNombreUsuario(), a.getUser().getContrasena());
+							usuarioActual.addSaldo(a.getBet() + a.getBet()*p.getCuotaGanancia()*10);
+
+							System.out.println(usuarioActual.getSaldo());
 						}
 					}
 				}

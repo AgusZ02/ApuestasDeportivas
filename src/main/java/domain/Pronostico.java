@@ -97,4 +97,7 @@ public class Pronostico implements Serializable {
 	public void addApuesta(Apuesta ap) {
 		apuestas.add(ap);
 	}
+	public Vector<Apuesta> getApuestas(){
+		return this.apuestas;
+	}
 }

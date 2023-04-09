@@ -116,11 +116,9 @@ public interface BLFacade {
 	@WebMethod
 	public Pronostico getPron(Integer predNumber);
 
-    void apostar(Pronostico pron, Usuario u, double apuesta) throws NotEnoughMoney;
+    public Pronostico getPronostico(String pronostico, Question pregunta);
 
-    Pronostico getPronostico(String pronostico, Question pregunta);
+    public void cerrarEvento(Event ev, Question q, Pronostico p, boolean b);
 
-    void cerrarEvento(Event ev, Question q, Pronostico p, boolean b);
-
-	Question findQuestion(int q);
+	public Question findQuestion(int q);
 }
