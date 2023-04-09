@@ -108,6 +108,7 @@ public class UsuarioGUI extends JFrame {
 					Pronostico pred = facade.getPron(pr);
 					facade.createApuesta(betRealizada, pred);
 					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
+					lblPronosticos.setText("Apuesta realizada correctamente");
 				}
 				//String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
 				
