@@ -5,7 +5,6 @@ import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
 import domain.Pronostico;
 import domain.Question;
-import domain.Usuario;
 import exceptions.EventFinished;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
@@ -403,6 +402,7 @@ public class AdminGUI extends JFrame {
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
 				CerrarEventoGUI ventana = new CerrarEventoGUI(ev);
 				ventana.setVisible(true);
+				dispose();
 				// int q = (int) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 0);
 				// Question qu = facade.findQuestion(q);
 				// String p = (String) tableModelProns.getValueAt(tableProns.getSelectedRow(), 1);

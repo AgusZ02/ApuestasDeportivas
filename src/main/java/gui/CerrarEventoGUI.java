@@ -101,8 +101,11 @@ public class CerrarEventoGUI extends JFrame {
 				System.out.println(comboBoxPronosticos.getSelectedItem().toString());
 				Question qu = (Question) comboBoxPreguntas.getSelectedItem();
 				Pronostico pron = (Pronostico) comboBoxPronosticos.getSelectedItem();
-				
-				facade.cerrarEvento(ev, qu, pron); //TODO: null pointer exception en esta linea (return value of "gui.CerrarEventoGUI.access$2(gui.CerrarEventoGUI)" is null)
+				if (comboBoxPreguntas.getItemCount()==1) {
+					facade.cerrarEvento(ev, qu, pron, true);
+					dispose();
+				}
+				facade.cerrarEvento(ev, qu, pron, false); //TODO: null pointer exception en esta linea (return value of "gui.CerrarEventoGUI.access$2(gui.CerrarEventoGUI)" is null)
 				comboBoxPreguntas.removeAllItems();
 				comboBoxPronosticos.removeAllItems();
 				refillComboBoxQ(ev);
@@ -119,7 +122,7 @@ public class CerrarEventoGUI extends JFrame {
 	private void refillComboBoxQ(Event ev){
 		for (Question q : ev.getQuestions()) {
 			System.out.println(q.toString());
-			if (true) {
+			if (q.getResult()==null) {
 				comboBoxPreguntas.addItem(q);
 			}
 		}
