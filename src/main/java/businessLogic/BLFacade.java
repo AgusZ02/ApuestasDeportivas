@@ -108,4 +108,11 @@ public interface BLFacade {
 
 	@WebMethod
 	public void createApuesta(double bet, Pronostico pronostico);
+	
+	@WebMethod
+	public Apuesta getApuesta(Integer betNumber);
+	
+	@WebMethod
+	public Pronostico getPron(Integer predNumber);
+
 }

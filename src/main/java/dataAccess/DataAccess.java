@@ -126,7 +126,23 @@ public class DataAccess {
 			Pronostico p1 = q1.addPronostico("atletic ganara", 0.3);
 			Pronostico p2 = q1.addPronostico("athletic ganara", 0.3);
 			Pronostico p3 = q1.addPronostico("empataran", 0.2);
-
+			Pronostico p4 = q2.addPronostico("Aduriz", 0.3);
+			Pronostico p5 = q2.addPronostico("Herrera", 0.3);
+			
+			Apuesta ap1 = new Apuesta(11.3, p1);
+			Apuesta ap2 = new Apuesta(15, p1);
+			Apuesta ap3 = new Apuesta(7.5, p3);
+					
+			p1.addApuesta(ap1);
+			p1.addApuesta(ap2);
+			p3.addApuesta(ap3);
+			
+			db.persist(ap1);
+			db.persist(ap2);
+			db.persist(ap3);
+			
+			db.persist(p5);
+			db.persist(p4);
 			db.persist(p3);
 			db.persist(p2);
 			db.persist(p1);
@@ -472,11 +488,36 @@ public class DataAccess {
 		List<Integer> list = query.getResultList();
 		Integer num = list.get(list.size() - 1);
 		Apuesta apuesta = new Apuesta(num + 1, bet, pronostico);
-
+		pronostico.addApuesta(apuesta);
 		db.persist(apuesta);
 		db.getTransaction().commit();
 
 		System.out.println("Nueva apuesta creada: " + apuesta.getBetNumber());
 		return apuesta;
 	}
+	
+	public Apuesta getApuesta(Integer betNumber) {
+		TypedQuery<Apuesta> query = db.createQuery("SELECT ap from Apuesta ap WHERE ap.getBetNumber()=?1", Apuesta.class);
+		query.setParameter(1, betNumber);
+		Apuesta betObtained = null;
+		try {
+			betObtained = query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("La apuesta no existe");
+		}
+		return betObtained;
+	}
+	
+	public Pronostico getPronostico(Integer predNumber) {
+		TypedQuery<Pronostico> query = db.createQuery("SELECT p from Pronostico p WHERE p.getPronNumber()=?1", Pronostico.class);
+		query.setParameter(1, predNumber);
+		Pronostico predObtained = null;
+		try {
+			predObtained = query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("El pronostico no existe");
+		}
+		return predObtained;
+	}
+	
 }

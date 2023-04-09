@@ -265,4 +265,20 @@ public class BLFacadeImplementation implements BLFacade {
 		}
 	}
 	
+	@WebMethod
+	public Apuesta getApuesta(Integer betNumber) {
+		dbManager.open(false);
+		Apuesta betSearched = dbManager.getApuesta(betNumber);
+		dbManager.close();
+		return betSearched;
+	}
+	
+	@WebMethod
+	public Pronostico getPron(Integer predNumber) {
+		dbManager.open(false);
+		Pronostico predSearched = dbManager.getPronostico(predNumber);
+		dbManager.close();
+		return predSearched;
+	}
+	
 }

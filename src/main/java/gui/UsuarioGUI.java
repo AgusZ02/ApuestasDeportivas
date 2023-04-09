@@ -42,7 +42,7 @@ public class UsuarioGUI extends JFrame {
 	private DefaultTableModel tableModelQueries;
 	private DefaultTableModel tableModelProns;
 	private final JScrollPane scrollPanePron = new JScrollPane();
-	private JTextField textFieldCantidad;
+	private JTextField textFieldApuesta;
 	private JLabel lblApostar;
 	private BLFacade facade = LoginGUI.getBusinessLogic();;
 	private String[] columnNamesEvents = new String[] {
@@ -87,16 +87,29 @@ public class UsuarioGUI extends JFrame {
 		lblApostar.setBounds(338, 354, 39, 20);
 		this.getContentPane().add(lblApostar, null);
 		
-		textFieldCantidad = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
-		textFieldCantidad.setBounds(413, 354, 122, 20);
-		textFieldCantidad.setColumns(10);
-		this.getContentPane().add(textFieldCantidad, null);
+		textFieldApuesta = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
+		textFieldApuesta.setBounds(413, 354, 122, 20);
+		textFieldApuesta.setColumns(10);
+		this.getContentPane().add(textFieldApuesta, null);
 		
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO: cÃ¡lculo del resultado del pronostico
-				String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
+				
+				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
+				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
+				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 2);
+				
+				if (betRealizada < qu.getBetMinimum()) {
+					VentanaAvisos error = new VentanaAvisos("<html>Error: La apuesta no llega al importe mínimo.<br/>No es posible realizar la apuesta.</html>", "");
+					error.setVisible(true);
+				} else {
+					Pronostico pred = facade.getPron(pr);
+					facade.createApuesta(betRealizada, pred);
+					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
+				}
+				//String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
 				
 			}
 		});

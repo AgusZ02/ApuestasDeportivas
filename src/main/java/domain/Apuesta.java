@@ -1,11 +1,16 @@
 package domain;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class Apuesta {
 
 	@XmlID
@@ -16,7 +21,7 @@ public class Apuesta {
 	private double bet;
 	@XmlIDREF
 	private Pronostico pronostico;
-	@XmlIDREF
+	//@XmlIDREF
 	private Usuario user;
 
 	public Apuesta(Integer betNumber, double bet, Pronostico pronostico, Usuario user) {
@@ -30,6 +35,12 @@ public class Apuesta {
 	public Apuesta(Integer betNumber, double bet, Pronostico pronostico) {
 		super();
 		this.betNumber = betNumber;
+		this.bet = bet;
+		this.pronostico = pronostico;
+	}
+
+	public Apuesta(double bet, Pronostico pronostico) {
+		super();
 		this.bet = bet;
 		this.pronostico = pronostico;
 	}
