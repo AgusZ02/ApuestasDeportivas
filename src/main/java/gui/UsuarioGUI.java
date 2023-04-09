@@ -5,6 +5,8 @@ import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
 import domain.Pronostico;
 import domain.Question;
+import domain.Usuario;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -64,12 +66,12 @@ public class UsuarioGUI extends JFrame {
 	
 	
 
-	public UsuarioGUI()
+	public UsuarioGUI(Usuario u)
 	{
 		
 		try
 		{
-			jbInit();
+			jbInit(u);
 		}
 		catch(Exception e)
 		{
@@ -78,7 +80,7 @@ public class UsuarioGUI extends JFrame {
 	}
 
 	
-	private void jbInit() throws Exception
+	private void jbInit(Usuario u) throws Exception
 	{
 
 		
@@ -107,7 +109,7 @@ public class UsuarioGUI extends JFrame {
 					error.setVisible(true);
 				} else {
 					Pronostico pred = facade.getPron(pr);
-					facade.createApuesta(betRealizada, ev, qu, pred);
+					facade.createApuesta(betRealizada, ev, qu, pred, u);
 					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
 					lblPronosticos.setText("Apuesta realizada correctamente");
 				}
