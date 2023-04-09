@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
+import businessLogic.BLFacadeImplementation;
 import domain.Event;
 import domain.Pronostico;
 import domain.Question;
@@ -22,10 +23,21 @@ public class CerrarEventoGUI extends JFrame {
     private JComboBox<Pronostico> comboBoxPronosticos;
 	private JButton btnVolver, btnResolver;
     private JLabel lblMarcaRespuestas, lblPreguntas, lblPronostico;
-    private BLFacade facade;
     private ComboBoxModel<Question> modeloPreguntas;
     private ComboBoxModel<Pronostico> modeloPronosticos = new DefaultComboBoxModel<>();
 	
+    
+    private static BLFacade facade;
+
+	public static BLFacade getBusinessLogic() {
+		return facade;
+	}
+
+	public void setBussinessLogic(BLFacade b){
+        this.facade = b;
+    }
+    
+    
 	public CerrarEventoGUI(Event ev) {
 		
 		setResizable(false);
@@ -112,9 +124,6 @@ public class CerrarEventoGUI extends JFrame {
 		this.getContentPane().add(btnResolver);
 	}
 	
-	public void setBussinessLogic(BLFacade b){
-        this.facade = b;
-    }
 
 	private void refillComboBoxQ(Event ev){
 		for (Question q : ev.getQuestions()) {

@@ -400,8 +400,10 @@ public class AdminGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO: cerrar el evento
 				
+				
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
 				CerrarEventoGUI ventana = new CerrarEventoGUI(ev);
+				ventana.setBussinessLogic(facade);
 				ventana.setVisible(true);
 				// int q = (int) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 0);
 				// Question qu = facade.findQuestion(q);
