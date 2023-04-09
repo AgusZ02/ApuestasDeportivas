@@ -76,8 +76,10 @@ public class RegisterGUI extends JFrame{
                         lblError.setForeground(Color.green);
                         Usuario newUser = new Usuario(us, ps);
                         newUser.setDni(textDNI.getText());
-                        newUser.setNombre(textName.getText());
-                        logicaNegocio.createUser(newUser);
+                        
+						newUser.setNombre(textName.getText());
+                        
+						logicaNegocio.createUser(newUser);
                         lblError.setText("User created successfully!");
                         lblError.setVisible(true);
                     }

@@ -484,10 +484,10 @@ public class DataAccess {
 		Apuesta apuesta;
 		if (list.isEmpty()) {
 			num = 0;
-			apuesta = new Apuesta(num, bet, pronostico, us);
+			apuesta = new Apuesta(num, bet, pronostico, us, false);
 		} else{
 			num = list.get(list.size() - 1);
-			apuesta = new Apuesta(num + 1, bet, pronostico, us);
+			apuesta = new Apuesta(num + 1, bet, pronostico, us, false);
 		}
 		
 		
@@ -561,10 +561,13 @@ public class DataAccess {
 
 						
 						for (Apuesta a : p.getApuestas()) { //Actualiza el saldo de los que apostaron
-							Usuario usuarioActual = getUser(a.getUser().getNombreUsuario(), a.getUser().getContrasena());
-							usuarioActual.addSaldo(a.getBet() + a.getBet()*p.getCuotaGanancia()*10);
-
-							System.out.println(usuarioActual.getSaldo());
+							Usuario usuarioActual = null;
+							if (!a.isFinalizado()) {
+								usuarioActual = getUser(a.getUser().getNombreUsuario(), a.getUser().getContrasena());
+								usuarioActual.addSaldo(a.getBet() + a.getBet()*p.getCuotaGanancia()*10);
+								a.setFinalizado(true);
+								System.out.println(usuarioActual.getSaldo());
+							}
 						}
 					}
 				}

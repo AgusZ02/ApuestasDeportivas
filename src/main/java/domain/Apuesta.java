@@ -25,12 +25,13 @@ public class Apuesta {
 	private Usuario user;
 	private boolean finalizado;
 
-	public Apuesta(Integer betNumber, double bet, Pronostico pronostico, Usuario user) {
+	public Apuesta(Integer betNumber, double bet, Pronostico pronostico, Usuario user, boolean finalizado) {
 		super();
 		this.betNumber = betNumber;
 		this.bet = bet;
 		this.pronostico = pronostico;
 		this.user = user;
+		
 	}
 
 	public Apuesta(Integer betNumber, double bet, Pronostico pronostico) {
@@ -103,5 +104,12 @@ public class Apuesta {
 	public void setUser(Usuario user) {
 		this.user = user;
 	}
+	public boolean isFinalizado(){
+		return this.finalizado;
+	}
+	public void setFinalizado(boolean b){
+		this.finalizado = b;
+	}
+	
 
 }
