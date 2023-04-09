@@ -35,7 +35,7 @@ public class UsuarioGUI extends JFrame {
 	private JScrollPane scrollPaneEvents = new JScrollPane();
 	private JScrollPane scrollPaneQueries = new JScrollPane();
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
-
+	private double saldo;
 	private JTable tableEvents= new JTable();
 	private JTable tableQueries = new JTable();
 	private JTable tableProns = new JTable();
@@ -85,7 +85,7 @@ public class UsuarioGUI extends JFrame {
 	{
 
 		
-		
+		saldo = u.getSaldo();
 		lblApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblApostar")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblApostar.setBounds(338, 354, 39, 20);
 		this.getContentPane().add(lblApostar, null);
@@ -111,7 +111,8 @@ public class UsuarioGUI extends JFrame {
 					Pronostico pred = facade.getPron(pr);
 					try{
 						facade.createApuesta(betRealizada, ev, qu, pred, u);
-						String.format("saldo disponible: %s",u.getSaldo());
+						saldo -= betRealizada;
+						lblSaldo.setText("Saldo disponible: " + saldo);
 					} catch(NotEnoughMoney NEM){
 						VentanaAvisos vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
 						vAvisos.setVisible(true);
@@ -349,7 +350,7 @@ public class UsuarioGUI extends JFrame {
 		
 		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UsuarioGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblSaldo = new JLabel();
-		lblSaldo.setText(String.format("saldo disponible: %s",u.getSaldo()));
+		lblSaldo.setText("Saldo disponible: " + saldo);
 		lblSaldo.setBounds(449, 15, 164, 13);
 		getContentPane().add(lblSaldo);
 		
