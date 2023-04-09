@@ -111,9 +111,10 @@ public class RegisterGUI extends JFrame{
 		getContentPane().add(lblError);
 	}
     public void setUserText(String string) {
-        textName.setText(string);
+    	textUser.setText(string);
     }
     public void setPasswordText(String string) {
         passwordField.setText(string);
     }
+    
 }
