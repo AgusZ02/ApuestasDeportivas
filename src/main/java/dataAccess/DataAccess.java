@@ -412,6 +412,7 @@ public class DataAccess {
 	}
 
 	public boolean existsUser(String us) {
+		System.out.println(">> DataAccess: existsUser=> user= " + us);
 		TypedQuery<Usuario> query = db.createQuery("SELECT Us FROM Usuario us WHERE us.nombreUsuario=?1",
 				Usuario.class);
 		query.setParameter(1, us);
@@ -422,6 +423,7 @@ public class DataAccess {
 	}
 
 	public Event addEvent(Event evento) {
+		System.out.println(">> DataAccess: addEvent=> event= " + evento.getDescription());
 		db.getTransaction().begin();
 		if (this.getEvent(evento.getEventNumber()) != null)
 			return null; // el evento ya existe
@@ -432,6 +434,7 @@ public class DataAccess {
 	}
 
 	public Event removeEvent(Integer eventNumber) {
+		
 		Event eventToRemove = this.getEvent(eventNumber);
 		if (eventToRemove == null)
 			return eventToRemove; //
@@ -440,6 +443,7 @@ public class DataAccess {
 	}
 
 	public Usuario createUser(String us, String ps) {
+		System.out.println(">> DataAccess: createUser=> user= " + us + " password= " + ps);
 		db.getTransaction().begin();
 		Usuario user = new Usuario(us, ps, 0, false);
 		db.persist(user);
@@ -474,9 +478,12 @@ public class DataAccess {
 
     }
 
-    public void cerrarEvento(Event ev, Question q, Pronostico p) {
+    public void cerrarEvento(Event ev, Question q, Pronostico p, boolean ultimaPregunta) {
+		System.out.println(">> DataAccess: cerrarEvento=> event= " + ev.getDescription() + "question= " + q.toString() + "pronostico= " + p.toString());
 		db.getTransaction().begin();
-		ev.setClosed(true);
+		if (ultimaPregunta) {
+			ev.setClosed(true);
+		}
 		for (Question qu : ev.getQuestions()) {
 			if (q.getQuestionNumber()==qu.getQuestionNumber()) {
 				qu.setResult(p.toString());
@@ -499,7 +506,7 @@ public class DataAccess {
     }
 
 	public Question findQuestion(int q) {
-		System.out.println(">> DataAccess: existQuestion=> numQuestion= " + q);
+		System.out.println(">> DataAccess: findQuestion=> numQuestion= " + q);
 		Question resultado = null;
 		resultado = db.find(Question.class, q);
 		return resultado;

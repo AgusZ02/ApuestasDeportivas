@@ -269,13 +269,13 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 	@Override
-	public void cerrarEvento(Event ev, Question q, Pronostico p) {
+	public void cerrarEvento(Event ev, Question q, Pronostico p, boolean b) {
 		dbManager.open(false);
 		if (ev.getQuestions().isEmpty()) {
 			return;
 			//TODO:throw new NoQuestions;
 		}
-		dbManager.cerrarEvento(ev, q, p);
+		dbManager.cerrarEvento(ev, q, p, b);
 		dbManager.close();
 
 	}
