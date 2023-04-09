@@ -404,7 +404,7 @@ public class AdminGUI extends JFrame {
 				CerrarEventoGUI ventana = new CerrarEventoGUI(ev);
 				ventana.setBussinessLogic(facade);
 				ventana.setVisible(true);
-				dispose();
+				
 				// int q = (int) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 0);
 				// Question qu = facade.findQuestion(q);
 				// String p = (String) tableModelProns.getValueAt(tableProns.getSelectedRow(), 1);
