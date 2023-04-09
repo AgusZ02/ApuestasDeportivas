@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
 import domain.Event;
 import domain.Pronostico;
 import domain.Question;
@@ -36,7 +34,6 @@ public class CerrarEventoGUI extends JFrame {
 	public void setBussinessLogic(BLFacade b){
         this.facade = b;
     }
-    
     
 	public CerrarEventoGUI(Event ev) {
 		
@@ -127,7 +124,7 @@ public class CerrarEventoGUI extends JFrame {
 					facade.cerrarEvento(ev, qu, pron, true);
 					dispose();
 				}
-				facade.cerrarEvento(ev, qu, pron, false); //TODO: null pointer exception en esta linea (return value of "gui.CerrarEventoGUI.access$2(gui.CerrarEventoGUI)" is null)
+				facade.cerrarEvento(ev, qu, pron, false);
 				int index = comboBoxPreguntas.getSelectedIndex();
 				
 				modeloPreguntas.removeElementAt(index);
@@ -142,11 +139,5 @@ public class CerrarEventoGUI extends JFrame {
 		this.getContentPane().add(btnResolver);
 	}
 	
-
-	private void refillComboBoxQ(Event ev){
-		
-		comboBoxPreguntas.repaint();
-
-	}
 
 }
