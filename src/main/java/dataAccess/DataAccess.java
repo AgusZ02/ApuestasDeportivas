@@ -547,6 +547,7 @@ public class DataAccess {
 		db.getTransaction().begin();
 		if (ultimaPregunta) {
 			ev.setClosed(true);
+			//db.persist(ev);
 		}
 		for (Question qu : ev.getQuestions()) {
 			if (q.getQuestionNumber()==qu.getQuestionNumber()) {

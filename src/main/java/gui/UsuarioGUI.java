@@ -50,7 +50,7 @@ public class UsuarioGUI extends JFrame {
 	private String[] columnNamesEvents = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
-
+			ResourceBundle.getBundle("Etiquetas").getString("FinalizedEvent"),
 	};
 	private String[] columnNamesQueries = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("QueryN"), 
@@ -197,7 +197,7 @@ public class UsuarioGUI extends JFrame {
 
 					try {
 						tableModelEvents.setDataVector(null, columnNamesEvents);
-						tableModelEvents.setColumnCount(3); // another column added to allocate ev objects
+						tableModelEvents.setColumnCount(4); // another column added to allocate ev objects
 
 						BLFacade facade=LoginGUI.getBusinessLogic();
 
@@ -212,12 +212,14 @@ public class UsuarioGUI extends JFrame {
 								row.add(ev.getEventNumber());
 								row.add(ev.getDescription());
 								row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
+								row.add(ev.isClosed());
 								tableModelEvents.addRow(row);	
 							}
 							System.out.println("Events "+ev);	
 						}
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
+						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(75);
 						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not shown in JTable
 					} catch (Exception e1) {
 
@@ -306,6 +308,7 @@ public class UsuarioGUI extends JFrame {
 		tableEvents.setModel(tableModelEvents);
 		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
+		tableEvents.getColumnModel().getColumn(2).setPreferredWidth(75);
 		tableEvents.setDefaultEditor(Object.class, null);
 
 		scrollPaneQueries.setViewportView(tableQueries);
