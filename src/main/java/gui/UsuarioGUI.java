@@ -101,8 +101,8 @@ public class UsuarioGUI extends JFrame {
 				
 				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
 				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
-				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 2);
-				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(),2);
+				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 3);
+				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(),3);
 				
 				if (betRealizada < qu.getBetMinimum()) {
 					VentanaAvisos error = new VentanaAvisos("<html>Error: La apuesta no llega al importe m�nimo.<br/>No es posible realizar la apuesta.</html>", "");
@@ -211,16 +211,16 @@ public class UsuarioGUI extends JFrame {
 							if (true) { //!ev.isClosed()
 								row.add(ev.getEventNumber());
 								row.add(ev.getDescription());
-								row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
 								row.add(ev.isClosed());
+								row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,3)
 								tableModelEvents.addRow(row);	
 							}
 							System.out.println("Events "+ev);	
 						}
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
-						tableEvents.getColumnModel().getColumn(3).setPreferredWidth(75);
-						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not shown in JTable
+						tableEvents.getColumnModel().getColumn(2).setPreferredWidth(150);
+						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(3)); // not shown in JTable
 					} catch (Exception e1) {
 
 						jLabelQueries.setText(e1.getMessage());
@@ -241,7 +241,7 @@ public class UsuarioGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i=tableEvents.getSelectedRow();
-				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i,2); // obtain ev object
+				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i,3); // obtain ev object
 				Vector<Question> queries=ev.getQuestions();
 
 				tableModelQueries.setDataVector(null, columnNamesQueries);
@@ -258,15 +258,15 @@ public class UsuarioGUI extends JFrame {
 					if (q.getResult()==null) {
 						row.add(q.getQuestionNumber());
 						row.add(q.toString());
-						row.add(q);
 						row.add(q.getBetMinimum());
+						row.add(q);
 						tableModelQueries.addRow(row);	
 					}
 				}
 				tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 				tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-				tableQueries.getColumnModel().getColumn(2).setPreferredWidth(75);
-				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(2)); // not
+				tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
+				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(3)); // not
 
 			}
 		});
@@ -275,7 +275,7 @@ public class UsuarioGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i = tableQueries.getSelectedRow();
-				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 2); // obtain ev object
+				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 3); // obtain ev object
 
 				Vector<Pronostico> pronosticos1 = qu.getPronosticos();
 
@@ -310,7 +310,7 @@ public class UsuarioGUI extends JFrame {
 		tableEvents.setModel(tableModelEvents);
 		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
-		tableEvents.getColumnModel().getColumn(2).setPreferredWidth(75);
+		tableEvents.getColumnModel().getColumn(2).setPreferredWidth(150);
 		tableEvents.setDefaultEditor(Object.class, null);
 
 		scrollPaneQueries.setViewportView(tableQueries);
@@ -319,7 +319,7 @@ public class UsuarioGUI extends JFrame {
 		tableQueries.setModel(tableModelQueries);
 		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-		tableQueries.getColumnModel().getColumn(2).setPreferredWidth(75);
+		tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
 		tableQueries.setDefaultEditor(Object.class, null);
 
 		
