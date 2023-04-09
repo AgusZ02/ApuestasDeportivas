@@ -347,6 +347,10 @@ public class DataAccess {
 		return event;
 	}
 
+	/**
+	 * Crea un pronostico en una pregunta
+	 * 
+	 */
 	public Pronostico createPron(Event ev, Question qu, String desc, double mul) throws PredictionAlreadyExists {
 		System.out.println(">> DataAccess: createPron=> question= " + qu + " pron= " + desc + " quote="
 		+ mul);
@@ -367,6 +371,10 @@ public class DataAccess {
 		return pron;
 	}
 
+	/**
+	 * Abre la base de datos
+	 * @param initializeMode
+	 */
 	public void open(boolean initializeMode) {
 
 
@@ -403,6 +411,12 @@ public class DataAccess {
 		System.out.println("DataBase closed");
 	}
 
+	/**
+	 * Busca una pregunta de un evento en la base de datos
+	 * @param event el evento al que pertenece la pregunta
+	 * @param question la pregunta
+	 * @return true si existe esa pregunta en el evento, de lo contrario false
+	 */
 	public boolean existQuestion(Event event, String question) {
 
 		System.out.println(">> DataAccess: existQuestion=> event= " + event + " question= " + question);
@@ -411,6 +425,11 @@ public class DataAccess {
 
 	}
 
+	/**
+	 * Indica si existe el usuario del parámetro
+	 * @param us el nombre de usuario
+	 * @return true si existe un usuario con ese nombre, false de lo contrario
+	 */
 	public boolean existsUser(String us) {
 		System.out.println(">> DataAccess: existsUser=> user= " + us);
 		TypedQuery<Usuario> query = db.createQuery("SELECT Us FROM Usuario us WHERE us.nombreUsuario=?1",
@@ -422,6 +441,11 @@ public class DataAccess {
 		return false;
 	}
 
+	/**
+	 * Añade un evento a la base de datos
+	 * @param evento el evento a añadir
+	 * @return el evento si se ha añadido, de lo contrario null
+	 */
 	public Event addEvent(Event evento) {
 		System.out.println(">> DataAccess: addEvent=> event= " + evento.getDescription());
 		db.getTransaction().begin();
@@ -433,6 +457,11 @@ public class DataAccess {
 		return evento;
 	}
 
+	/**
+	 * Elimina un evento de la base de datos.
+	 * @param eventNumber el numero de evento a eliminar
+	 * @return el evento eliminado
+	 */
 	public Event removeEvent(Integer eventNumber) {
 		
 		Event eventToRemove = this.getEvent(eventNumber);
@@ -442,6 +471,12 @@ public class DataAccess {
 		return eventToRemove;
 	}
 
+	/**
+	 * Crea un usuario con las credenciales en la base de datos
+	 * @param us: el nombre de usuario
+	 * @param ps: la contraseña
+	 * @return el usuario creado
+	 */
 	public Usuario createUser(String us, String ps) {
 		System.out.println(">> DataAccess: createUser=> user= " + us + " password= " + ps);
 		db.getTransaction().begin();
@@ -451,6 +486,12 @@ public class DataAccess {
 		return user;
 	}
 
+	/**
+	 * Este método comprueba si existe un objeto usuario con la combinación de name y pass en sus credenciales en la base de datos.
+	 * @param name: el nombre de usuario
+	 * @param pass: la contraseña del usuario
+	 * @return true si existe combinación, de lo contrario false
+	 */
 	public boolean hacerLogin(String name, String pass) {
 		System.out.println(">> DataAccess: hacerLogin=> user= " + name + " password= " + pass);
 		Usuario user = db.find(Usuario.class, name);
@@ -459,6 +500,11 @@ public class DataAccess {
 		return (user.getContrasena().equals(pass) && user.getNombreUsuario().equals(name));
 	}
 
+	/**
+	 * Busca en la base de datos el evento por su numero
+	 * @param numEvento el numero del evento
+	 * @return el evento si existe, sino, devuelve null
+	 */
 	public Event findEvent(int numEvento) {
 		System.out.println(">> DataAccess: findEvent=> numEvento= " + numEvento);
 		TypedQuery<Event> query = db.createQuery("SELECT ev FROM Event ev WHERE ev.eventNumber=?1", Event.class);
@@ -466,6 +512,7 @@ public class DataAccess {
 		Event evento = query.getSingleResult();
 		return evento;
 	}
+
 
     public void apostar(Pronostico pron, Usuario u, double apuesta) {
 		db.getTransaction().begin();
@@ -478,6 +525,14 @@ public class DataAccess {
 
     }
 
+
+	/**
+	 * Asigna el pronóstico resultado a la pregunta del evento, resolviendo así la pregunta y cerrando el evento
+	 * @param ev el evento a cerrar
+	 * @param q la pregunta a resolver
+	 * @param p el pronóstico correcto
+	 * @param ultimaPregunta parámetro que indica si es la última pregunta del evento a resolver. El evento no se cerrará hasta que se hayan resuelto todas las preguntas.
+	 */
     public void cerrarEvento(Event ev, Question q, Pronostico p, boolean ultimaPregunta) {
 		System.out.println(">> DataAccess: cerrarEvento=> event= " + ev.getDescription() + "question= " + q.toString() + "pronostico= " + p.toString());
 		db.getTransaction().begin();
@@ -505,10 +560,15 @@ public class DataAccess {
 		db.getTransaction().commit();
     }
 
-	public Question findQuestion(int q) {
-		System.out.println(">> DataAccess: findQuestion=> numQuestion= " + q);
+	/**
+	 * Este método busca una pregunta por su número de pregunta.
+	 * @param q el número de la pregunta a buscar
+	 * @return la pregunta si existe, sino devuelve null.
+	 */
+	public Question findQuestion(int qNum) {
+		System.out.println(">> DataAccess: findQuestion=> numQuestion= " + qNum);
 		Question resultado = null;
-		resultado = db.find(Question.class, q);
+		resultado = db.find(Question.class, qNum);
 		return resultado;
 	}
 
