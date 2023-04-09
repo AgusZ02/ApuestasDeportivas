@@ -198,7 +198,7 @@ public class AdminGUI extends JFrame {
 					Vector<Object> row = new Vector<Object>();
 
 					row.add(q.getQuestionNumber());
-					row.add(q.getQuestion());
+					row.add(q.toString());
 					row.add(q);
 					tableModelQueries.addRow(row);
 				}
@@ -223,16 +223,16 @@ public class AdminGUI extends JFrame {
 
 				if (pronosticos1.isEmpty())
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.toString());
 				else
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.toString());
 
 				for (domain.Pronostico p : pronosticos1) {
 					Vector<Object> row = new Vector<Object>();
 
 					row.add(p.getPronNumber());
-					row.add(p.getPronostico());
+					row.add(p.toString());
 					row.add(p.getCuotaGanancia());
 					tableModelProns.addRow(row);
 				}
@@ -399,10 +399,17 @@ public class AdminGUI extends JFrame {
 		btnCerrarEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO: cerrar el evento
-				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
-				facade.cerrarEvento(ev);
 				
-				// TODO: revisar cambiar setResult(String) por setResult(Pronostico)
+				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
+				CerrarEventoGUI ventana = new CerrarEventoGUI(ev);
+				ventana.setVisible(true);
+				// int q = (int) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 0);
+				// Question qu = facade.findQuestion(q);
+				// String p = (String) tableModelProns.getValueAt(tableProns.getSelectedRow(), 1);
+				// Pronostico pron = facade.getPronostico(p, qu);
+				// facade.cerrarEvento(ev, qu, pron);
+				
+				
 
 			}
 		});

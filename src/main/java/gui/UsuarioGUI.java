@@ -249,7 +249,7 @@ public class UsuarioGUI extends JFrame {
 					//TODO: Columna nueva con resultado de la pregunta.
 					if (q.getResult()==null) {
 						row.add(q.getQuestionNumber());
-						row.add(q.getQuestion());
+						row.add(q.toString());
 						row.add(q);
 						tableModelQueries.addRow(row);	
 					}
@@ -274,16 +274,16 @@ public class UsuarioGUI extends JFrame {
 
 				if (pronosticos1.isEmpty())
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.toString());
 				else
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.toString());
 
 				for (domain.Pronostico p : pronosticos1) {
 					Vector<Object> row = new Vector<Object>();
 					if (!p.isFinalizado()) {
 						row.add(p.getPronNumber());
-						row.add(p.getPronostico());
+						row.add(p.toString());
 						row.add(p.getCuotaGanancia());
 						tableModelProns.addRow(row);
 					}

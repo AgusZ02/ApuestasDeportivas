@@ -2,7 +2,6 @@ package domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -47,7 +46,7 @@ public class Pronostico implements Serializable {
 	}
 
 
-	public String getPronostico() {
+	public String toString() {
 		return pronostico;
 	}
 

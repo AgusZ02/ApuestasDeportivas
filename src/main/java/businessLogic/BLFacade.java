@@ -108,5 +108,7 @@ public interface BLFacade {
 
     Pronostico getPronostico(String pronostico, Question pregunta);
 
-    void cerrarEvento(Event ev);
+    void cerrarEvento(Event ev, Question q, Pronostico p);
+
+	Question findQuestion(int q);
 }

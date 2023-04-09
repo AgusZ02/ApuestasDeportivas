@@ -109,7 +109,7 @@ public class Event implements Serializable {
 	 */
 	public boolean DoesQuestionExists(String question) {
 		for (Question q : this.getQuestions()) {
-			if (q.getQuestion().compareTo(question) == 0)
+			if (q.toString().compareTo(question) == 0)
 				return true;
 		}
 		return false;
