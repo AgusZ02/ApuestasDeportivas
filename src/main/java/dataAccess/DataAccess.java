@@ -252,6 +252,7 @@ public class DataAccess {
 		for (Pronostico pr : preguntaBuscada.getPronosticos())
 			if (pr.getPronostico().equals(pronostico))
 				pronosticoBuscado = pr;
+
 		return pronosticoBuscado;
 	}
 
@@ -364,7 +365,6 @@ public class DataAccess {
 				pron = question.addPronostico(desc, mul);
 			}
 		}
-		db.persist(pron);
 		db.getTransaction().commit();
 		return pron;
 	}
@@ -463,16 +463,5 @@ public class DataAccess {
 		Event evento = query.getSingleResult();
 		return evento;
 	}
-
-    public void apostar(Pronostico pron, Usuario u, double apuesta) {
-		db.getTransaction().begin();
-		Usuario user = db.find(Usuario.class, u.getNombreUsuario());
-		user.setSaldo(user.getSaldo()-apuesta);
-		Pronostico pronostico = db.find(Pronostico.class, pron.getPronNumber());
-		pronostico.apostar(user, apuesta);
-		db.getTransaction().commit();
-
-
-    }
 
 }

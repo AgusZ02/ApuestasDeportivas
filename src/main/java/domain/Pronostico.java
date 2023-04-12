@@ -37,7 +37,6 @@ public class Pronostico implements Serializable {
 		this.pronostico = pronostico;
 		this.finalizado = finalizado;
 		this.cuotaGanancia = cuotaGanancia;
-		this.apuestas = new HashMap<>();
 	}
 
 	public Pronostico(String pronostico, boolean finalizado, double cuotaGanancia, Question pregunta) {

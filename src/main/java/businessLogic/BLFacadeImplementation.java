@@ -12,7 +12,6 @@ import domain.Usuario;
 import domain.Event;
 import domain.Pronostico;
 import exceptions.EventFinished;
-import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 
@@ -256,16 +255,6 @@ public class BLFacadeImplementation implements BLFacade {
 		evento = dbManager.findEvent(numEvento);
 		dbManager.close();
 		return evento;
-	}
-
-	@Override
-	public void apostar(Pronostico pron, Usuario u, double apuesta) throws NotEnoughMoney{
-		if (u.getSaldo() < apuesta) {
-			throw new NotEnoughMoney();
-		}
-		dbManager.open(false);
-		dbManager.apostar(pron, u, apuesta);
-		dbManager.close();
 	}
 
 }
