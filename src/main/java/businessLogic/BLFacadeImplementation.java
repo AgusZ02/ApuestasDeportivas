@@ -12,6 +12,7 @@ import domain.Usuario;
 import domain.Apuesta;
 import domain.Event;
 import domain.Pronostico;
+import exceptions.EventExpired;
 import exceptions.EventFinished;
 import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
@@ -256,12 +257,15 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 	@WebMethod
-	public void createApuesta(double bet, Event ev, Question qu, Pronostico pronostico, Usuario us) throws NotEnoughMoney {
+	public void createApuesta(double bet, Event ev, Question qu, Pronostico pronostico, Usuario us) throws NotEnoughMoney, EventExpired {
 		if (bet <=0){
 			System.out.println("Cantidad apostada incorrecta"); // TODO: mostrar este error en la app
 		} if (us.getSaldo()<bet) {
 			throw new NotEnoughMoney();
-		} else {
+		} if (ev.getEventDate().after(new Date())) {
+			throw new EventExpired();
+		} 
+		else {
 			dbManager.open(false);
 			dbManager.createApuesta(bet, ev, qu, pronostico, us);
 			dbManager.close();

@@ -6,6 +6,7 @@ import com.toedter.calendar.JCalendar;
 import domain.Pronostico;
 import domain.Question;
 import domain.Usuario;
+import exceptions.EventExpired;
 import exceptions.NotEnoughMoney;
 
 import javax.swing.*;
@@ -109,14 +110,18 @@ public class UsuarioGUI extends JFrame {
 					error.setVisible(true);
 				} else {
 					Pronostico pred = facade.getPron(pr);
+					VentanaAvisos vAvisos;
 					try{
 						facade.createApuesta(betRealizada, ev, qu, pred, u);
 						saldo -= betRealizada;
 						lblSaldo.setText("Saldo disponible: " + saldo);
 					} catch(NotEnoughMoney NEM){
-						VentanaAvisos vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
+						vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
 						vAvisos.setVisible(true);
+					} catch(EventExpired EE){
+						vAvisos = new VentanaAvisos("El evento ha terminado.", "EventExpired");
 					}
+					
 					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
 					lblPronosticos.setText("Apuesta realizada correctamente");
 				}

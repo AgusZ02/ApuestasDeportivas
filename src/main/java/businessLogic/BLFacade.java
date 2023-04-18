@@ -9,6 +9,7 @@ import domain.Usuario;
 import domain.Apuesta;
 import domain.Event;
 import domain.Pronostico;
+import exceptions.EventExpired;
 import exceptions.EventFinished;
 import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
@@ -108,7 +109,7 @@ public interface BLFacade {
 	public Event findEvent(int numEvento);
 
 	@WebMethod
-	public void createApuesta(double bet,Event ev, Question qu, Pronostico pronostico, Usuario us) throws NotEnoughMoney;
+	public void createApuesta(double bet,Event ev, Question qu, Pronostico pronostico, Usuario us) throws NotEnoughMoney, EventExpired;
 	
 	@WebMethod
 	public Apuesta getApuesta(Integer betNumber);
