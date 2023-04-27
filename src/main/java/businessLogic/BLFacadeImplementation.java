@@ -12,6 +12,7 @@ import domain.Usuario;
 import domain.Event;
 import domain.Pronostico;
 import exceptions.EventFinished;
+import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 
