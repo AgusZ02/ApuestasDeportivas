@@ -65,6 +65,8 @@ public class AdminGUI extends JFrame {
 	private JTextField tfNewEvent;
 	private JTextField tfNewPron;
 	private JTextField tfMultip;
+	private final JButton btnCerrarEvento = new JButton(
+			ResourceBundle.getBundle("Etiquetas").getString("AdminGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	public AdminGUI() {
 		try {
@@ -88,20 +90,13 @@ public class AdminGUI extends JFrame {
 		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(268, 523, 130, 30));
-
-		jButtonClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
+		jButtonClose.setBounds(new Rectangle(195, 523, 130, 30));
 
 		this.getContentPane().add(jButtonClose, null);
 		jCalendar1.setBorder(new LineBorder(new Color(0, 0, 0)));
 
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
-		
 		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 		CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
 
@@ -115,7 +110,7 @@ public class AdminGUI extends JFrame {
 					calendarAnt = (Calendar) propertychangeevent.getOldValue();
 					calendarAct = (Calendar) propertychangeevent.getNewValue();
 					DateFormat dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
-//					jCalendar1.setCalendar(calendarAct);
+					// jCalendar1.setCalendar(calendarAct);
 					Date firstDay = UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
 
 					int monthAnt = calendarAnt.get(Calendar.MONTH);
@@ -132,8 +127,6 @@ public class AdminGUI extends JFrame {
 
 						jCalendar1.setCalendar(calendarAct);
 
-						
-
 						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 					}
 
@@ -142,8 +135,6 @@ public class AdminGUI extends JFrame {
 					try {
 						tableModelEvents.setDataVector(null, columnNamesEvents);
 						tableModelEvents.setColumnCount(3); // another column added to allocate ev objects
-
-						
 
 						Vector<domain.Event> events = facade.getEvents(firstDay);
 
@@ -169,7 +160,7 @@ public class AdminGUI extends JFrame {
 						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not
 																												// shown
 						// in
-																												// JTable
+						// JTable
 					} catch (Exception e1) {
 
 						jLabelQueries.setText(e1.getMessage());
@@ -206,16 +197,15 @@ public class AdminGUI extends JFrame {
 					Vector<Object> row = new Vector<Object>();
 
 					row.add(q.getQuestionNumber());
-					row.add(q.getQuestion());
+					row.add(q.toString());
 					row.add(q);
 					tableModelQueries.addRow(row);
 				}
-				//tableModelQueries.setColumnCount(2);
+				// tableModelQueries.setColumnCount(2);
 				tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 				tableQueries.getColumnModel().getColumn(1).setPreferredWidth(200);
 				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(2)); // not
 
-				
 			}
 		});
 
@@ -232,16 +222,16 @@ public class AdminGUI extends JFrame {
 
 				if (pronosticos1.isEmpty())
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.toString());
 				else
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.toString());
 
 				for (domain.Pronostico p : pronosticos1) {
 					Vector<Object> row = new Vector<Object>();
 
 					row.add(p.getPronNumber());
-					row.add(p.getPronostico());
+					row.add(p.toString());
 					row.add(p.getCuotaGanancia());
 					tableModelProns.addRow(row);
 				}
@@ -282,7 +272,7 @@ public class AdminGUI extends JFrame {
 		JButton btnNewEvent = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnNewEvent"));
 		btnNewEvent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String evDesc = tfNewEvent.getText();
 
 				Date date = jCalendar1.getDate();
@@ -290,9 +280,9 @@ public class AdminGUI extends JFrame {
 				if (date != null) {
 
 					if (evDesc.length() > 0) {
-						
+
 						jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("EventCreated"));
-						
+
 						facade.createEvent(evDesc, date);
 					} else
 						jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorEvent"));
@@ -311,18 +301,22 @@ public class AdminGUI extends JFrame {
 				int i = tableEvents.getSelectedRow();
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(i, 2);
 				if (quest.length() > 0) {
-					
+
 					try {
 						facade.createQuestion(ev, quest, min);
 						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryCreated"));
 					} catch (EventFinished e1) {
-						VentanaAvisos error = new VentanaAvisos("<html>Error: evento finalizado.<br/>No es posible añadir una pregunta a un evento finalizado.</html>", "EventFinished");
+						VentanaAvisos error = new VentanaAvisos(
+								"<html>Error: evento finalizado.<br/>No es posible añadir una pregunta a un evento finalizado.</html>",
+								"EventFinished");
 						error.setVisible(true);
-						//e1.printStackTrace();
+						// e1.printStackTrace();
 					} catch (QuestionAlreadyExist e1) {
-						VentanaAvisos error = new VentanaAvisos("<html>Error: La pregunta ya existe.<br/>No es posible añadir una pregunta duplicada.</html>", "QuestionAlreadyExist");
+						VentanaAvisos error = new VentanaAvisos(
+								"<html>Error: La pregunta ya existe.<br/>No es posible añadir una pregunta duplicada.</html>",
+								"QuestionAlreadyExist");
 						error.setVisible(true);
-						//e1.printStackTrace();
+						// e1.printStackTrace();
 					}
 				} else
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorQuest"));
@@ -364,17 +358,17 @@ public class AdminGUI extends JFrame {
 		btnNewPron.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String pron = tfNewPron.getText();
-				double mul = Double.parseDouble(tfMultip.getText());
+				double mul = (double)Double.parseDouble(tfMultip.getText());
 				int i = tableQueries.getSelectedRow();
 				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 2);
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
-				
+
 				if (pron.length() > 0) {
-					
+
 					try {
 						facade.createPron(ev, qu, pron, mul);
 					} catch (PredictionAlreadyExists e1) {
-						
+
 					}
 				} else
 					lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorPron"));
@@ -401,11 +395,33 @@ public class AdminGUI extends JFrame {
 		JLabel lblMultip = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblMultip"));
 		lblMultip.setBounds(350, 430, 85, 13);
 		getContentPane().add(lblMultip);
+		btnCerrarEvento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO: cerrar el evento
+				
+				
+				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
+				CerrarEventoGUI ventana = new CerrarEventoGUI(ev);
+				ventana.setBussinessLogic(facade);
+				ventana.setVisible(true);
+				// int q = (int) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 0);
+				// Question qu = facade.findQuestion(q);
+				// String p = (String) tableModelProns.getValueAt(tableProns.getSelectedRow(), 1);
+				// Pronostico pron = facade.getPronostico(p, qu);
+				// facade.cerrarEvento(ev, qu, pron);
+				
+				
+
+			}
+		});
+		btnCerrarEvento.setBounds(350, 523, 110, 30);
+
+		getContentPane().add(btnCerrarEvento);
 
 	}
-	
-	public void setBussinessLogic(BLFacade b){
+
+	public void setBussinessLogic(BLFacade b) {
 		this.facade = b;
 	}
-	
+
 }

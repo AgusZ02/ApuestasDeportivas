@@ -7,6 +7,7 @@ import java.util.Date;
 import domain.Question;
 import domain.Usuario;
 import domain.Event;
+import domain.Pronostico;
 import exceptions.EventFinished;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
@@ -101,4 +102,12 @@ public interface BLFacade {
 	@WebMethod public Usuario createUser(Usuario user);
 
     Event findEvent(int numEvento);
+
+    void apostar(Pronostico pron, Usuario u, double apuesta) throws NotEnoughMoney;
+
+    Pronostico getPronostico(String pronostico, Question pregunta);
+
+    void cerrarEvento(Event ev, Question q, Pronostico p, boolean b);
+
+	Question findQuestion(int q);
 }

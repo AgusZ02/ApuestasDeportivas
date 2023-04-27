@@ -257,4 +257,35 @@ public class BLFacadeImplementation implements BLFacade {
 		return evento;
 	}
 
+	@Override
+	public void apostar(Pronostico pron, Usuario u, double apuesta) throws NotEnoughMoney{
+		if (u.getSaldo() < apuesta) {
+			throw new NotEnoughMoney();
+		}
+		dbManager.open(false);
+		dbManager.apostar(pron, u, apuesta);
+		dbManager.close();
+	}
+
+	@Override
+	public void cerrarEvento(Event ev, Question q, Pronostico p, boolean b) {
+		dbManager.open(false);
+		if (ev.getQuestions().isEmpty()) {
+			return;
+			//TODO:throw new NoQuestions;
+		}
+		dbManager.cerrarEvento(ev, q, p, b);
+		dbManager.close();
+
+	}
+
+	public Question findQuestion(int q){
+		Question qu = null;
+		dbManager.open(false);
+		qu = dbManager.findQuestion(q);
+		dbManager.close();
+		return qu;
+
+	}
+
 }

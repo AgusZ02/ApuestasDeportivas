@@ -190,13 +190,14 @@ public class UsuarioGUI extends JFrame {
 						else jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")+ ": "+dateformat1.format(calendarAct.getTime()));
 						for (domain.Event ev:events){
 							Vector<Object> row = new Vector<Object>();
-
-							System.out.println("Events "+ev);
-
-							row.add(ev.getEventNumber());
-							row.add(ev.getDescription());
-							row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
-							tableModelEvents.addRow(row);		
+							//TODO: columna con atributo de isClosed de evento.
+							if (true) { //!ev.isClosed()
+								row.add(ev.getEventNumber());
+								row.add(ev.getDescription());
+								row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
+								tableModelEvents.addRow(row);	
+							}
+							System.out.println("Events "+ev);	
 						}
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -234,11 +235,13 @@ public class UsuarioGUI extends JFrame {
 
 				for (domain.Question q:queries){
 					Vector<Object> row = new Vector<Object>();
-
-					row.add(q.getQuestionNumber());
-					row.add(q.getQuestion());
-					row.add(q);
-					tableModelQueries.addRow(row);	
+					//TODO: Columna nueva con resultado de la pregunta.
+					if (q.getResult()==null) {
+						row.add(q.getQuestionNumber());
+						row.add(q.toString());
+						row.add(q);
+						tableModelQueries.addRow(row);	
+					}
 				}
 				tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 				tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -260,18 +263,19 @@ public class UsuarioGUI extends JFrame {
 
 				if (pronosticos1.isEmpty())
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.toString());
 				else
 					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.getQuestion());
+							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.toString());
 
 				for (domain.Pronostico p : pronosticos1) {
 					Vector<Object> row = new Vector<Object>();
-
-					row.add(p.getPronNumber());
-					row.add(p.getPronostico());
-					row.add(p.getCuotaGanancia());
-					tableModelProns.addRow(row);
+					if (!p.isFinalizado()) {
+						row.add(p.getPronNumber());
+						row.add(p.toString());
+						row.add(p.getCuotaGanancia());
+						tableModelProns.addRow(row);
+					}
 				}
 				tableProns.getColumnModel().getColumn(0).setPreferredWidth(10);
 				// tableProns.getColumnModel().getColumn(2).setPreferredWidth(10);

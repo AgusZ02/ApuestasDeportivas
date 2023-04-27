@@ -2,7 +2,6 @@ package domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,7 +45,7 @@ public class Pronostico implements Serializable {
 	}
 
 
-	public String getPronostico() {
+	public String toString() {
 		return pronostico;
 	}
 
@@ -89,6 +88,9 @@ public class Pronostico implements Serializable {
 	}
 	public void apostar(Usuario user, double cantidad){
 		this.apuestas.put(user, cantidad);
+	}
+	public HashMap<Usuario, Double> getApuestas(){
+		return this.apuestas;
 	}
 	
 	

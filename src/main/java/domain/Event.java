@@ -25,6 +25,7 @@ public class Event implements Serializable {
 	private Integer eventNumber;
 	private String description;
 	private Date eventDate;
+	private boolean closed;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	private Vector<Question> questions = new Vector<Question>();
 
@@ -39,17 +40,24 @@ public class Event implements Serializable {
 	public Event() {
 		super();
 	}
-
-	public Event(Integer eventNumber, String description, Date eventDate) {
-		this.eventNumber = eventNumber;
-		this.description = description;
-		this.eventDate = eventDate;
-	}
-
+	
 	public Event(String description, Date eventDate) {
 		this.description = description;
 		this.eventDate = eventDate;
+		
 	}
+
+	public Event(Integer eventNumber, String description, Date eventDate) {
+		this(description, eventDate);
+		this.eventNumber = eventNumber;
+		if (new Date().after(eventDate)) {
+			this.closed = true;
+		} else{
+			this.closed = false;
+		}
+		
+	}
+
 
 	public Integer getEventNumber() {
 		return eventNumber;
@@ -101,7 +109,7 @@ public class Event implements Serializable {
 	 */
 	public boolean DoesQuestionExists(String question) {
 		for (Question q : this.getQuestions()) {
-			if (q.getQuestion().compareTo(question) == 0)
+			if (q.toString().compareTo(question) == 0)
 				return true;
 		}
 		return false;
@@ -127,6 +135,12 @@ public class Event implements Serializable {
 		if (eventNumber != other.eventNumber)
 			return false;
 		return true;
+	}
+	public boolean isClosed(){
+		return this.closed;
+	}
+	public void setClosed(boolean b){
+		this.closed = b;
 	}
 
 }
