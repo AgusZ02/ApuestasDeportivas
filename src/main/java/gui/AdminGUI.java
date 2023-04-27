@@ -98,7 +98,6 @@ public class AdminGUI extends JFrame {
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
 		datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
-		CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
 
 		// Code for JCalendar
 		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
@@ -129,8 +128,6 @@ public class AdminGUI extends JFrame {
 
 						datesWithEventsCurrentMonth = facade.getEventsMonth(jCalendar1.getDate());
 					}
-
-					CreateQuestionGUI.paintDaysWithEvents(jCalendar1, datesWithEventsCurrentMonth);
 
 					try {
 						tableModelEvents.setDataVector(null, columnNamesEvents);
