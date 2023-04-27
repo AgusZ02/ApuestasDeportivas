@@ -258,6 +258,7 @@ public class DataAccess {
 		for (Pronostico pr : preguntaBuscada.getPronosticos())
 			if (pr.toString().equals(pronostico))
 				pronosticoBuscado = pr;
+
 		return pronosticoBuscado;
 	}
 
@@ -376,7 +377,6 @@ public class DataAccess {
 				pron = question.addPronostico(desc, mul);
 			}
 		}
-		db.persist(pron);
 		db.getTransaction().commit();
 		return pron;
 	}
