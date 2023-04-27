@@ -101,7 +101,7 @@ public class UsuarioGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
-				Pronostico pr = (Pronostico) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
+				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
 				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 4);
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(),3);
 				
@@ -109,18 +109,22 @@ public class UsuarioGUI extends JFrame {
 					VentanaAvisos error = new VentanaAvisos("<html>Error: La apuesta no llega al importe m�nimo.<br/>No es posible realizar la apuesta.</html>", "");
 					error.setVisible(true);
 				} else {
+					Pronostico pred = facade.getPron(pr);
 					VentanaAvisos vAvisos;
 					try{
-						facade.createApuesta(betRealizada, ev, qu, pr, u);
+						facade.createApuesta(betRealizada, ev, qu, pred, u);
 						saldo -= betRealizada;
 						lblSaldo.setText("Saldo disponible: " + saldo);
 						repaint();
 					} catch(NotEnoughMoney NEM){
 						vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
 						vAvisos.setVisible(true);
+					} catch(EventExpired EE){
+						vAvisos = new VentanaAvisos("El evento ha terminado.", "EventExpired");
 					}
 					
-					
+					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
+					lblPronosticos.setText("Apuesta realizada correctamente");
 				}
 				//String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
 				
@@ -154,12 +158,11 @@ public class UsuarioGUI extends JFrame {
 		this.getContentPane().add(jButtonClose, null);
 
 
-
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
 		
 		datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
-
+		CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
 
 		// Code for JCalendar
 		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener()
@@ -198,6 +201,12 @@ public class UsuarioGUI extends JFrame {
 
 						datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
 					}
+
+
+
+					CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
+													
+					
 
 					try {
 						tableModelEvents.setDataVector(null, columnNamesEvents);
@@ -324,7 +333,6 @@ public class UsuarioGUI extends JFrame {
 		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
 		tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
 		tableQueries.setDefaultEditor(Object.class, null);
-		
 
 		
 
