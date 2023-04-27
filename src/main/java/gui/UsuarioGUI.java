@@ -68,12 +68,12 @@ public class UsuarioGUI extends JFrame {
 	
 	
 
-	public UsuarioGUI(Usuario u)
+	public UsuarioGUI()
 	{
 		
 		try
 		{
-			jbInit(u);
+			jbInit();
 		}
 		catch(Exception e)
 		{
@@ -82,7 +82,7 @@ public class UsuarioGUI extends JFrame {
 	}
 
 	
-	private void jbInit(Usuario u) throws Exception
+	private void jbInit() throws Exception
 	{
 
 		
@@ -171,7 +171,7 @@ public class UsuarioGUI extends JFrame {
 
 		
 		datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
-		CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
+
 
 		// Code for JCalendar
 		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener()
@@ -210,12 +210,6 @@ public class UsuarioGUI extends JFrame {
 
 						datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
 					}
-
-
-
-					CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
-													
-					
 
 					try {
 						tableModelEvents.setDataVector(null, columnNamesEvents);

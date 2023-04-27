@@ -17,17 +17,18 @@ public class Apuesta {
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@Id
 	@GeneratedValue
-	private Integer betNumber;
+	private Integer betId;
 	private double bet;
+	private boolean finalizado;
 	@XmlIDREF
 	private Pronostico pronostico;
 	//@XmlIDREF
 	private Usuario user;
-	private boolean finalizado;
+	
 
 	public Apuesta(Integer betNumber, double bet, Pronostico pronostico, Usuario user, boolean finalizado) {
 		super();
-		this.betNumber = betNumber;
+		this.betId = betNumber;
 		this.bet = bet;
 		this.pronostico = pronostico;
 		this.user = user;
@@ -36,7 +37,7 @@ public class Apuesta {
 
 	public Apuesta(Integer betNumber, double bet, Pronostico pronostico) {
 		super();
-		this.betNumber = betNumber;
+		this.betId = betNumber;
 		this.bet = bet;
 		this.pronostico = pronostico;
 	
@@ -53,14 +54,14 @@ public class Apuesta {
 	 * @return the betNumber
 	 */
 	public Integer getBetNumber() {
-		return betNumber;
+		return betId;
 	}
 
 	/**
 	 * @param betNumber the betNumber to set
 	 */
 	public void setBetNumber(Integer betNumber) {
-		this.betNumber = betNumber;
+		this.betId = betNumber;
 	}
 
 	/**
