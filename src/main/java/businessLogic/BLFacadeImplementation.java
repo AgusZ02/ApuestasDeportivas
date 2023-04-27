@@ -262,7 +262,7 @@ public class BLFacadeImplementation implements BLFacade {
 			System.out.println("Cantidad apostada incorrecta"); // TODO: mostrar este error en la app
 		} if (us.getSaldo()<bet) {
 			throw new NotEnoughMoney();
-		} if (ev.getEventDate().after(new Date())) {
+		} if (ev.getEventDate().before(new Date())) {
 			throw new EventExpired();
 		} 
 		else {
