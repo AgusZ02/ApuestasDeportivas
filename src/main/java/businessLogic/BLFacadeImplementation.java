@@ -14,6 +14,7 @@ import domain.Event;
 import domain.Pronostico;
 import exceptions.EventExpired;
 import exceptions.EventFinished;
+import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 

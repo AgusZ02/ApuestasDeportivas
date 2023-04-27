@@ -68,12 +68,12 @@ public class UsuarioGUI extends JFrame {
 	
 	
 
-	public UsuarioGUI()
+	public UsuarioGUI(Usuario u)
 	{
 		
 		try
 		{
-			jbInit();
+			jbInit(u);
 		}
 		catch(Exception e)
 		{
@@ -82,7 +82,7 @@ public class UsuarioGUI extends JFrame {
 	}
 
 	
-	private void jbInit() throws Exception
+	private void jbInit(Usuario u) throws Exception
 	{
 
 		
