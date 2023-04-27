@@ -101,8 +101,8 @@ public class UsuarioGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
-				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
-				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 3);
+				Pronostico pr = (Pronostico) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
+				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 4);
 				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(),3);
 				
 				if (betRealizada < qu.getBetMinimum()) {
@@ -110,25 +110,13 @@ public class UsuarioGUI extends JFrame {
 					error.setVisible(true);
 				} else {
 					VentanaAvisos vAvisos;
-					if(!ev.isClosed()){
-						Pronostico pred = facade.getPron(pr);
-						try{
-							facade.createApuesta(betRealizada, ev, qu, pred, u);
-							saldo -= betRealizada;
-							lblSaldo.setText("Saldo disponible: " + saldo);
-						} catch(NotEnoughMoney NEM){
-							vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
-							vAvisos.setVisible(true);
-						} catch(EventExpired EE){
-							vAvisos = new VentanaAvisos("El evento ha terminado.", "EventExpired");
-							vAvisos.setVisible(true);
-						}
-						
-						//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
-						lblPronosticos.setText("Apuesta realizada correctamente");
-
-					} else{
-						vAvisos = new VentanaAvisos("El evento está cerrado","EventoFinalizado");
+					try{
+						facade.createApuesta(betRealizada, ev, qu, pr, u);
+						saldo -= betRealizada;
+						lblSaldo.setText("Saldo disponible: " + saldo);
+						repaint();
+					} catch(NotEnoughMoney NEM){
+						vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
 						vAvisos.setVisible(true);
 					}
 					
@@ -223,7 +211,6 @@ public class UsuarioGUI extends JFrame {
 						else jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("Events")+ ": "+dateformat1.format(calendarAct.getTime()));
 						for (domain.Event ev:events){
 							Vector<Object> row = new Vector<Object>();
-							//TODO: columna con atributo de isClosed de evento.
 							if (true) { //!ev.isClosed()
 								row.add(ev.getEventNumber());
 								row.add(ev.getDescription());
@@ -261,7 +248,7 @@ public class UsuarioGUI extends JFrame {
 				Vector<Question> queries=ev.getQuestions();
 
 				tableModelQueries.setDataVector(null, columnNamesQueries);
-				tableModelQueries.setColumnCount(4);
+				tableModelQueries.setColumnCount(5);
 
 				if (queries.isEmpty())
 					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoQueries")+": "+ev.getDescription());
@@ -270,11 +257,11 @@ public class UsuarioGUI extends JFrame {
 
 				for (domain.Question q:queries){
 					Vector<Object> row = new Vector<Object>();
-					//TODO: Columna nueva con resultado de la pregunta.
 					if (q.getResult()==null) {
 						row.add(q.getQuestionNumber());
 						row.add(q.toString());
 						row.add(q.getBetMinimum());
+						row.add(q.getResult());
 						row.add(q);
 						tableModelQueries.addRow(row);	
 					}
@@ -282,7 +269,8 @@ public class UsuarioGUI extends JFrame {
 				tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
 				tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
 				tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
-				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(3)); // not
+				tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
+				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(4)); // not
 
 			}
 		});
@@ -291,7 +279,7 @@ public class UsuarioGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i = tableQueries.getSelectedRow();
-				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 3); // obtain ev object
+				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 4); // obtain ev object
 
 				Vector<Pronostico> pronosticos1 = qu.getPronosticos();
 

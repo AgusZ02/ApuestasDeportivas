@@ -523,6 +523,7 @@ public class DataAccess {
 	}
 
 	public Apuesta createApuesta(double bet, Event ev, Question qu, Pronostico pronostico, Usuario us) {
+		System.out.println(">> DataAccess: createApuesta");
 		db.getTransaction().begin();
 		TypedQuery<Integer> query = db.createQuery("SELECT ap.betId FROM Apuesta ap", Integer.class);
 		List<Integer> list = query.getResultList();
@@ -546,42 +547,13 @@ public class DataAccess {
 					
 					us.addApuesta(apuesta);
 					us.setSaldo(us.getSaldo()-bet);
-					getUser(us.getNombreUsuario(), us.getContrasena()).addApuesta(apuesta);
-					getUser(us.getNombreUsuario(), us.getContrasena()).setSaldo(getUser(us.getNombreUsuario(), us.getContrasena()).getSaldo()-bet);
-					Usuario usuarioActual = apuesta.getUser();
-					usuarioActual.setSaldo(usuarioActual.getSaldo()-bet);
-				}
-			}
-		}
-
-    public void apostar(Pronostico pron, Usuario u, double apuesta) {
-		db.getTransaction().begin();
-		TypedQuery<Integer> query = db.createQuery("SELECT ap.betNumber FROM Apuesta ap", Integer.class);
-		List<Integer> list = query.getResultList();
-		Integer num;
-		Apuesta apuesta;
-		if (list.isEmpty()) {
-			num = 0;
-			apuesta = new Apuesta(num, bet, pronostico, us, false);
-		} else{
-			num = list.get(list.size() - 1);
-			apuesta = new Apuesta(num + 1, bet, pronostico, us, false);
-		}
-		
-		
-		Event event = this.findEvent(ev.getEventNumber());
-		for (Question question : event.getQuestions()) {
-			for (Pronostico pron : question.getPronosticos()) {
-				if (pron.getPronNumber() == pronostico.getPronNumber()) {
-					pron.addApuesta(apuesta);
-					pronostico.addApuesta(apuesta);
 					
-					us.addApuesta(apuesta);
-					us.setSaldo(us.getSaldo()-bet);
 					getUser(us.getNombreUsuario(), us.getContrasena()).addApuesta(apuesta);
-					getUser(us.getNombreUsuario(), us.getContrasena()).setSaldo(getUser(us.getNombreUsuario(), us.getContrasena()).getSaldo()-bet);
+					getUser(us.getNombreUsuario(), us.getContrasena()).addSaldo(-bet);
+					
 					Usuario usuarioActual = apuesta.getUser();
-					usuarioActual.setSaldo(usuarioActual.getSaldo()-bet);
+					usuarioActual.addSaldo(-bet);
+
 				}
 			}
 		}
@@ -591,6 +563,7 @@ public class DataAccess {
 		db.getTransaction().commit();
 
 		System.out.println("Nueva apuesta creada: " + apuesta.getBetNumber());
+		System.out.println(">> DataAccess: Nuevo saldo de: " + us.getNombreUsuario() + " : " + us.getSaldo());
 		return apuesta;
 	}
 	
