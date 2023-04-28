@@ -1,8 +1,6 @@
 package gui;
 
-import java.awt.Rectangle;
 import java.util.Vector;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

@@ -25,9 +25,9 @@ public class CerrarEventoGUI extends JFrame {
     private DefaultComboBoxModel<Pronostico> modeloPronosticos = new DefaultComboBoxModel<Pronostico>();
 	
     
-    private static BLFacade facade;
+    private  BLFacade facade;
 
-	public static BLFacade getBusinessLogic() {
+	public  BLFacade getBusinessLogic() {
 		return facade;
 	}
 

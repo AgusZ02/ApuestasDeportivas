@@ -1,14 +1,10 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import businessLogic.BLFacade;
 import domain.Usuario;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;

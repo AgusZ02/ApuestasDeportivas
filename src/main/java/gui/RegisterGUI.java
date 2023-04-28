@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.text.BadLocationException;
 
 import businessLogic.BLFacade;
 import domain.Usuario;
@@ -20,9 +21,11 @@ public class RegisterGUI extends JFrame{
 	private JTextField textDNI;
 	private JPasswordField passwordField;
     private JLabel lblError;
+
 	public RegisterGUI() {
 		getContentPane().setLayout(null);
 		this.setSize(new Dimension(474, 300));
+		setTitle("Registrar usuario");
 		textUser = new JTextField();
 		textUser.setBounds(195, 42, 171, 20);
 		getContentPane().add(textUser);
@@ -73,15 +76,37 @@ public class RegisterGUI extends JFrame{
                         lblError.setVisible(true);
                         lblError.setForeground(Color.RED);
                     } else {
-                        lblError.setForeground(Color.green);
-                        Usuario newUser = new Usuario(us, ps);
-                        newUser.setDni(textDNI.getText());
-                        
-						newUser.setNombre(textName.getText());
-                        
-						logicaNegocio.createUser(newUser);
-                        lblError.setText("User created successfully!");
-                        lblError.setVisible(true);
+						if (textDNI.getText().length() != 9 || !Character.isLetter(textDNI.getText().charAt(textDNI.getText().length()-1))) {
+							
+							lblError.setText("El DNI no es válido");
+							lblError.setVisible(true);
+							lblError.setForeground(Color.RED);
+						} else{
+							try {
+								System.out.println(Integer.parseInt(textDNI.getText().substring(0, textDNI.getText().length()-1))); 
+								lblError.setForeground(Color.GREEN);
+								lblError.setVisible(false);
+								Usuario newUser = new Usuario(us, ps);
+							
+						
+								newUser.setDni(textDNI.getText());
+							
+								newUser.setNombre(textName.getText());
+							
+								logicaNegocio.createUser(newUser);
+								lblError.setText("User created successfully!");
+								lblError.setVisible(true);
+								
+							} catch (Exception e2) {
+								lblError.setText("El DNI no es válido");
+								lblError.setVisible(true);
+								lblError.setForeground(Color.RED);
+							}
+							
+							
+							}
+						
+						
                     }
                 }
                 
@@ -107,7 +132,7 @@ public class RegisterGUI extends JFrame{
 		getContentPane().add(passwordField);
 		
 		lblError = new JLabel("");
-		lblError.setBounds(96, 163, 46, 14);
+		lblError.setBounds(40, 163, 326, 14);
 		getContentPane().add(lblError);
 	}
     public void setUserText(String string) {
