@@ -648,4 +648,13 @@ public class DataAccess {
 		return resultado;
 	}
 
+    public List<Apuesta> getApuestasFrom(Usuario u) {
+        System.out.println(">> DataAccess: findQuestion=> user = " + u.getNombreUsuario());
+		List<Apuesta> resultado = null;
+		TypedQuery<Apuesta> query = db.createQuery("SELECT ap from Apuesta ap WHERE ap.getUser()=?1", Apuesta.class);
+		query.setParameter(1, u);
+		resultado = query.getResultList();
+		return resultado;
+    }
+
 }

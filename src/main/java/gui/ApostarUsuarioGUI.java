@@ -18,7 +18,7 @@ import java.util.*;
 import javax.swing.table.DefaultTableModel;
 
 
-public class UsuarioGUI extends JFrame {
+public class ApostarUsuarioGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
@@ -68,7 +68,7 @@ public class UsuarioGUI extends JFrame {
 	
 	
 
-	public UsuarioGUI(Usuario u)
+	public ApostarUsuarioGUI(Usuario u)
 	{
 		
 		try
@@ -151,7 +151,10 @@ public class UsuarioGUI extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				jButton2_actionPerformed(e);
+				MenuUsuarioGUI ventana = new MenuUsuarioGUI(u);
+				ventana.setVisible(true);
+				dispose();
+				
 			}
 		});
 
@@ -360,10 +363,6 @@ public class UsuarioGUI extends JFrame {
 		lblSaldo.setBounds(449, 15, 164, 13);
 		getContentPane().add(lblSaldo);
 		
-	}
-
-	private void jButton2_actionPerformed(ActionEvent e) {
-		System.exit(0);
 	}
 	public void setBussinessLogic(BLFacade b){
 		this.facade = b;

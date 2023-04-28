@@ -275,7 +275,7 @@ public class LoginGUI extends JFrame {
 							a.setVisible(true);
 							
 						} else {
-							UsuarioGUI b = new UsuarioGUI(user);
+							MenuUsuarioGUI b = new MenuUsuarioGUI(user);
 							b.setBussinessLogic(logicaNegocio);
 							b.setVisible(true);
 						}

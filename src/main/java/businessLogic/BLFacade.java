@@ -122,4 +122,6 @@ public interface BLFacade {
     public void cerrarEvento(Event ev, Question q, Pronostico p, boolean b);
 
 	public Question findQuestion(int q);
+
+    Vector<Apuesta> getApuestasFrom(Usuario u);
 }

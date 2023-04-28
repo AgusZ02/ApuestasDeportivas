@@ -310,4 +310,13 @@ public class BLFacadeImplementation implements BLFacade {
 
 	}
 
+	@Override
+	public Vector<Apuesta> getApuestasFrom(Usuario u) {
+		Vector<Apuesta> resultado = null;
+		dbManager.open(false);
+		resultado = new Vector<Apuesta>(dbManager.getApuestasFrom(u));
+		dbManager.close();
+		return resultado;
+	}
+
 }
