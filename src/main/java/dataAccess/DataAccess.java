@@ -657,4 +657,13 @@ public class DataAccess {
 		return resultado;
     }
 
+    public void addSaldo(Usuario u, double saldo) {
+		db.getTransaction().begin();
+		Usuario user = db.find(Usuario.class, u.getNombreUsuario());
+		user.addSaldo(saldo);
+		u.addSaldo(saldo);
+		db.getTransaction().commit();
+		
+    }
+
 }

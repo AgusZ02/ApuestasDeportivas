@@ -53,6 +53,9 @@ public class MenuUsuarioGUI extends JFrame {
 		btnRecargar = new JButton("Recargar saldo");
 		btnRecargar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				RecargarSaldoUsuarioGUI ventana = new RecargarSaldoUsuarioGUI(user);
+				ventana.setVisible(true);
+				dispose();
 				
 			}
 		});

@@ -319,4 +319,11 @@ public class BLFacadeImplementation implements BLFacade {
 		return resultado;
 	}
 
+	@Override
+	public void addSaldo(Usuario u, double saldo) {
+		dbManager.open(false);
+		dbManager.addSaldo(u, saldo);
+		dbManager.close();
+	}
+
 }

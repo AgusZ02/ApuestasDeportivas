@@ -124,4 +124,6 @@ public interface BLFacade {
 	public Question findQuestion(int q);
 
     Vector<Apuesta> getApuestasFrom(Usuario u);
+
+    void addSaldo(Usuario u, double saldo);
 }
