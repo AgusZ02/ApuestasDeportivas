@@ -73,7 +73,9 @@ public class MenuUsuarioGUI extends JFrame {
 		btnCerrar = new JButton("Cerrar sesión");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				LoginGUI login = new LoginGUI();
+				login.setVisible(true);
+				dispose();
 			}
 		});
 		btnCerrar.setBounds(10, 157, 208, 23);
