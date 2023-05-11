@@ -49,7 +49,6 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
-				u.addSaldo(Double.parseDouble(textFieldSaldo.getText()));
 				saldo = u.getSaldo();
 				lblSaldoActual.setText(String.format("Saldo actual: %f",saldo));
 			}

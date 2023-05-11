@@ -65,7 +65,7 @@ public class RegisterGUI extends JFrame{
                 String ps = new String(passwordField.getPassword());
                 BLFacade logicaNegocio = LoginGUI.getBusinessLogic();
                 
-                if (textDNI.getText().isBlank() || textName.getText().isBlank() || textUser.getText().isBlank() || passwordField.getPassword().length == 0) {
+                if (textDNI.getText().isEmpty() || textName.getText().isEmpty() || textUser.getText().isEmpty() || passwordField.getPassword().length == 0) {
                     lblError.setText("Error, hay algún campo vacío.");
                     lblError.setVisible(true);
                     lblError.setForeground(Color.RED);
