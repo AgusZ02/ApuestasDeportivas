@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 public class MenuUsuarioGUI extends JFrame {
 
@@ -26,7 +27,7 @@ public class MenuUsuarioGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btnApostar = new JButton("Apostar");
+		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblApostar"));
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(user); //TODO: cambiar por nueva ventana
@@ -38,7 +39,7 @@ public class MenuUsuarioGUI extends JFrame {
 		btnApostar.setBounds(10, 56, 208, 23);
 		contentPane.add(btnApostar);
 		
-		btnConsultar = new JButton("Ver mis apuestas");
+		btnConsultar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnVerAPuestas"));
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultarApuestasUsuarioGUI ventana = new ConsultarApuestasUsuarioGUI(user);
@@ -50,7 +51,7 @@ public class MenuUsuarioGUI extends JFrame {
 		btnConsultar.setBounds(10, 90, 208, 23);
 		contentPane.add(btnConsultar);
 		
-		btnRecargar = new JButton("Recargar saldo");
+		btnRecargar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnRecargarSaldo")); //
 		btnRecargar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RecargarSaldoUsuarioGUI ventana = new RecargarSaldoUsuarioGUI(user);
@@ -62,15 +63,15 @@ public class MenuUsuarioGUI extends JFrame {
 		btnRecargar.setBounds(10, 123, 208, 23);
 		contentPane.add(btnRecargar);
 		
-		lblBienvenida = new JLabel("Bienvenid@, " + user.getNombre());
+		lblBienvenida = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblBienvenida") + " " + user.getNombre());
 		lblBienvenida.setBounds(10, 11, 208, 14);
 		contentPane.add(lblBienvenida);
 		
-		lblSaldo = new JLabel("Tu saldo es de: " + user.getSaldo());
+		lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo") + " " + user.getSaldo());
 		lblSaldo.setBounds(10, 31, 208, 14);
 		contentPane.add(lblSaldo);
 		
-		btnCerrar = new JButton("Cerrar sesión");
+		btnCerrar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnCerrar"));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginGUI login = new LoginGUI();

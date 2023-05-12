@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 
 public class RecargarSaldoUsuarioGUI extends JFrame {
@@ -32,11 +33,11 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblSaldoActual = new JLabel();
-		lblSaldoActual.setText(String.format("Saldo actual: %f",saldo));
+		lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
 		lblSaldoActual.setBounds(10, 11, 198, 14);
 		contentPane.add(lblSaldoActual);
 		
-		lblAnadir = new JLabel("Añadir saldo");
+		lblAnadir = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("btnRecargarSaldo"));
 		lblAnadir.setBounds(10, 39, 68, 14);
 		contentPane.add(lblAnadir);
 		
@@ -45,12 +46,12 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		contentPane.add(textFieldSaldo);
 		textFieldSaldo.setColumns(10);
 
-		btnAnadir = new JButton("Añadir");
+		btnAnadir = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnRecargarSaldo"));
 		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
 				saldo = u.getSaldo();
-				lblSaldoActual.setText(String.format("Saldo actual: %f",saldo));
+				lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
 			}
 		});
 		btnAnadir.setBounds(10, 116, 89, 23);
@@ -58,7 +59,7 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		
 		
 		
-		btnSalir = new JButton("Salir");
+		btnSalir = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MenuUsuarioGUI ventana = new MenuUsuarioGUI(u);

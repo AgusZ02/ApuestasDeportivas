@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ public class ConsultarApuestasUsuarioGUI extends JFrame {
 	private JPanel contentPane;
 	private JTable table = new JTable();
 	private DefaultTableModel tableModel = new DefaultTableModel();
-	private String[] columnNames = new String[] {"ID","Evento","Pregunta","Pronostico","Cantidad","Finalizado"};
+	private String[] columnNames = new String[] {ResourceBundle.getBundle("Etiquetas").getString("strID"),ResourceBundle.getBundle("Etiquetas").getString("strEvento"),ResourceBundle.getBundle("Etiquetas").getString("strPregunta"),ResourceBundle.getBundle("Etiquetas").getString("strPronostico"),ResourceBundle.getBundle("Etiquetas").getString("strCantidad"),ResourceBundle.getBundle("Etiquetas").getString("strFinalizado")};
 	private Vector<Apuesta> vector;
 	private JScrollPane scrollPane = new JScrollPane();
 	private JButton btnVolver;
@@ -65,7 +66,7 @@ public class ConsultarApuestasUsuarioGUI extends JFrame {
 
 		contentPane.add(scrollPane);
 		
-		btnVolver = new JButton("Volver");
+		btnVolver = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnVolver.setBounds(156, 233, 137, 23);
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
