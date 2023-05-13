@@ -90,3 +90,4 @@ nb-configuration.xml
 *.obs
 *.obs$
 *.temp$
+src/main/resources/config.xml
