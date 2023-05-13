@@ -123,5 +123,7 @@ public interface BLFacade {
 
 	public Question findQuestion(int q);
 
-    Vector<Apuesta> getApuestasFrom(Usuario u);
+    public Vector<domain.Apuesta> getApuestasFrom(Usuario u);
+
+	public Vector<domain.Question> getQuestions(Event ev);
 }

@@ -22,51 +22,29 @@ public class ApostarUsuarioGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
-	private final JLabel jLabelQueries = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries")); 
 	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events")); 
-	private final JLabel lblPronosticos = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblPronosticos"));
-	private JLabel lblSaldo;
 	
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
-	private JButton btnApostar;
+	private JButton btnVerPreguntasPronosticos = new JButton(ResourceBundle.getBundle("Etiquetas").getString("VerPreguntasPronosticos")); 
+	
 	// Code for JCalendar
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
 	private Calendar calendarAct = null;
-	private JScrollPane scrollPaneEvents = new JScrollPane();
-	private JScrollPane scrollPaneQueries = new JScrollPane();
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
+	
 	private double saldo;
+	
+	private JScrollPane scrollPaneEvents = new JScrollPane();
 	private JTable tableEvents= new JTable();
-	private JTable tableQueries = new JTable();
-	private JTable tableProns = new JTable();
-
-
 	private DefaultTableModel tableModelEvents;
-	private DefaultTableModel tableModelQueries;
-	private DefaultTableModel tableModelProns;
-	private final JScrollPane scrollPanePron = new JScrollPane();
-	private JTextField textFieldApuesta;
-	private JLabel lblApostar;
-	private BLFacade facade = LoginGUI.getBusinessLogic();;
+
+	private static BLFacade facade = LoginGUI.getBusinessLogic();;
 	private String[] columnNamesEvents = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
 			ResourceBundle.getBundle("Etiquetas").getString("FinalizedEvent"),
-	};
-	private String[] columnNamesQueries = new String[] {
-			ResourceBundle.getBundle("Etiquetas").getString("QueryN"), 
-			ResourceBundle.getBundle("Etiquetas").getString("Query"),
-			ResourceBundle.getBundle("Etiquetas").getString("BetMin"),
-	};
-	
-	private String[] columnNamesProns = new String[] { ResourceBundle.getBundle("Etiquetas").getString("PronN"),
-			ResourceBundle.getBundle("Etiquetas").getString("Pron"),
-			ResourceBundle.getBundle("Etiquetas").getString("Multip")
-
-	};
-	
-	
+	};	
 
 	public ApostarUsuarioGUI(Usuario u)
 	{
@@ -87,80 +65,44 @@ public class ApostarUsuarioGUI extends JFrame {
 
 		
 		saldo = u.getSaldo();
-		lblApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblApostar")); //$NON-NLS-1$ //$NON-NLS-2$
-		lblApostar.setBounds(338, 354, 39, 20);
-		this.getContentPane().add(lblApostar, null);
 		
-		textFieldApuesta = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
-		textFieldApuesta.setBounds(413, 354, 122, 20);
-		textFieldApuesta.setColumns(10);
-		this.getContentPane().add(textFieldApuesta, null);
-		
-		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
-		btnApostar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
-				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
-				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 4);
-				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(),3);
-				
-				if (betRealizada < qu.getBetMinimum()) {
-					VentanaAvisos error = new VentanaAvisos("<html>Error: La apuesta no llega al importe m�nimo.<br/>No es posible realizar la apuesta.</html>", "");
-					error.setVisible(true);
-				} else {
-					Pronostico pred = facade.getPron(pr);
-					VentanaAvisos vAvisos;
-					try{
-						facade.createApuesta(betRealizada, ev, qu, pred, u);
-						saldo -= betRealizada;
-						lblSaldo.setText("Saldo disponible: " + saldo);
-						repaint();
-					} catch(NotEnoughMoney NEM){
-						vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
-						vAvisos.setVisible(true);
-					} catch(EventExpired EE){
-						vAvisos = new VentanaAvisos("El evento ha terminado.", "EventExpired");
-					}
-					
-					//lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
-					lblPronosticos.setText("Apuesta realizada correctamente");
-				}
-				//String pronosticoSeleccionado = (String) tableProns.getValueAt(tableProns.getSelectedRow(), 1);
-				
-			}
-		});
-		btnApostar.setBounds(549, 353, 89, 23);
-		this.getContentPane().add(btnApostar, null);
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(700, 500));
+		this.setSize(new Dimension(700, 353));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 
-		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
-		jLabelQueries.setBounds(40, 227, 288, 14);
-		jLabelEvents.setBounds(295, 19, 259, 16);
+		jLabelEventDate.setBounds(new Rectangle(40, 24, 225, 16));
+		jLabelEvents.setBounds(292, 24, 346, 16);
 
 		this.getContentPane().add(jLabelEventDate, null);
-		this.getContentPane().add(jLabelQueries);
 		this.getContentPane().add(jLabelEvents);
 
-		jButtonClose.setBounds(new Rectangle(264, 419, 140, 30));
-
-		jButtonClose.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		jButtonClose.setBounds(new Rectangle(260, 272, 140, 30));
+		jButtonClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				MenuUsuarioGUI ventana = new MenuUsuarioGUI(u);
 				ventana.setVisible(true);
 				dispose();
-				
 			}
 		});
-
 		this.getContentPane().add(jButtonClose, null);
 
-
+		
+		btnVerPreguntasPronosticos.setBounds(224, 230, 207, 30);
+		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i=tableEvents.getSelectedRow();
+				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i,3);
+				PreguntasApuestasUsuarioGUI ventana = new PreguntasApuestasUsuarioGUI(u, ev);
+				ventana.setBussinessLogic(facade);
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
+		this.getContentPane().add(btnVerPreguntasPronosticos);
+		
+		
+		
 		jCalendar1.setBounds(new Rectangle(40, 50, 225, 150));
 
 		
@@ -238,7 +180,7 @@ public class ApostarUsuarioGUI extends JFrame {
 						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(3)); // not shown in JTable
 					} catch (Exception e1) {
 
-						jLabelQueries.setText(e1.getMessage());
+						//jLabelQueries.setText(e1.getMessage());
 					}
 
 				}
@@ -248,11 +190,8 @@ public class ApostarUsuarioGUI extends JFrame {
 		this.getContentPane().add(jCalendar1, null);
 		
 		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
-		scrollPaneQueries.setBounds(new Rectangle(40, 251, 288, 91));
-		scrollPanePron.setBounds(new Rectangle(350, 272, 300, 116));
 
-
-		tableEvents.addMouseListener(new MouseAdapter() {
+		/*tableEvents.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int i=tableEvents.getSelectedRow();
@@ -285,39 +224,7 @@ public class ApostarUsuarioGUI extends JFrame {
 				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(4)); // not
 
 			}
-		});
-		
-		tableQueries.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int i = tableQueries.getSelectedRow();
-				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 4); // obtain ev object
-
-				Vector<Pronostico> pronosticos1 = qu.getPronosticos();
-
-				tableModelProns.setDataVector(null, columnNamesProns);
-				tableModelProns.setColumnCount(3);
-
-				if (pronosticos1.isEmpty())
-					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("NoPredictions") + ": " + qu.toString());
-				else
-					lblPronosticos.setText(
-							ResourceBundle.getBundle("Etiquetas").getString("SelectedPron") + " " + qu.toString());
-
-				for (domain.Pronostico p : pronosticos1) {
-					Vector<Object> row = new Vector<Object>();
-					row.add(p.getPronNumber());
-					row.add(p.toString());
-					row.add(p.getCuotaGanancia());
-					tableModelProns.addRow(row);
-					
-				}
-				tableProns.getColumnModel().getColumn(0).setPreferredWidth(10);
-				// tableProns.getColumnModel().getColumn(2).setPreferredWidth(10);
-
-			}
-		});
+		});*/
 
 		scrollPaneEvents.setViewportView(tableEvents);
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
@@ -328,43 +235,17 @@ public class ApostarUsuarioGUI extends JFrame {
 		tableEvents.getColumnModel().getColumn(2).setPreferredWidth(150);
 		tableEvents.setDefaultEditor(Object.class, null);
 
-		scrollPaneQueries.setViewportView(tableQueries);
-		tableModelQueries = new DefaultTableModel(null, columnNamesQueries);
-
-		tableQueries.setModel(tableModelQueries);
-		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
-		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-		tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
-		tableQueries.setDefaultEditor(Object.class, null);
-
-		
-
-		scrollPanePron.setViewportView(tableProns);
-		tableModelProns = new DefaultTableModel(null, columnNamesProns);
-
-		tableProns.setModel(tableModelProns);
-		tableProns.getColumnModel().getColumn(0).setPreferredWidth(10);
-		tableProns.getColumnModel().getColumn(2).setPreferredWidth(10);
-		tableProns.setDefaultEditor(Object.class, null);
-
 		this.getContentPane().add(scrollPaneEvents, null);
-		this.getContentPane().add(scrollPaneQueries, null);
-		this.getContentPane().add(scrollPanePron, null);
-
-		scrollPanePron.setBounds(new Rectangle(350, 272, 300, 116));
-		scrollPanePron.setBounds(338, 251, 300, 91);
 		
-		lblPronosticos.setBounds(338, 227, 300, 14);
-		this.getContentPane().add(lblPronosticos, null);
 		
-		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UsuarioGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
-		lblSaldo = new JLabel();
-		lblSaldo.setText("Saldo disponible: " + saldo);
-		lblSaldo.setBounds(449, 15, 164, 13);
-		getContentPane().add(lblSaldo);
 		
 	}
-	public void setBussinessLogic(BLFacade b){
+	
+	public void setBussinessLogic(BLFacade b) {
 		this.facade = b;
+	}
+	
+	public static BLFacade getBusinessLogic() {
+		return ApostarUsuarioGUI.facade;
 	}
 }

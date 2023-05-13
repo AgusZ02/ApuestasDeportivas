@@ -318,5 +318,14 @@ public class BLFacadeImplementation implements BLFacade {
 		dbManager.close();
 		return resultado;
 	}
+	
+	@Override
+	public Vector<domain.Question> getQuestions(Event ev) {
+		Vector<domain.Question> resultado = null;
+		dbManager.open(false);
+		resultado = new Vector<domain.Question>(dbManager.getQuestions(ev));
+		dbManager.close();
+		return resultado;
+	}
 
 }
