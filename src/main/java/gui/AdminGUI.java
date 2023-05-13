@@ -3,12 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
-import domain.Pronostico;
-import domain.Question;
 import domain.Usuario;
-import exceptions.EventFinished;
-import exceptions.PredictionAlreadyExists;
-import exceptions.QuestionAlreadyExist;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -39,7 +34,7 @@ public class AdminGUI extends JFrame {
 
 	private DefaultTableModel tableModelEvents;
 
-	private static BLFacade facade = LoginGUI.getBusinessLogic();
+	private BLFacade facade = LoginGUI.getBusinessLogic();
 
 	private JTextField tfNewEvent;
 
@@ -230,8 +225,8 @@ public class AdminGUI extends JFrame {
 		this.facade = b;
 	}
 
-	public static BLFacade getBusinessLogic() {
-		return AdminGUI.facade;
+	public BLFacade getBusinessLogic() {
+		return facade;
 	}
 
 }

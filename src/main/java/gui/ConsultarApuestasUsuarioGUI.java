@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ConsultarApuestasUsuarioGUI extends JFrame {
-	private BLFacade bl = MenuUsuarioGUI.getBusinessLogic();
+	private BLFacade bl = LoginGUI.getBusinessLogic();
 	private JPanel contentPane;
 	private JTable table = new JTable();
 	private DefaultTableModel tableModel = new DefaultTableModel();

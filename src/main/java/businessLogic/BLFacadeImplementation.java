@@ -259,7 +259,7 @@ public class BLFacadeImplementation implements BLFacade {
 	@WebMethod
 	public void createApuesta(double bet, Event ev, Question qu, Pronostico pronostico, Usuario us) throws NotEnoughMoney, EventExpired {
 		if (bet <=0){
-			System.out.println("Cantidad apostada incorrecta"); // TODO: mostrar este error en la app
+			System.out.println("Cantidad apostada incorrecta");
 		} if (us.getSaldo()<bet) {
 			throw new NotEnoughMoney();
 		} if (ev.getEventDate().before(new Date())) {
@@ -294,7 +294,6 @@ public class BLFacadeImplementation implements BLFacade {
 		dbManager.open(false);
 		if (ev.getQuestions().isEmpty()) {
 			return;
-			//TODO:throw new NoQuestions;
 		}
 		dbManager.cerrarEvento(ev, q, p, b);
 		dbManager.close();

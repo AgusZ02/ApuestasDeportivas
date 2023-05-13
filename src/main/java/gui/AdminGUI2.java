@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,14 +23,12 @@ import domain.Event;
 import domain.Pronostico;
 import domain.Question;
 import domain.Usuario;
-import exceptions.EventExpired;
 import exceptions.EventFinished;
-import exceptions.NotEnoughMoney;
 import exceptions.PredictionAlreadyExists;
 import exceptions.QuestionAlreadyExist;
 
 public class AdminGUI2 extends JFrame {
-	private static BLFacade businessLogic = ApostarUsuarioGUI.getBusinessLogic();
+	private static BLFacade businessLogic = LoginGUI.getBusinessLogic();
 	private JPanel contentPane;
 
 	private DefaultTableModel tableModelQueries;

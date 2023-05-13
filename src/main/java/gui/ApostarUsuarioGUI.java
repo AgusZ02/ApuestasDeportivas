@@ -4,12 +4,10 @@ import businessLogic.BLFacade;
 import configuration.UtilDate;
 import com.toedter.calendar.JCalendar;
 import domain.Usuario;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import java.text.DateFormat;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,11 +27,8 @@ public class ApostarUsuarioGUI extends JFrame {
 	private Calendar calendarAct = null;
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
 	
-	private double saldo;
-	
 	//Variables para el calendario
 	private Date firstDay = new Date();
-	private DateFormat dateformat1;
 	private int monthAnt, monthAct;
 	private Date dateCalendar = new Date();
 
@@ -41,7 +36,7 @@ public class ApostarUsuarioGUI extends JFrame {
 	private JTable tableEvents= new JTable();
 	private DefaultTableModel tableModelEvents;
 
-	private static BLFacade facade = LoginGUI.getBusinessLogic();;
+	private BLFacade facade = LoginGUI.getBusinessLogic();;
 	private String[] columnNamesEvents = new String[] {
 			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
@@ -66,7 +61,6 @@ public class ApostarUsuarioGUI extends JFrame {
 	
 	private void jbInit(Usuario u) throws Exception
 	{
-		saldo = u.getSaldo();
 		this.getContentPane().setLayout(null);
 		this.setSize(new Dimension(700, 353));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -113,7 +107,7 @@ public class ApostarUsuarioGUI extends JFrame {
 		this.jCalendar1.addPropertyChangeListener(new PropertyChangeListener()
 		{
 			
-			public void propertyChange(PropertyChangeEvent propertychangeevent) //TODO: AQUIIIIIIIIIIIIIIIIIIIIIIIIII 
+			public void propertyChange(PropertyChangeEvent propertychangeevent)
 			{
 				if (propertychangeevent.getPropertyName().equals("locale"))
 				{
@@ -123,7 +117,6 @@ public class ApostarUsuarioGUI extends JFrame {
 				{
 					calendarAnt = (Calendar) propertychangeevent.getOldValue();
 					calendarAct = (Calendar) propertychangeevent.getNewValue();
-					dateformat1 = DateFormat.getDateInstance(1, jCalendar1.getLocale());
 					//					jCalendar1.setCalendar(calendarAct);
 					firstDay=UtilDate.trim(new Date(jCalendar1.getCalendar().getTime().getTime()));
 					monthAnt = calendarAnt.get(Calendar.MONTH);
@@ -168,8 +161,8 @@ public class ApostarUsuarioGUI extends JFrame {
 		this.facade = b;
 	}
 	
-	public static BLFacade getBusinessLogic() {
-		return ApostarUsuarioGUI.facade;
+	public BLFacade getBusinessLogic() {
+		return facade;
 	}
 	
 	private void inicializarTablaEvents(Date thisDate){

@@ -25,13 +25,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import javax.swing.SwingConstants;
 
 public class PreguntasApuestasUsuarioGUI extends JFrame {
 	
 	//private static final long serialVersionUID = 1L;
 
-	private static BLFacade businessLogic = ApostarUsuarioGUI.getBusinessLogic();
+	private static BLFacade businessLogic = LoginGUI.getBusinessLogic();
 	private JPanel contentPane;
 
 	private DefaultTableModel tableModelQueries;
@@ -244,7 +243,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		JButton btnAtras = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(u, ev.getEventDate()); //TODO
+				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(u, ev.getEventDate());
 				ventana.setBussinessLogic(businessLogic);
 				ventana.setVisible(true);
 				dispose();

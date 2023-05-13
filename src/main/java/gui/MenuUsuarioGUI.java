@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class MenuUsuarioGUI extends JFrame {
 
 	private JPanel contentPane;
-	private static BLFacade businessLogic = LoginGUI.getBusinessLogic();
+	private BLFacade businessLogic = LoginGUI.getBusinessLogic();
 	private JButton btnApostar, btnConsultar, btnCerrar, btnRecargar;
 	private JLabel lblBienvenida, lblSaldo;
 
@@ -31,7 +31,7 @@ public class MenuUsuarioGUI extends JFrame {
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblApostar"));
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(user, new Date()); //TODO: cambiar por nueva ventana
+				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(user, new Date());
 				ventana.setBussinessLogic(businessLogic);
 				ventana.setVisible(true);
 				dispose();
@@ -91,7 +91,7 @@ public class MenuUsuarioGUI extends JFrame {
 
 
 
-	public static BLFacade getBusinessLogic() {
-		return MenuUsuarioGUI.businessLogic;
+	public BLFacade getBusinessLogic() {
+		return this.businessLogic;
 	}
 }
