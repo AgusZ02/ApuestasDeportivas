@@ -84,12 +84,17 @@ public class ApostarUsuarioGUI extends JFrame {
 		btnVerPreguntasPronosticos.setBounds(224, 230, 207, 30);
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i=tableEvents.getSelectedRow();
-				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i, 3);
-				PreguntasApuestasUsuarioGUI ventana = new PreguntasApuestasUsuarioGUI(u, ev);
-				ventana.setBussinessLogic(facade);
-				ventana.setVisible(true);
-				dispose();
+				try {
+					int i=tableEvents.getSelectedRow();
+					domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i, 3);
+					PreguntasApuestasUsuarioGUI ventana = new PreguntasApuestasUsuarioGUI(u, ev);
+					ventana.setBussinessLogic(facade);
+					ventana.setVisible(true);
+					dispose();
+				}catch(Exception ex) {
+					VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecEvento"), null);
+					ventana.setVisible(true);
+				}
 			}
 		});
 		this.getContentPane().add(btnVerPreguntasPronosticos);

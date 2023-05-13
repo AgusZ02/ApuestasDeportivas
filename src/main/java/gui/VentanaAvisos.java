@@ -17,7 +17,7 @@ public class VentanaAvisos extends JFrame {
 
 	public VentanaAvisos(String mensaje, String titulo) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 526, 266);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setTitle(titulo);
@@ -31,12 +31,12 @@ public class VentanaAvisos extends JFrame {
 				dispose();
 			}
 		});
-		btnNewButton.setBounds(155, 227, 89, 23);
+		btnNewButton.setBounds(209, 197, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblMsj = new JLabel(mensaje);
 		lblMsj.setVerticalAlignment(SwingConstants.TOP);
-		lblMsj.setBounds(10, 11, 424, 205);
+		lblMsj.setBounds(10, 11, 490, 175);
 		contentPane.add(lblMsj);
 	}
 }

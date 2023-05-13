@@ -199,33 +199,41 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnApostar")); //$NON-NLS-1$ //$NON-NLS-2$
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					double betRealizada = Double.parseDouble(textFieldApuesta.getText());
+					Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
+					Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 4);
 
-				double betRealizada = Double.parseDouble(textFieldApuesta.getText());
-				Integer pr = (Integer) tableProns.getValueAt(tableProns.getSelectedRow(), 0);
-				Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 4);
-
-				if (betRealizada < qu.getBetMinimum()) {
-					VentanaAvisos error = new VentanaAvisos(
-							"<html>Error: La apuesta no llega al importe minimo.<br/>No es posible realizar la apuesta.</html>",
-							"");
-					error.setVisible(true);
-				} else {
-					Pronostico pred = businessLogic.getPron(pr);
-					VentanaAvisos vAvisos;
-					try {
-						businessLogic.createApuesta(betRealizada, ev, qu, pred, u);
-						u.setSaldo(u.getSaldo() - betRealizada);
-						lblSaldo.setText("Saldo disponible: " + u.getSaldo());
-						repaint();
-					} catch (NotEnoughMoney NEM) {
-						vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
-						vAvisos.setVisible(true);
-					} catch (EventExpired EE) {
-						vAvisos = new VentanaAvisos("El evento ha terminado.", "EventExpired");
+					if (betRealizada < qu.getBetMinimum()) {
+						VentanaAvisos error = new VentanaAvisos(
+								"<html>Error: La apuesta no llega al importe minimo.<br/>No es posible realizar la apuesta.</html>",
+								"");
+						error.setVisible(true);
+					} else {
+						Pronostico pred = businessLogic.getPron(pr);
+						VentanaAvisos vAvisos;
+						try {
+							businessLogic.createApuesta(betRealizada, ev, qu, pred, u);
+							u.setSaldo(u.getSaldo() - betRealizada);
+							lblSaldo.setText("Saldo disponible: " + u.getSaldo());
+							repaint();
+						} catch (NotEnoughMoney NEM) {
+							vAvisos = new VentanaAvisos("El usuario no tiene suficiente dinero", "NotEnoughMoney");
+							vAvisos.setVisible(true);
+						} catch (EventExpired EE) {
+							vAvisos = new VentanaAvisos("El evento ha terminado.", "EventExpired");
+							vAvisos.setVisible(true);
+						}
+						lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("ApuestaRealizada"));
 					}
-					// lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("Apuesta realizada"));
-					lblPronosticos.setText("Apuesta realizada correctamente");
+				} catch (NumberFormatException e1) {
+					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorNumFormatBtnApostar"), null);
+					vAvisos.setVisible(true);
+				} catch (ArrayIndexOutOfBoundsException e2) {
+					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorPredBtnApostar"), null);
+					vAvisos.setVisible(true);
 				}
+				
 			}
 		});
 		btnApostar.setBounds(371, 322, 89, 23);
