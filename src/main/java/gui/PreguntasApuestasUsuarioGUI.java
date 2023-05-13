@@ -77,7 +77,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		scrollPaneQueries.setViewportView(tableQueries);
 		tableModelQueries = new DefaultTableModel(null, columnNamesQueries);
 		
-		scrollPanePron.setBounds(new Rectangle(12, 194, 542, 116));
+		scrollPanePron.setBounds(new Rectangle(12, 195, 542, 116));
 		scrollPanePron.setViewportView(tableProns);
 		tableModelProns = new DefaultTableModel(null, columnNamesProns);
 		
@@ -180,18 +180,18 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UsuarioGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblSaldo = new JLabel();
 		lblSaldo.setText("Saldo disponible: " + u.getSaldo());
-		lblSaldo.setBounds(322, 194, 232, 21);
+		lblSaldo.setBounds(395, 12, 159, 21);
 		getContentPane().add(lblSaldo);
 		
 		
 		// JLabel (Apostar)
 		lblApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblApostar")); //$NON-NLS-1$ //$NON-NLS-2$
-		lblApostar.setBounds(322, 226, 39, 20);
+		lblApostar.setBounds(80, 323, 81, 20);
 		this.getContentPane().add(lblApostar, null);
 
 		// JTextField
 		textFieldApuesta = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
-		textFieldApuesta.setBounds(373, 226, 181, 20);
+		textFieldApuesta.setBounds(179, 323, 181, 22);
 		textFieldApuesta.setColumns(10);
 		this.getContentPane().add(textFieldApuesta, null);
 
