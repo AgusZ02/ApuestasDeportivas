@@ -240,29 +240,20 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		btnApostar.setBounds(371, 322, 89, 23);
 		this.getContentPane().add(btnApostar, null);
 		
-		JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir")); //$NON-NLS-1$ //$NON-NLS-2$
-		btnClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(u, ev.getEventDate());
-				ventana.setVisible(true);
-				dispose();
-			}
-		});
-		btnClose.setBounds(227, 382, 98, 26);
-		contentPane.add(btnClose);
 		
-		
-		JButton btnAtras = new JButton(ResourceBundle.getBundle("Etiquetas").getString("PreguntasApuestasUsuarioGUI.btnNewButton.text"));
+		JButton btnAtras = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(u, ev.getEventDate()); //TODO
 				ventana.setBussinessLogic(businessLogic);
+				ventana.setVisible(true);
+				dispose();
 				
 			}
 		});
 		
 		
-		btnAtras.setBounds(175, 329, 232, 32);
+		btnAtras.setBounds(165, 377, 232, 32);
 		contentPane.add(btnAtras);
 
 	}
