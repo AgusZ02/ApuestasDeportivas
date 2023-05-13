@@ -270,7 +270,7 @@ public class LoginGUI extends JFrame {
 					if (logicaNegocio.login(us, ps)) {
 						Usuario user = logicaNegocio.getUsuario(us);
 						if (user.esAdmin()) {
-							AdminGUI a = new AdminGUI();
+							AdminGUI a = new AdminGUI(user);
 							a.setBussinessLogic(logicaNegocio);
 							a.setVisible(true);
 							

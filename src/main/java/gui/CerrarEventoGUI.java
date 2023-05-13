@@ -13,6 +13,7 @@ import businessLogic.BLFacade;
 import domain.Event;
 import domain.Pronostico;
 import domain.Question;
+import domain.Usuario;
 
 public class CerrarEventoGUI extends JFrame {
 
@@ -35,7 +36,7 @@ public class CerrarEventoGUI extends JFrame {
         this.facade = b;
     }
     
-	public CerrarEventoGUI(Event ev) {
+	public CerrarEventoGUI(Usuario u, Event ev) {
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,7 +92,7 @@ public class CerrarEventoGUI extends JFrame {
 		btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                AdminGUI ventana = new AdminGUI();
+                AdminGUI ventana = new AdminGUI(u);
                 ventana.setVisible(true);
 				dispose();
                 

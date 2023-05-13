@@ -46,24 +46,17 @@ public class ApostarUsuarioGUI extends JFrame {
 			ResourceBundle.getBundle("Etiquetas").getString("FinalizedEvent"),
 	};	
 
-	public ApostarUsuarioGUI(Usuario u)
-	{
-		
-		try
-		{
+	public ApostarUsuarioGUI(Usuario u)	{
+		try	{
 			jbInit(u);
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	
-	private void jbInit(Usuario u) throws Exception
-	{
+	private void jbInit(Usuario u) throws Exception {
 
-		
 		saldo = u.getSaldo();
 		
 		this.getContentPane().setLayout(null);
@@ -92,7 +85,7 @@ public class ApostarUsuarioGUI extends JFrame {
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i=tableEvents.getSelectedRow();
-				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i,3);
+				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i, 3);
 				PreguntasApuestasUsuarioGUI ventana = new PreguntasApuestasUsuarioGUI(u, ev);
 				ventana.setBussinessLogic(facade);
 				ventana.setVisible(true);
@@ -172,7 +165,7 @@ public class ApostarUsuarioGUI extends JFrame {
 								row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,3)
 								tableModelEvents.addRow(row);	
 							}
-							System.out.println("Events "+ev);	
+							System.out.println("Events " + ev);	
 						}
 						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
 						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
@@ -190,43 +183,8 @@ public class ApostarUsuarioGUI extends JFrame {
 		this.getContentPane().add(jCalendar1, null);
 		
 		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
-
-		/*tableEvents.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int i=tableEvents.getSelectedRow();
-				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i,3); // obtain ev object
-				Vector<Question> queries=ev.getQuestions();
-
-				tableModelQueries.setDataVector(null, columnNamesQueries);
-				tableModelQueries.setColumnCount(5);
-
-				if (queries.isEmpty())
-					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("NoQueries")+": "+ev.getDescription());
-				else 
-					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("SelectedEvent")+" "+ev.getDescription());
-
-				for (domain.Question q:queries){
-					Vector<Object> row = new Vector<Object>();
-					if (q.getResult()==null) {
-						row.add(q.getQuestionNumber());
-						row.add(q.toString());
-						row.add(q.getBetMinimum());
-						row.add(q.getResult());
-						row.add(q);
-						tableModelQueries.addRow(row);	
-					}
-				}
-				tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
-				tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-				tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
-				tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
-				tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(4)); // not
-
-			}
-		});*/
-
 		scrollPaneEvents.setViewportView(tableEvents);
+		
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
 
 		tableEvents.setModel(tableModelEvents);
@@ -236,8 +194,6 @@ public class ApostarUsuarioGUI extends JFrame {
 		tableEvents.setDefaultEditor(Object.class, null);
 
 		this.getContentPane().add(scrollPaneEvents, null);
-		
-		
 		
 	}
 	
