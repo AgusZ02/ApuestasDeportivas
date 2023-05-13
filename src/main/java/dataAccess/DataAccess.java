@@ -72,7 +72,7 @@ public class DataAccess {
 			Event ev2 = new Event(2, "Eibar-Barcelona", UtilDate.newDate(year, month, 17));
 			Event ev3 = new Event(3, "Getafe-Celta", UtilDate.newDate(year, month, 17));
 			Event ev4 = new Event(4, "Alaves-Deportivo", UtilDate.newDate(year, month, 17));
-			Event ev5 = new Event(5, "Espaï¿½ol-Villareal", UtilDate.newDate(year, month, 17));
+			Event ev5 = new Event(5, "Español-Villareal", UtilDate.newDate(year, month, 17));
 			Event ev6 = new Event(6, "Las Palmas-Sevilla", UtilDate.newDate(year, month, 17));
 			Event ev7 = new Event(7, "Malaga-Valencia", UtilDate.newDate(year, month, 17));
 			Event ev8 = new Event(8, "Girona-Leganes", UtilDate.newDate(year, month, 17));
@@ -83,7 +83,7 @@ public class DataAccess {
 			Event ev12 = new Event(12, "Eibar-Barcelona", UtilDate.newDate(year, month, 1));
 			Event ev13 = new Event(13, "Getafe-Celta", UtilDate.newDate(year, month, 1));
 			Event ev14 = new Event(14, "Alaves-Deportivo", UtilDate.newDate(year, month, 1));
-			Event ev15 = new Event(15, "Espaï¿½ol-Villareal", UtilDate.newDate(year, month, 1));
+			Event ev15 = new Event(15, "Español-Villareal", UtilDate.newDate(year, month, 1));
 			Event ev16 = new Event(16, "Las Palmas-Sevilla", UtilDate.newDate(year, month, 1));
 
 			Event ev17 = new Event(17, "Malaga-Valencia", UtilDate.newDate(year, month + 1, 28));
@@ -99,12 +99,12 @@ public class DataAccess {
 			Question q6;
 
 			if (Locale.getDefault().equals(new Locale("es"))) {
-				q1 = ev1.addQuestion("ï¿½Quien ganara el partido?", 1);
-				q2 = ev1.addQuestion("ï¿½Quien metera el primer gol?", 2);
-				q3 = ev11.addQuestion("ï¿½Quien ganara el partido?", 1);
-				q4 = ev11.addQuestion("ï¿½Cuantos goles se marcaran?", 2);
-				q5 = ev17.addQuestion("ï¿½Quien ganara el partido?", 1);
-				q6 = ev17.addQuestion("ï¿½Habra goles en la primera parte?", 2);
+				q1 = ev1.addQuestion("¿Quien ganara el partido?", 1);
+				q2 = ev1.addQuestion("¿Quien metera el primer gol?", 2);
+				q3 = ev11.addQuestion("¿Quien ganara el partido?", 1);
+				q4 = ev11.addQuestion("¿Cuantos goles se marcaran?", 2);
+				q5 = ev17.addQuestion("¿Quien ganara el partido?", 1);
+				q6 = ev17.addQuestion("¿Habra goles en la primera parte?", 2);
 			} else if (Locale.getDefault().equals(new Locale("en"))) {
 				q1 = ev1.addQuestion("Who will win the match?", 1);
 				q2 = ev1.addQuestion("Who will score first?", 2);

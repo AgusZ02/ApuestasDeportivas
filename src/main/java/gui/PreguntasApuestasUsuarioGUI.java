@@ -64,7 +64,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 
 	public PreguntasApuestasUsuarioGUI(Usuario u, Event evento) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 582, 411);
+		setBounds(100, 100, 582, 459);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -77,7 +77,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		scrollPaneQueries.setViewportView(tableQueries);
 		tableModelQueries = new DefaultTableModel(null, columnNamesQueries);
 		
-		scrollPanePron.setBounds(new Rectangle(12, 194, 300, 116));
+		scrollPanePron.setBounds(new Rectangle(12, 194, 542, 116));
 		scrollPanePron.setViewportView(tableProns);
 		tableModelProns = new DefaultTableModel(null, columnNamesProns);
 		
@@ -186,12 +186,12 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		
 		// JLabel (Apostar)
 		lblApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblApostar")); //$NON-NLS-1$ //$NON-NLS-2$
-		lblApostar.setBounds(12, 333, 39, 20);
+		lblApostar.setBounds(117, 322, 75, 20);
 		this.getContentPane().add(lblApostar, null);
 
 		// JTextField
 		textFieldApuesta = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
-		textFieldApuesta.setBounds(69, 333, 132, 20);
+		textFieldApuesta.setBounds(210, 322, 132, 20);
 		textFieldApuesta.setColumns(10);
 		this.getContentPane().add(textFieldApuesta, null);
 
@@ -206,7 +206,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 
 				if (betRealizada < qu.getBetMinimum()) {
 					VentanaAvisos error = new VentanaAvisos(
-							"<html>Error: La apuesta no llega al importe m�nimo.<br/>No es posible realizar la apuesta.</html>",
+							"<html>Error: La apuesta no llega al importe minimo.<br/>No es posible realizar la apuesta.</html>",
 							"");
 					error.setVisible(true);
 				} else {
@@ -228,8 +228,19 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 				}
 			}
 		});
-		btnApostar.setBounds(223, 332, 89, 23);
+		btnApostar.setBounds(371, 322, 89, 23);
 		this.getContentPane().add(btnApostar, null);
+		
+		JButton btnClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(u);
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
+		btnClose.setBounds(227, 382, 98, 26);
+		contentPane.add(btnClose);
 
 	}
 
