@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MenuUsuarioGUI extends JFrame {
@@ -30,7 +31,7 @@ public class MenuUsuarioGUI extends JFrame {
 		btnApostar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblApostar"));
 		btnApostar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(user); //TODO: cambiar por nueva ventana
+				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(user, new Date()); //TODO: cambiar por nueva ventana
 				ventana.setBussinessLogic(businessLogic);
 				ventana.setVisible(true);
 				dispose();
