@@ -25,6 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javax.swing.SwingConstants;
 
 public class PreguntasApuestasUsuarioGUI extends JFrame {
 	
@@ -180,18 +181,18 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UsuarioGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblSaldo = new JLabel();
 		lblSaldo.setText("Saldo disponible: " + u.getSaldo());
-		lblSaldo.setBounds(390, 16, 164, 13);
+		lblSaldo.setBounds(322, 194, 232, 21);
 		getContentPane().add(lblSaldo);
 		
 		
 		// JLabel (Apostar)
 		lblApostar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblApostar")); //$NON-NLS-1$ //$NON-NLS-2$
-		lblApostar.setBounds(12, 333, 39, 20);
+		lblApostar.setBounds(322, 226, 39, 20);
 		this.getContentPane().add(lblApostar, null);
 
 		// JTextField
 		textFieldApuesta = new JTextField(ResourceBundle.getBundle("Etiquetas").getString("textFieldCantidad"));
-		textFieldApuesta.setBounds(69, 333, 132, 20);
+		textFieldApuesta.setBounds(373, 226, 181, 20);
 		textFieldApuesta.setColumns(10);
 		this.getContentPane().add(textFieldApuesta, null);
 
@@ -228,8 +229,20 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 				}
 			}
 		});
-		btnApostar.setBounds(223, 332, 89, 23);
+		btnApostar.setBounds(322, 278, 232, 32);
 		this.getContentPane().add(btnApostar, null);
+		
+		JButton btnAtras = new JButton(ResourceBundle.getBundle("Etiquetas").getString("PreguntasApuestasUsuarioGUI.btnNewButton.text"));
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApostarUsuarioGUI ventana = new ApostarUsuarioGUI(u, ev.getEventDate()); //TODO
+				ventana.setBussinessLogic(businessLogic);
+				ventana.setVisible(true);
+				dispose();
+			}
+		});
+		btnAtras.setBounds(175, 329, 232, 32);
+		contentPane.add(btnAtras);
 
 	}
 
