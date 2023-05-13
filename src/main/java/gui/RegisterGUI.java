@@ -2,15 +2,13 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
-
 import businessLogic.BLFacade;
 import domain.Usuario;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -24,40 +22,40 @@ public class RegisterGUI extends JFrame{
 
 	public RegisterGUI() {
 		getContentPane().setLayout(null);
-		this.setSize(new Dimension(474, 300));
-		setTitle("Registrar usuario");
+		this.setSize(new Dimension(474, 365));
+		setTitle(ResourceBundle.getBundle("Etiquetas").getString("noAcc"));
 		textUser = new JTextField();
-		textUser.setBounds(195, 42, 171, 20);
+		textUser.setBounds(40, 65, 369, 20);
 		getContentPane().add(textUser);
 		textUser.setColumns(10);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		textName = new JTextField();
 		textName.setColumns(10);
-		textName.setBounds(195, 104, 171, 20);
+		textName.setBounds(40, 165, 369, 20);
 		getContentPane().add(textName);
 		
 		textDNI = new JTextField();
 		textDNI.setColumns(10);
-		textDNI.setBounds(195, 135, 171, 20);
+		textDNI.setBounds(40, 215, 369, 20);
 		getContentPane().add(textDNI);
 		
-		JLabel lblUser = new JLabel("Usuario");
-		lblUser.setBounds(40, 45, 65, 14);
+		JLabel lblUser = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Username"));
+		lblUser.setBounds(40, 50, 369, 10);
 		getContentPane().add(lblUser);
 		
 		JLabel lblDNI = new JLabel("DNI");
-		lblDNI.setBounds(40, 138, 65, 14);
+		lblDNI.setBounds(40, 200, 369, 10);
 		getContentPane().add(lblDNI);
 		
-		JLabel lblName = new JLabel("Nombre");
-		lblName.setBounds(40, 107, 65, 14);
+		JLabel lblName = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Nombre"));
+		lblName.setBounds(40, 150, 369, 10);
 		getContentPane().add(lblName);
 		
-		JLabel lblPassword = new JLabel("Contraseña");
-		lblPassword.setBounds(40, 76, 65, 14);
+		JLabel lblPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password"));
+		lblPassword.setBounds(40, 100, 369, 10);
 		getContentPane().add(lblPassword);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		JButton btnAceptar = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Accept"));
 		btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 lblError.setVisible(false);
@@ -65,20 +63,20 @@ public class RegisterGUI extends JFrame{
                 String ps = new String(passwordField.getPassword());
                 BLFacade logicaNegocio = LoginGUI.getBusinessLogic();
                 
-                if (textDNI.getText().isBlank() || textName.getText().isBlank() || textUser.getText().isBlank() || passwordField.getPassword().length == 0) {
-                    lblError.setText("Error, hay algún campo vacío.");
+                if (textDNI.getText().isEmpty() || textName.getText().isEmpty() || textUser.getText().isEmpty() || passwordField.getPassword().length == 0) {
+                    lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("CampoVacio"));
                     lblError.setVisible(true);
                     lblError.setForeground(Color.RED);
                 } else {
                 	boolean bool = logicaNegocio.existsUser(us);
                     if (bool) {
-                        lblError.setText("Invalid username, try another one.");
+                        lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("UserInvalido"));
                         lblError.setVisible(true);
                         lblError.setForeground(Color.RED);
                     } else {
 						if (textDNI.getText().length() != 9 || !Character.isLetter(textDNI.getText().charAt(textDNI.getText().length()-1))) {
 							
-							lblError.setText("El DNI no es válido");
+							lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("DniInvalido"));
 							lblError.setVisible(true);
 							lblError.setForeground(Color.RED);
 						} else{
@@ -87,36 +85,26 @@ public class RegisterGUI extends JFrame{
 								lblError.setForeground(Color.GREEN);
 								lblError.setVisible(false);
 								Usuario newUser = new Usuario(us, ps);
-							
-						
-								newUser.setDni(textDNI.getText());
-							
+								newUser.setDni(textDNI.getText());							
 								newUser.setNombre(textName.getText());
-							
 								logicaNegocio.createUser(newUser);
-								lblError.setText("User created successfully!");
+								lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("UsuarioCreado"));
 								lblError.setVisible(true);
 								
 							} catch (Exception e2) {
-								lblError.setText("El DNI no es válido");
+								lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("DniInvalido"));
 								lblError.setVisible(true);
 								lblError.setForeground(Color.RED);
 							}
-							
-							
-							}
-						
-						
+						}
                     }
-                }
-                
-                
+                }                
             }
         });
-		btnAceptar.setBounds(195, 206, 171, 23);
+		btnAceptar.setBounds(238, 286, 171, 32);
 		getContentPane().add(btnAceptar);
 		
-		JButton btnSalir = new JButton("Retroceder");
+		JButton btnSalir = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginGUI ventana = new LoginGUI();
@@ -124,11 +112,11 @@ public class RegisterGUI extends JFrame{
 				dispose();
 			}
 		});
-		btnSalir.setBounds(40, 206, 145, 23);
+		btnSalir.setBounds(41, 286, 171, 32);
 		getContentPane().add(btnSalir);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(195, 73, 171, 20);
+		passwordField.setBounds(40, 115, 369, 20);
 		getContentPane().add(passwordField);
 		
 		lblError = new JLabel("");

@@ -196,7 +196,7 @@ public class LoginGUI extends JFrame {
 	private JTextField textField() {
 		if (textField == null) {
 			textField = new JTextField();
-			textField.setBounds(224, 39, 159, 19);
+			textField.setBounds(36, 39, 347, 19);
 			textField.setColumns(10);
 		}
 		return textField;
@@ -205,8 +205,8 @@ public class LoginGUI extends JFrame {
 	private JLabel lblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Password"));
-			lblPassword.setBounds(36, 84, 145, 13);
-			lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPassword.setBounds(36, 68, 145, 13);
+			lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		return lblPassword;
 	}
@@ -214,7 +214,7 @@ public class LoginGUI extends JFrame {
 	private JButton btnNoAcc() {
 		if (btnNoAcc == null) {
 			btnNoAcc = new JButton(ResourceBundle.getBundle("Etiquetas").getString("noAcc"));
-			btnNoAcc.setBounds(250, 129, 102, 21);
+			btnNoAcc.setBounds(224, 129, 159, 32);
 			btnNoAcc.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					RegisterGUI ventana = new RegisterGUI();
@@ -242,7 +242,7 @@ public class LoginGUI extends JFrame {
 	private JPasswordField passwordField() {
 		if (passwordField == null) {
 			passwordField = new JPasswordField();
-			passwordField.setBounds(224, 81, 159, 19);
+			passwordField.setBounds(36, 81, 347, 19);
 		}
 		return passwordField;
 	}
@@ -251,8 +251,8 @@ public class LoginGUI extends JFrame {
 		if (lblUsername == null) {
 			lblUsername = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Username"));
 
-			lblUsername.setBounds(36, 42, 145, 13);
-			lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
+			lblUsername.setBounds(36, 23, 145, 13);
+			lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
 		}
 		return lblUsername;
 	}
@@ -260,7 +260,7 @@ public class LoginGUI extends JFrame {
 	private JButton btnLogin() {
 		if (btnLogin == null) {
 			btnLogin = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnLogin"));
-			btnLogin.setBounds(56, 129, 111, 21);
+			btnLogin.setBounds(36, 129, 159, 32);
 			btnLogin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					lblError.setVisible(false);

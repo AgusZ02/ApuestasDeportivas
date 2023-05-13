@@ -126,4 +126,6 @@ public interface BLFacade {
     public Vector<domain.Apuesta> getApuestasFrom(Usuario u);
 
 	public Vector<domain.Question> getQuestions(Event ev);
+
+    public void addSaldo(Usuario u, double saldo);
 }
