@@ -131,16 +131,14 @@ public class ApostarUsuarioGUI extends JFrame {
 						}						
 						jCalendar1.setCalendar(calendarAct);
 					}
-					datesWithEventsCurrentMonth = datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
-					CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
+					CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate()));
 					inicializarTablaEvents(firstDay);
 				}
 			} 
 		});
 		jCalendar1.getMonthChooser().getComboBox().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate());
-				CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth);
+				CreateQuestionGUI.paintDaysWithEvents(jCalendar1,datesWithEventsCurrentMonth=facade.getEventsMonth(jCalendar1.getDate()));
 			}
 		});
 
