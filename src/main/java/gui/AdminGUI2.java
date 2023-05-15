@@ -182,32 +182,38 @@ public class AdminGUI2 extends JFrame {
 		btnNewQuestion = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnNewQuestion"));
 		btnNewQuestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String quest = tfQuestion.getText();
-				float min = Float.parseFloat(tfMinBet.getText());
-				if (quest.length() > 0) {
+				try {
+					String quest = tfQuestion.getText();
+					float min = Float.parseFloat(tfMinBet.getText());
+					if (quest.length() > 0) {
 
-					try {
-						businessLogic.createQuestion(ev, quest, min);
-						jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryCreated"));
-					} catch (EventFinished e1) {
-						VentanaAvisos error = new VentanaAvisos(
-								"<html>Error: evento finalizado.<br/>No es posible añadir una pregunta a un evento finalizado.</html>",
-								"EventFinished");
-						error.setVisible(true);
-						// e1.printStackTrace();
-					} catch (QuestionAlreadyExist e1) {
-						VentanaAvisos error = new VentanaAvisos(
-								"<html>Error: La pregunta ya existe.<br/>No es posible añadir una pregunta duplicada.</html>",
-								"QuestionAlreadyExist");
-						error.setVisible(true);
-						// e1.printStackTrace();
+						try {
+							businessLogic.createQuestion(ev, quest, min);
+							jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("QueryCreated"));
+						} catch (EventFinished e1) {
+							VentanaAvisos error = new VentanaAvisos(
+									"<html>Error: evento finalizado.<br/>No es posible añadir una pregunta a un evento finalizado.</html>",
+									"EventFinished");
+							error.setVisible(true);
+							// e1.printStackTrace();
+						} catch (QuestionAlreadyExist e2) {
+							VentanaAvisos error = new VentanaAvisos(
+									"<html>Error: La pregunta ya existe.<br/>No es posible añadir una pregunta duplicada.</html>",
+									"QuestionAlreadyExist");
+							error.setVisible(true);
+							// e1.printStackTrace();
+						}
+					} else {
+						VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("ErrorQuest"), null);
+						vAvisos.setVisible(true);
 					}
-				} else
-					jLabelQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorQuest"));
+				} catch (NumberFormatException e3) {
+					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorMinBetCreateQuestion"), null);
+					vAvisos.setVisible(true);
+				}
 			}
-
 		});
-		btnNewQuestion.setBounds(270, 196, 142, 21);
+		btnNewQuestion.setBounds(251, 196, 161, 21);
 
 		getContentPane().add(btnNewQuestion);
 
@@ -217,16 +223,16 @@ public class AdminGUI2 extends JFrame {
 		tfQuestion.setColumns(10);
 
 		tfMinBet = new JTextField();
-		tfMinBet.setBounds(173, 196, 85, 19);
+		tfMinBet.setBounds(173, 196, 66, 19);
 		getContentPane().add(tfMinBet);
 		tfMinBet.setColumns(10);
 
 		lblQuestion = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblQuestion"));
-		lblQuestion.setBounds(79, 170, 85, 13);
+		lblQuestion.setBounds(57, 170, 107, 13);
 		getContentPane().add(lblQuestion);
 
 		lblMinBet = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblMinBet"));
-		lblMinBet.setBounds(79, 200, 85, 13);
+		lblMinBet.setBounds(57, 200, 107, 13);
 		getContentPane().add(lblMinBet);
 		
 		
@@ -241,24 +247,33 @@ public class AdminGUI2 extends JFrame {
 		btnNewPron = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnNewPron"));
 		btnNewPron.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String pron = tfNewPron.getText();
-				double mul = (double)Double.parseDouble(tfMultip.getText());
-				int i = tableQueries.getSelectedRow();
-				Question qu = (domain.Question) tableModelQueries.getValueAt(i, 4);
+				try {
+					String pron = tfNewPron.getText();
+					double mul = (double)Double.parseDouble(tfMultip.getText());
+					int i = tableQueries.getSelectedRow();
+					Question qu = (domain.Question) tableModelQueries.getValueAt(i, 4);
 
-				if (pron.length() > 0) {
+					if (pron.length() > 0) {
 
-					try {
-						businessLogic.createPron(ev, qu, pron, mul);
-					} catch (PredictionAlreadyExists e1) {
+						try {
+							businessLogic.createPron(ev, qu, pron, mul);
+						} catch (PredictionAlreadyExists e1) {
 
+						}
+					} else {
+						VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("ErrorPron"), null);
+						vAvisos.setVisible(true);
 					}
-				} else
-					lblPronosticos.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorPron"));
-
+				}catch(NumberFormatException e1) {
+					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorMultiplierCreatePred"), null);
+					vAvisos.setVisible(true);
+				}catch(ArrayIndexOutOfBoundsException e2) {
+					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecQuestion"), null);
+					vAvisos.setVisible(true);
+				}
 			}
 		});
-		btnNewPron.setBounds(270, 410, 142, 21);
+		btnNewPron.setBounds(251, 410, 161, 21);
 		getContentPane().add(btnNewPron);
 
 		tfNewPron = new JTextField();
@@ -267,16 +282,16 @@ public class AdminGUI2 extends JFrame {
 		tfNewPron.setColumns(10);
 
 		tfMultip = new JTextField();
-		tfMultip.setBounds(173, 410, 85, 19);
+		tfMultip.setBounds(173, 410, 66, 19);
 		getContentPane().add(tfMultip);
 		tfMultip.setColumns(10);
 
 		lblNewPron = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblNewPron"));
-		lblNewPron.setBounds(79, 384, 85, 13);
+		lblNewPron.setBounds(57, 384, 107, 13);
 		getContentPane().add(lblNewPron);
 
 		lblMultip = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblMultip"));
-		lblMultip.setBounds(79, 414, 85, 13);
+		lblMultip.setBounds(57, 414, 107, 13);
 		getContentPane().add(lblMultip);
 		
 		
