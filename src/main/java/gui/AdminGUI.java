@@ -209,12 +209,17 @@ public class AdminGUI extends JFrame {
 		btnVerPreguntasPronosticos.setBounds(124, 374, 199, 25);
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i=tableEvents.getSelectedRow();
-				domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i, 3);
-				AdminGUI2 ventana = new AdminGUI2(u, ev);
-				ventana.setBussinessLogic(facade);
-				ventana.setVisible(true);
-				dispose();
+				try {
+					int i=tableEvents.getSelectedRow();
+					domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i, 3);
+					AdminGUI2 ventana = new AdminGUI2(u, ev);
+					ventana.setBussinessLogic(facade);
+					ventana.setVisible(true);
+					dispose();
+				}catch(Exception ex) {
+					VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecEvento"), null);
+					ventana.setVisible(true);
+				}				
 			}
 		});
 		this.getContentPane().add(btnVerPreguntasPronosticos);
