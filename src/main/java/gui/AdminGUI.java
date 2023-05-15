@@ -189,7 +189,7 @@ public class AdminGUI extends JFrame {
 		getContentPane().add(btnNewEvent);
 
 		JLabel lblNewEvent = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblNewEvent"));
-		lblNewEvent.setBounds(69, 250, 111, 13);
+		lblNewEvent.setBounds(52, 246, 151, 17);
 		getContentPane().add(lblNewEvent);
 
 		tfNewEvent = new JTextField();
@@ -215,7 +215,7 @@ public class AdminGUI extends JFrame {
 		getContentPane().add(btnCerrarEvento);
 		
 		//JButton Ver preguntas y pronosticos
-		btnVerPreguntasPronosticos.setBounds(124, 374, 199, 25);
+		btnVerPreguntasPronosticos.setBounds(88, 375, 232, 25);
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
