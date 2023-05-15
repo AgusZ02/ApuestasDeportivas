@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -40,7 +42,7 @@ public class CerrarEventoGUI extends JFrame {
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 437, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,19 +79,19 @@ public class CerrarEventoGUI extends JFrame {
         	}
         });
 		contentPane.setLayout(null);
-		comboBoxPreguntas.setBounds(116, 101, 237, 21);
+		comboBoxPreguntas.setBounds(132, 101, 237, 21);
 		this.getContentPane().add(comboBoxPreguntas);
 	
 
 
 
 		comboBoxPronosticos = new JComboBox<Pronostico>();
-		comboBoxPronosticos.setBounds(116, 132, 237, 21);
+		comboBoxPronosticos.setBounds(132, 130, 237, 21);
         comboBoxPronosticos.setModel(modeloPronosticos);
 		this.getContentPane().add(comboBoxPronosticos);
 		
 		
-		btnVolver = new JButton("Volver");
+		btnVolver = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                 AdminGUI ventana = new AdminGUI(u);
@@ -101,42 +103,47 @@ public class CerrarEventoGUI extends JFrame {
 		btnVolver.setBounds(116, 232, 164, 21);
 		this.getContentPane().add(btnVolver);
 		
-		lblMarcaRespuestas = new JLabel("Marca los pronósticos correctos de cada pregunta.");
-		lblMarcaRespuestas.setBounds(49, 40, 265, 13);
+		lblMarcaRespuestas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblCerrarEvento"));
+		lblMarcaRespuestas.setBounds(49, 40, 304, 31);
 		this.getContentPane().add(lblMarcaRespuestas);
 		
-		lblPreguntas = new JLabel("Preguntas");
+		lblPreguntas = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Queries"));
 		lblPreguntas.setBounds(49, 105, 107, 13);
 		this.getContentPane().add(lblPreguntas);
 		
-		lblPronostico = new JLabel("Pronostico");
+		lblPronostico = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("predictions"));
 		lblPronostico.setBounds(49, 132, 107, 13);
 		this.getContentPane().add(lblPronostico);
 		
-		btnResolver = new JButton("Resolver pregunta");
+		btnResolver = new JButton(ResourceBundle.getBundle("Etiquetas").getString("resolverPregunta"));
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println(comboBoxPreguntas.getSelectedItem().toString());
-				System.out.println(comboBoxPronosticos.getSelectedItem().toString());
-				Question qu = (Question) comboBoxPreguntas.getSelectedItem();
-				Pronostico pron = (Pronostico) comboBoxPronosticos.getSelectedItem();
-				if (comboBoxPreguntas.getItemCount()==1) {
-					facade.cerrarEvento(ev, qu, pron, true);
-					dispose();
+				try {
+					System.out.println(comboBoxPreguntas.getSelectedItem().toString());
+					System.out.println(comboBoxPronosticos.getSelectedItem().toString());
+					Question qu = (Question) comboBoxPreguntas.getSelectedItem();
+					Pronostico pron = (Pronostico) comboBoxPronosticos.getSelectedItem();
+					if (comboBoxPreguntas.getItemCount()==1) {
+						facade.cerrarEvento(ev, qu, pron, true);
+						dispose();
+					}
+					facade.cerrarEvento(ev, qu, pron, false);
+					int index = comboBoxPreguntas.getSelectedIndex();
+					
+					modeloPreguntas.removeElementAt(index);
+					comboBoxPreguntas.setModel(modeloPreguntas);
+					comboBoxPreguntas.setSelectedItem(null);
+					
+					comboBoxPronosticos.removeAllItems();
+					//refillComboBoxQ(ev);
+				}catch(NullPointerException e1) {
+					VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecQuestion"), null);
+					ventana.setVisible(true);
 				}
-				facade.cerrarEvento(ev, qu, pron, false);
-				int index = comboBoxPreguntas.getSelectedIndex();
-				
-				modeloPreguntas.removeElementAt(index);
-				comboBoxPreguntas.setModel(modeloPreguntas);
-				comboBoxPreguntas.setSelectedItem(null);
-				
-				comboBoxPronosticos.removeAllItems();
-				//refillComboBoxQ(ev);
             }
 		});
-		btnResolver.setBounds(49, 163, 304, 21);
+		btnResolver.setBounds(49, 163, 320, 21);
 		this.getContentPane().add(btnResolver);
 	}
 	

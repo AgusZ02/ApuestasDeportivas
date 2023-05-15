@@ -64,8 +64,10 @@ public class AdminGUI extends JFrame {
 		this.getContentPane().add(jLabelEventDate, null);
 		this.getContentPane().add(jLabelEvents);
 		jButtonClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+			public void actionPerformed(ActionEvent e) {			
+				LoginGUI ventana = new LoginGUI();
+				ventana.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -175,8 +177,10 @@ public class AdminGUI extends JFrame {
 						jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("EventCreated"));
 
 						facade.createEvent(evDesc, date);
-					} else
-						jLabelEvents.setText(ResourceBundle.getBundle("Etiquetas").getString("ErrorEvent"));
+					} else {
+						VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("ErrorEvent"), null);
+						ventana.setVisible(true);
+					}
 				}
 			}
 		});
@@ -196,10 +200,15 @@ public class AdminGUI extends JFrame {
 		//JButton cerrar evento
 		btnCerrarEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 2);
-				CerrarEventoGUI ventana = new CerrarEventoGUI(u, ev);
-				ventana.setBussinessLogic(facade);
-				ventana.setVisible(true);
+				try {
+					domain.Event ev = (domain.Event) tableModelEvents.getValueAt(tableEvents.getSelectedRow(), 3);
+					CerrarEventoGUI ventana = new CerrarEventoGUI(u, ev);
+					ventana.setBussinessLogic(facade);
+					ventana.setVisible(true);
+				}catch(Exception ex) {
+					VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecEvento"), null);
+					ventana.setVisible(true);
+				}
 			}
 		});
 		btnCerrarEvento.setBounds(368, 374, 130, 27);
