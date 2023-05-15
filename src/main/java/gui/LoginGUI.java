@@ -78,7 +78,7 @@ public class LoginGUI extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(new Dimension(441, 290));
+		this.setSize(new Dimension(440, 290));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI"));
 		this.setContentPane(getJContentPane());
 	}
@@ -112,7 +112,7 @@ public class LoginGUI extends JFrame {
 	private JRadioButton getRdbtnNewRadioButton() {
 		if (rdbtnNewRadioButton == null) {
 			rdbtnNewRadioButton = new JRadioButton(ResourceBundle.getBundle("Etiquetas").getString("eng"));
-			rdbtnNewRadioButton.setBounds(46, 6, 103, 21);
+			rdbtnNewRadioButton.setBounds(42, 6, 103, 21);
 			rdbtnNewRadioButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Locale.setDefault(new Locale("en"));
@@ -128,7 +128,7 @@ public class LoginGUI extends JFrame {
 	private JRadioButton getRdbtnNewRadioButton_1() {
 		if (rdbtnNewRadioButton_1 == null) {
 			rdbtnNewRadioButton_1 = new JRadioButton(ResourceBundle.getBundle("Etiquetas").getString("eus"));
-			rdbtnNewRadioButton_1.setBounds(162, 6, 103, 21);
+			rdbtnNewRadioButton_1.setBounds(172, 6, 103, 21);
 			rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					Locale.setDefault(new Locale("eus"));
@@ -232,7 +232,7 @@ public class LoginGUI extends JFrame {
 	private JLabel lblChooseLang() {
 		if (lblChooseLang == null) {
 			lblChooseLang = new JLabel();
-			lblChooseLang.setBounds(145, 190, 159, 13);
+			lblChooseLang.setBounds(125, 197, 159, 13);
 			lblChooseLang.setText(ResourceBundle.getBundle("Etiquetas").getString("ChooseLang"));
 			lblChooseLang.setHorizontalAlignment(SwingConstants.CENTER);
 		}

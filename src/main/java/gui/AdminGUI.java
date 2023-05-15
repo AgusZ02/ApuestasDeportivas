@@ -25,7 +25,7 @@ public class AdminGUI extends JFrame {
 	private JCalendar jCalendar1 = new JCalendar();
 	private Calendar calendarAnt = null;
 	private Calendar calendarAct = null;
-	
+
 	private JScrollPane scrollPaneEvents = new JScrollPane();
 
 	private Vector<Date> datesWithEventsCurrentMonth = new Vector<Date>();
@@ -41,8 +41,9 @@ public class AdminGUI extends JFrame {
 	private JButton btnVerPreguntasPronosticos = new JButton(ResourceBundle.getBundle("Etiquetas").getString("VerPreguntasPronosticos"));
 	private final JButton btnCerrarEvento = new JButton(ResourceBundle.getBundle("Etiquetas").getString("AdminGUI.btnNewButton.text")); //$NON-NLS-1$ //$NON-NLS-2$
 
-	private String[] columnNamesEvents = new String[] { ResourceBundle.getBundle("Etiquetas").getString("EventN"),
-			ResourceBundle.getBundle("Etiquetas").getString("Event"), };
+	private String[] columnNamesEvents = new String[] { ResourceBundle.getBundle("Etiquetas").getString("N"),
+			ResourceBundle.getBundle("Etiquetas").getString("Event"),
+			ResourceBundle.getBundle("Etiquetas").getString("FinalizedEvent") };
 
 	public AdminGUI(Usuario u) {
 		try {
@@ -55,7 +56,7 @@ public class AdminGUI extends JFrame {
 	private void jbInit(Usuario u) throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(748, 600));
+		this.setSize(new Dimension(752, 600));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
@@ -64,14 +65,14 @@ public class AdminGUI extends JFrame {
 		this.getContentPane().add(jLabelEventDate, null);
 		this.getContentPane().add(jLabelEvents);
 		jButtonClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				LoginGUI ventana = new LoginGUI();
 				ventana.setVisible(true);
 				dispose();
 			}
 		});
 
-		jButtonClose.setBounds(new Rectangle(269, 482, 130, 30));
+		jButtonClose.setBounds(new Rectangle(288, 482, 130, 30));
 
 		this.getContentPane().add(jButtonClose, null);
 		jCalendar1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -137,11 +138,12 @@ public class AdminGUI extends JFrame {
 							row.add(ev); // ev object added in order to obtain it with tableModelEvents.getValueAt(i,2)
 							tableModelEvents.addRow(row);
 						}
-						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
-						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
-						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(2)); // not shown in JTable
+						tableEvents.getColumnModel().getColumn(0).setPreferredWidth(30);
+						tableEvents.getColumnModel().getColumn(1).setPreferredWidth(230);
+						tableEvents.getColumnModel().getColumn(2).setPreferredWidth(140);
+						tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(3)); // not shown in JTable
 					} catch (Exception e1) {
-						//jLabelQueries.setText(e1.getMessage());
+						// jLabelQueries.setText(e1.getMessage());
 					}
 
 				}
@@ -150,14 +152,15 @@ public class AdminGUI extends JFrame {
 
 		this.getContentPane().add(jCalendar1, null);
 
-		scrollPaneEvents.setBounds(new Rectangle(292, 50, 406, 150));
+		scrollPaneEvents.setBounds(new Rectangle(290, 50, 400, 150));
 
 		scrollPaneEvents.setViewportView(tableEvents);
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
 
 		tableEvents.setModel(tableModelEvents);
-		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
-		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
+		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(230);
+		tableEvents.getColumnModel().getColumn(2).setPreferredWidth(140);
 		tableEvents.setDefaultEditor(Object.class, null);
 
 		this.getContentPane().add(scrollPaneEvents, null);
@@ -185,7 +188,7 @@ public class AdminGUI extends JFrame {
 			}
 		});
 
-		btnNewEvent.setBounds(548, 277, 111, 25);
+		btnNewEvent.setBounds(564, 277, 130, 25);
 		getContentPane().add(btnNewEvent);
 
 		JLabel lblNewEvent = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblNewEvent"));
@@ -193,11 +196,11 @@ public class AdminGUI extends JFrame {
 		getContentPane().add(lblNewEvent);
 
 		tfNewEvent = new JTextField();
-		tfNewEvent.setBounds(210, 246, 449, 19);
+		tfNewEvent.setBounds(210, 246, 484, 19);
 		getContentPane().add(tfNewEvent);
 		tfNewEvent.setColumns(10);
 
-		//JButton cerrar evento
+		// JButton cerrar evento
 		btnCerrarEvento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -205,30 +208,30 @@ public class AdminGUI extends JFrame {
 					CerrarEventoGUI ventana = new CerrarEventoGUI(u, ev);
 					ventana.setBussinessLogic(facade);
 					ventana.setVisible(true);
-				}catch(Exception ex) {
+				} catch (Exception ex) {
 					VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecEvento"), null);
 					ventana.setVisible(true);
 				}
 			}
 		});
-		btnCerrarEvento.setBounds(368, 374, 130, 27);
+		btnCerrarEvento.setBounds(389, 374, 130, 27);
 		getContentPane().add(btnCerrarEvento);
-		
-		//JButton Ver preguntas y pronosticos
-		btnVerPreguntasPronosticos.setBounds(88, 375, 232, 25);
+
+		// JButton Ver preguntas y pronosticos
+		btnVerPreguntasPronosticos.setBounds(98, 375, 232, 25);
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int i=tableEvents.getSelectedRow();
-					domain.Event ev=(domain.Event)tableModelEvents.getValueAt(i, 3);
+					int i = tableEvents.getSelectedRow();
+					domain.Event ev = (domain.Event) tableModelEvents.getValueAt(i, 3);
 					AdminGUI2 ventana = new AdminGUI2(u, ev);
 					ventana.setBussinessLogic(facade);
 					ventana.setVisible(true);
 					dispose();
-				}catch(Exception ex) {
+				} catch (Exception ex) {
 					VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorSelecEvento"), null);
 					ventana.setVisible(true);
-				}				
+				}
 			}
 		});
 		this.getContentPane().add(btnVerPreguntasPronosticos);
