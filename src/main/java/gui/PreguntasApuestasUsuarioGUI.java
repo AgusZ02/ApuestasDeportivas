@@ -52,7 +52,8 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 	private String[] columnNamesQueries = new String[] { 
 			ResourceBundle.getBundle("Etiquetas").getString("N"),
 			ResourceBundle.getBundle("Etiquetas").getString("Query"),
-			ResourceBundle.getBundle("Etiquetas").getString("BetMin"), 
+			ResourceBundle.getBundle("Etiquetas").getString("BetMin"),
+			ResourceBundle.getBundle("Etiquetas").getString("result")
 	};
 
 	private String[] columnNamesProns = new String[] { 
@@ -101,7 +102,10 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 					row.add(q.getQuestionNumber());
 					row.add(q.toString());
 					row.add(q.getBetMinimum());
-					row.add(q.getResult());
+					if(q.getResult()==null)
+						row.add("...");
+					else
+						row.add(q.getResult());
 					row.add(q);
 					tableModelQueries.addRow(row);	
 				}

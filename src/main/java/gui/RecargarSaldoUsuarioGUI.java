@@ -25,7 +25,7 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 	public RecargarSaldoUsuarioGUI(Usuario u) {
 		saldo = u.getSaldo();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 234, 189);
+		setBounds(100, 100, 302, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -34,33 +34,39 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		
 		lblSaldoActual = new JLabel();
 		lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
-		lblSaldoActual.setBounds(10, 11, 198, 14);
+		lblSaldoActual.setBounds(20, 11, 252, 14);
 		contentPane.add(lblSaldoActual);
 		
 		lblAnadir = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("btnRecargarSaldo"));
-		lblAnadir.setBounds(10, 39, 68, 14);
+		lblAnadir.setBounds(20, 39, 120, 14);
 		contentPane.add(lblAnadir);
 		
 		textFieldSaldo = new JTextField();
-		textFieldSaldo.setBounds(77, 36, 131, 20);
+		textFieldSaldo.setBounds(140, 36, 132, 20);
 		contentPane.add(textFieldSaldo);
 		textFieldSaldo.setColumns(10);
 
 		btnAnadir = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnRecargarSaldo"));
 		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Double.parseDouble(textFieldSaldo.getText())<=0){
-					VentanaAvisos ventana = new VentanaAvisos("La cantidad debe ser un número positivo", "Cantidad incorrecta");
-					ventana.setVisible(true);
-				}
-				else{
-					bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
-					saldo = u.getSaldo();
-					lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
-				}
+				try {
+					if(Double.parseDouble(textFieldSaldo.getText())<=0){
+						VentanaAvisos ventana = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("ErrorNumber"), 
+								ResourceBundle.getBundle("Etiquetas").getString("cantidadIncorrecta"));
+						ventana.setVisible(true);
+					}
+					else{
+						bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
+						saldo = u.getSaldo();
+						lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
+					}
+				} catch (NumberFormatException e1) {
+					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorNumeroFormato"), null);
+					vAvisos.setVisible(true);
+				}	
 			}
 		});
-		btnAnadir.setBounds(10, 116, 89, 23);
+		btnAnadir.setBounds(57, 72, 177, 23);
 		contentPane.add(btnAnadir);
 		
 		
@@ -74,7 +80,7 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(119, 116, 89, 23);
+		btnSalir.setBounds(86, 127, 111, 23);
 		contentPane.add(btnSalir);
 	}
 }
