@@ -629,7 +629,7 @@ public class DataAccess {
 							Usuario usuarioActual = null;
 							if (!a.isFinalizado()) {
 								usuarioActual = getUser(a.getUser().getNombreUsuario(), a.getUser().getContrasena());
-								usuarioActual.addSaldo(a.getBet() + a.getBet()*p.getCuotaGanancia()*10);
+								usuarioActual.addSaldo(a.getBet() + a.getBet()*p.getCuotaGanancia());
 								a.setFinalizado(true);
 								System.out.println(usuarioActual.getSaldo());
 							}
