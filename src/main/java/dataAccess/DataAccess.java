@@ -141,7 +141,9 @@ public class DataAccess {
 			db.persist(p1);
 
 			Usuario user1 = new Usuario("user1", "user1", 100, false);
+			user1.setNombre("User1");
 			Usuario admin1 = new Usuario("admin1", "admin1", 100, true);
+			admin1.setNombre("Admin1");
 
 			db.persist(admin1);
 			db.persist(user1);
