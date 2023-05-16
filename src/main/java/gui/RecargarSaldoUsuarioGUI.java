@@ -49,9 +49,15 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		btnAnadir = new JButton(ResourceBundle.getBundle("Etiquetas").getString("btnRecargarSaldo"));
 		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
-				saldo = u.getSaldo();
-				lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
+				if(Double.parseDouble(textFieldSaldo.getText())<=0){
+					VentanaAvisos ventana = new VentanaAvisos("La cantidad debe ser un número positivo", "Cantidad incorrecta");
+					ventana.setVisible(true);
+				}
+				else{
+					bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
+					saldo = u.getSaldo();
+					lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
+				}
 			}
 		});
 		btnAnadir.setBounds(10, 116, 89, 23);
