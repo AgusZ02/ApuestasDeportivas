@@ -224,7 +224,6 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 						VentanaAvisos vAvisos;
 						try {
 							businessLogic.createApuesta(betRealizada, ev, qu, pred, u);
-							u.setSaldo(u.getSaldo() - betRealizada);
 							lblSaldo.setText("Saldo disponible: " + u.getSaldo());
 							repaint();
 						} catch (NotEnoughMoney NEM) {
