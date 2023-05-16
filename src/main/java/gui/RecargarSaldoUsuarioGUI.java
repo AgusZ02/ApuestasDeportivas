@@ -33,7 +33,7 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblSaldoActual = new JLabel();
-		lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
+		lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo")+"%f",saldo));
 		lblSaldoActual.setBounds(20, 11, 252, 14);
 		contentPane.add(lblSaldoActual);
 		
