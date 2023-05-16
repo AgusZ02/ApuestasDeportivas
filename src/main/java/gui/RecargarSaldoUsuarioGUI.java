@@ -33,7 +33,7 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblSaldoActual = new JLabel();
-		lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
+		lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo") + " " + String.format("%.2f", saldo)));
 		lblSaldoActual.setBounds(20, 11, 252, 14);
 		contentPane.add(lblSaldoActual);
 		
@@ -58,7 +58,7 @@ public class RecargarSaldoUsuarioGUI extends JFrame {
 					else{
 						bl.addSaldo(u,Double.parseDouble(textFieldSaldo.getText()));
 						saldo = u.getSaldo();
-						lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo"),saldo));
+						lblSaldoActual.setText(String.format(ResourceBundle.getBundle("Etiquetas").getString("lblSaldo") + " " + String.format("%.2f", saldo)));
 					}
 				} catch (NumberFormatException e1) {
 					VentanaAvisos vAvisos = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorNumeroFormato"), null);
