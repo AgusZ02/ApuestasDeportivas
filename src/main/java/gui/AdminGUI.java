@@ -18,7 +18,9 @@ public class AdminGUI extends JFrame {
 
 	private final JLabel jLabelEventDate = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EventDate"));
 	private final JLabel jLabelEvents = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Events"));
-
+	private final JLabel lblOpcionConsultar = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblOpcionConsultarAdminGUI"));
+	private final JLabel lblOpcionCerrarEvento = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("lblOpcionCerrarEventoAdminGUI"));
+	
 	private JButton jButtonClose = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
 
 	// Code for JCalendar
@@ -56,14 +58,22 @@ public class AdminGUI extends JFrame {
 	private void jbInit(Usuario u) throws Exception {
 
 		this.getContentPane().setLayout(null);
-		this.setSize(new Dimension(752, 600));
+		this.setSize(new Dimension(752, 590));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		jLabelEventDate.setBounds(new Rectangle(40, 15, 140, 25));
 		jLabelEvents.setBounds(292, 19, 259, 16);
-
+		lblOpcionConsultar.setBounds(40, 314, 650, 25);
+		lblOpcionConsultar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOpcionCerrarEvento.setBounds(40, 393, 650, 25);
+		lblOpcionCerrarEvento.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		this.getContentPane().add(jLabelEventDate, null);
 		this.getContentPane().add(jLabelEvents);
+		this.getContentPane().add(lblOpcionConsultar);
+		this.getContentPane().add(lblOpcionCerrarEvento);
+		
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginGUI ventana = new LoginGUI();
@@ -72,7 +82,7 @@ public class AdminGUI extends JFrame {
 			}
 		});
 
-		jButtonClose.setBounds(new Rectangle(288, 482, 130, 30));
+		jButtonClose.setBounds(new Rectangle(303, 509, 130, 30));
 
 		this.getContentPane().add(jButtonClose, null);
 		jCalendar1.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -214,11 +224,11 @@ public class AdminGUI extends JFrame {
 				}
 			}
 		});
-		btnCerrarEvento.setBounds(389, 374, 130, 27);
+		btnCerrarEvento.setBounds(247, 422, 232, 25);
 		getContentPane().add(btnCerrarEvento);
 
 		// JButton Ver preguntas y pronosticos
-		btnVerPreguntasPronosticos.setBounds(98, 375, 232, 25);
+		btnVerPreguntasPronosticos.setBounds(247, 340, 232, 25);
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -235,7 +245,6 @@ public class AdminGUI extends JFrame {
 			}
 		});
 		this.getContentPane().add(btnVerPreguntasPronosticos);
-
 	}
 
 	public void setBussinessLogic(BLFacade b) {
@@ -245,5 +254,4 @@ public class AdminGUI extends JFrame {
 	public BLFacade getBusinessLogic() {
 		return facade;
 	}
-
 }

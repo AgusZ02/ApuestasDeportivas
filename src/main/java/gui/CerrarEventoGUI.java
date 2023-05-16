@@ -41,7 +41,7 @@ public class CerrarEventoGUI extends JFrame {
 	public CerrarEventoGUI(Usuario u, Event ev) {
 		
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 437, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,8 +94,8 @@ public class CerrarEventoGUI extends JFrame {
 		btnVolver = new JButton(ResourceBundle.getBundle("Etiquetas").getString("lblSalir"));
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                AdminGUI ventana = new AdminGUI(u);
-                ventana.setVisible(true);
+                //AdminGUI ventana = new AdminGUI(u);
+                //ventana.setVisible(true);
 				dispose();
                 
 			}
