@@ -121,14 +121,19 @@ public class DataAccess {
 
 			}
 
+			Question q7 = ev1.addQuestion("¿Habra un hat-trick?", 3);
+			
 			Pronostico p1 = q1.addPronostico("atletic ganara", 0.3);
 			Pronostico p2 = q1.addPronostico("athletic ganara", 0.3);
 			Pronostico p3 = q1.addPronostico("empataran", 0.2);
 			Pronostico p4 = q2.addPronostico("Aduriz", 0.3);
 			Pronostico p5 = q2.addPronostico("Herrera", 0.3);
 			
-			
+			Pronostico p6 = q7.addPronostico("Habra un hat-trick", 0.3);
+			Pronostico p7 = q7.addPronostico("No habra un hat-trick", 0.1);
 		
+			db.persist(p7);
+			db.persist(p6);
 			db.persist(p5);
 			db.persist(p4);
 			db.persist(p3);
@@ -148,6 +153,7 @@ public class DataAccess {
 			db.persist(q4);
 			db.persist(q5);
 			db.persist(q6);
+			db.persist(q7);
 
 			db.persist(ev1);
 			db.persist(ev2);
