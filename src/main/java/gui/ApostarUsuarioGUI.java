@@ -80,7 +80,7 @@ public class ApostarUsuarioGUI extends JFrame {
 		this.getContentPane().add(jButtonClose, null);
 
 		
-		btnVerPreguntasPronosticos.setBounds(226, 228, 207, 32);
+		btnVerPreguntasPronosticos.setBounds(217, 227, 225, 32);
 		btnVerPreguntasPronosticos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

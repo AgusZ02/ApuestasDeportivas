@@ -191,9 +191,9 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		// ***************************************************************************
 
 		// JLabel (Saldo)
-		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("UsuarioGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		//lblSaldo = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("saldoDisponible")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblSaldo = new JLabel();
-		lblSaldo.setText("Saldo disponible: " + u.getSaldo());
+		lblSaldo.setText(ResourceBundle.getBundle("Etiquetas").getString("saldoDisponible") + u.getSaldo());
 		lblSaldo.setBounds(395, 12, 159, 21);
 		getContentPane().add(lblSaldo);
 		
@@ -219,9 +219,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 					Question qu = (domain.Question) tableModelQueries.getValueAt(tableQueries.getSelectedRow(), 4);
 
 					if (betRealizada < qu.getBetMinimum()) {
-						VentanaAvisos error = new VentanaAvisos(
-								"<html>Error: La apuesta no llega al importe minimo.<br/>No es posible realizar la apuesta.</html>",
-								"");
+						VentanaAvisos error = new VentanaAvisos(ResourceBundle.getBundle("Etiquetas").getString("errorApuestaNoLlegaAlMin"), null);
 						error.setVisible(true);
 					} else {
 						Pronostico pred = businessLogic.getPron(pr);

@@ -50,7 +50,8 @@ public class ConsultarApuestasUsuarioGUI extends JFrame {
 			row.add(a.getBet());
 			row.add(a.getPronostico().isFinalizado());
 			row.add(a.getPronostico().getCuotaGanancia());
-			row.add(a.getBet()*a.getPronostico().getCuotaGanancia()); //ganancia en caso de acierto
+			double ganancia = a.getBet()*a.getPronostico().getCuotaGanancia(); //ganancia en caso de acierto
+			row.add(String.format("%.2f", ganancia)); //redondea a 2 decimales
 			row.add(a);
 			tableModel.addRow(row);
 
