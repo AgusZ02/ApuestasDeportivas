@@ -38,7 +38,7 @@ public class ApostarUsuarioGUI extends JFrame {
 
 	private BLFacade facade = LoginGUI.getBusinessLogic();;
 	private String[] columnNamesEvents = new String[] {
-			ResourceBundle.getBundle("Etiquetas").getString("EventN"), 
+			ResourceBundle.getBundle("Etiquetas").getString("N"), 
 			ResourceBundle.getBundle("Etiquetas").getString("Event"), 
 			ResourceBundle.getBundle("Etiquetas").getString("FinalizedEvent"),
 	};	
@@ -144,16 +144,17 @@ public class ApostarUsuarioGUI extends JFrame {
 
 		this.getContentPane().add(jCalendar1, null);
 		
-		scrollPaneEvents.setBounds(new Rectangle(292, 50, 346, 150));
+		scrollPaneEvents.setBounds(new Rectangle(292, 50, 350, 150));
 		scrollPaneEvents.setViewportView(tableEvents);
 		
 		tableModelEvents = new DefaultTableModel(null, columnNamesEvents);
 		inicializarTablaEvents(dateCalendar);
 		tableEvents.setModel(tableModelEvents);
 		
-		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
-		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
+		tableEvents.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tableEvents.getColumnModel().getColumn(1).setPreferredWidth(170);
 		tableEvents.getColumnModel().getColumn(2).setPreferredWidth(150);
+		tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(3));
 		tableEvents.setDefaultEditor(Object.class, null);
 
 		this.getContentPane().add(scrollPaneEvents, null);
@@ -195,8 +196,8 @@ public class ApostarUsuarioGUI extends JFrame {
 				}
 				System.out.println("Events "+ev);	
 			}
-			tableEvents.getColumnModel().getColumn(0).setPreferredWidth(25);
-			tableEvents.getColumnModel().getColumn(1).setPreferredWidth(268);
+			tableEvents.getColumnModel().getColumn(0).setPreferredWidth(30);
+			tableEvents.getColumnModel().getColumn(1).setPreferredWidth(170);
 			tableEvents.getColumnModel().getColumn(2).setPreferredWidth(150);
 			tableEvents.getColumnModel().removeColumn(tableEvents.getColumnModel().getColumn(3)); // not shown in JTable
 		} catch (Exception e1) {

@@ -50,13 +50,13 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 	private JLabel lblSaldo;
 
 	private String[] columnNamesQueries = new String[] { 
-			ResourceBundle.getBundle("Etiquetas").getString("QueryN"),
+			ResourceBundle.getBundle("Etiquetas").getString("N"),
 			ResourceBundle.getBundle("Etiquetas").getString("Query"),
 			ResourceBundle.getBundle("Etiquetas").getString("BetMin"), 
 	};
 
 	private String[] columnNamesProns = new String[] { 
-			ResourceBundle.getBundle("Etiquetas").getString("PronN"),
+			ResourceBundle.getBundle("Etiquetas").getString("N"),
 			ResourceBundle.getBundle("Etiquetas").getString("Pron"),
 			ResourceBundle.getBundle("Etiquetas").getString("Multip")
 	};
@@ -73,11 +73,11 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("QueryQueries"));
 
-		scrollPaneQueries.setBounds(new Rectangle(12, 41, 542, 117));
+		scrollPaneQueries.setBounds(new Rectangle(12, 41, 540, 117));
 		scrollPaneQueries.setViewportView(tableQueries);
 		tableModelQueries = new DefaultTableModel(null, columnNamesQueries);
 		
-		scrollPanePron.setBounds(new Rectangle(12, 195, 542, 116));
+		scrollPanePron.setBounds(new Rectangle(12, 195, 540, 116));
 		scrollPanePron.setViewportView(tableProns);
 		tableModelProns = new DefaultTableModel(null, columnNamesProns);
 		
@@ -107,9 +107,14 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 				}
 				System.out.println("Questions " + q);
 			}
+			tableQueries.getColumnModel().getColumn(0).setPreferredWidth(30);
+			tableQueries.getColumnModel().getColumn(1).setPreferredWidth(250);
+			tableQueries.getColumnModel().getColumn(2).setPreferredWidth(100);
+			tableQueries.getColumnModel().getColumn(3).setPreferredWidth(160);
+			tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(4));
 		} catch(Exception e) {
-			VentanaAvisos vent = new VentanaAvisos("Error en tableQueries/tableModelQueries", null);
-			vent.setVisible(true);
+			//VentanaAvisos vent = new VentanaAvisos("Error en tableQueries/tableModelQueries", null);
+			//vent.setVisible(true);
 		}
 		
 		tableQueries.addMouseListener(new MouseAdapter() {
@@ -126,7 +131,7 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 
 				try {
 					tableModelProns.setDataVector(null, columnNamesProns);
-					tableModelProns.setColumnCount(4);
+					tableModelProns.setColumnCount(3);
 					for (domain.Pronostico p : pronosticos1) {
 						Vector<Object> row = new Vector<Object>();
 						row.add(p.getPronNumber());
@@ -136,6 +141,9 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 						tableModelProns.addRow(row);
 						System.out.println("Pron " + p);
 					}
+					tableProns.getColumnModel().getColumn(0).setPreferredWidth(30);
+					tableProns.getColumnModel().getColumn(1).setPreferredWidth(400);
+					tableProns.getColumnModel().getColumn(2).setPreferredWidth(110);
 				} catch(Exception exc) {
 					VentanaAvisos vent = new VentanaAvisos("Error en tableProns/tableModelProns", null);
 					vent.setVisible(true);
@@ -144,10 +152,12 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 		});
 
 		tableQueries.setModel(tableModelQueries);
-		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(25);
-		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(268);
-		tableQueries.getColumnModel().getColumn(2).setPreferredWidth(85);
-		tableQueries.getColumnModel().getColumn(3).setPreferredWidth(150);
+		
+		
+		tableQueries.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tableQueries.getColumnModel().getColumn(1).setPreferredWidth(250);
+		tableQueries.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tableQueries.getColumnModel().getColumn(3).setPreferredWidth(160);
 		tableQueries.getColumnModel().removeColumn(tableQueries.getColumnModel().getColumn(4));
 		tableQueries.setDefaultEditor(Object.class, null);
 		
@@ -155,9 +165,9 @@ public class PreguntasApuestasUsuarioGUI extends JFrame {
 
 
 		tableProns.setModel(tableModelProns);
-		tableProns.getColumnModel().getColumn(0).setPreferredWidth(15);
-		tableProns.getColumnModel().getColumn(1).setPreferredWidth(268);
-		tableProns.getColumnModel().getColumn(2).setPreferredWidth(15);
+		tableProns.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tableProns.getColumnModel().getColumn(1).setPreferredWidth(400);
+		tableProns.getColumnModel().getColumn(2).setPreferredWidth(110);
 		//tableProns.getColumnModel().removeColumn(tableProns.getColumnModel().getColumn(3));
 		tableProns.setDefaultEditor(Object.class, null);
 
