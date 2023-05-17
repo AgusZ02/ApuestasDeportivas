@@ -203,8 +203,10 @@ public static void paintDaysWithEvents(JCalendar jCalendar,Vector<Date> datesWit
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		int offset = calendar.get(Calendar.DAY_OF_WEEK);
 
-		
-		offset += 5;
+		if (Locale.getDefault().equals(new Locale("es")))
+			offset += 4;
+		else
+			offset += 5;
 		
 		
 	 	for (Date d:datesWithEventsCurrentMonth){

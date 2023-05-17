@@ -84,11 +84,12 @@ public class RegisterGUI extends JFrame{
 								System.out.println(Integer.parseInt(textDNI.getText().substring(0, textDNI.getText().length()-1))); 
 								lblError.setForeground(Color.GREEN);
 								lblError.setVisible(false);
-								Usuario newUser = new Usuario(us, ps);
+								Usuario newUser = new Usuario(us, ps, textDNI.getText(), textName.getText());
 								newUser.setDni(textDNI.getText());							
-								newUser.setNombre(textName.getText());
+	
 								logicaNegocio.createUser(newUser);
 								lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("UsuarioCreado"));
+								VentanaAvisos ventana = new VentanaAvisos("Usuario creado correctamente", "UserCreated");
 								lblError.setVisible(true);
 								
 							} catch (Exception e2) {

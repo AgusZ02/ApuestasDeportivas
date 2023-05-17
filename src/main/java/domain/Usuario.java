@@ -40,6 +40,15 @@ public class Usuario implements Serializable {
 		this.saldo = 0;
 	}
 
+	public Usuario(String nombreUsuario, String contrasena, String DNI, String Nombre) {
+		this.nombreUsuario = nombreUsuario;
+		this.contrasena = contrasena;
+		this.esAdmin = false;
+		this.saldo = 0;
+		this.dni = DNI;
+		this.nombre = Nombre;
+	}
+
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}
