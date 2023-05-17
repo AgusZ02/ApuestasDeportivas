@@ -89,7 +89,8 @@ public class RegisterGUI extends JFrame{
 	
 								logicaNegocio.createUser(newUser);
 								lblError.setText(ResourceBundle.getBundle("Etiquetas").getString("UsuarioCreado"));
-								VentanaAvisos ventana = new VentanaAvisos("Usuario creado correctamente", "UserCreated");
+								// VentanaAvisos ventana = new VentanaAvisos("Usuario creado correctamente", "UserCreated");
+								// ventana.setVisible(true);
 								lblError.setVisible(true);
 								
 							} catch (Exception e2) {
@@ -121,7 +122,7 @@ public class RegisterGUI extends JFrame{
 		getContentPane().add(passwordField);
 		
 		lblError = new JLabel("");
-		lblError.setBounds(40, 163, 326, 14);
+		lblError.setBounds(40, 250, 326, 14);
 		getContentPane().add(lblError);
 	}
     public void setUserText(String string) {
