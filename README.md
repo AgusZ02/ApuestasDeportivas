@@ -1,18 +1,24 @@
-## Getting Started
+## Introducción
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Este repositorio contiene un proyecto propuesto en la asignatura de Ingeniería Informática 2022/2023 en el grado de Ingeniería Informática de la facultad de Ingeniería Informatica de San Sebastián.
+Se trata de una demostración de lo que sería una aplicación para realizar apuestas deportivas. 
+Se pueden probar los siguientes casos de uso:
+- Login/Registro de usuarios
+- Apostar a pronósticos
+- Ver eventos/preguntas de eventos/pronósticos de preguntas
+- Cerrar eventos (Y con ello resolver las apuestas del mismo)
+- Crear eventos / preguntas / pronósticos
+- Añadir saldo
+- Consultar apuestas
 
-## Folder Structure
+Se ha utilizado para este proyecto una metodología de trabajo SCRUM, basada en una mejora continua y en marcos de tiempo definidos para hacer cada iteración. También se ha trabajado el diseño e implementación de interfaces gráficas y gestión de bases de datos Java.
+## Estructura del repositorio
 
-The workspace contains two folders by default, where:
+- `src`: Contiene el código fuente.
+- `lib`: Contiene las librerias necesarias.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Tecnologías usadas:
+- `ObjectDB`: Para gestionar la base de datos.
+- `Swing`: Para el diseño de la interfaz gráfica.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Se ha programado enteramente en Java.
